@@ -14,6 +14,19 @@
 		04041C571BEC7678009C49E6 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04041C561BEC7678009C49E6 /* Images.xcassets */; };
 		04041C5A1BEC7678009C49E6 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04041C581BEC7678009C49E6 /* LaunchScreen.xib */; };
 		04041C661BEC7678009C49E6 /* IvoclarLabTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 04041C651BEC7678009C49E6 /* IvoclarLabTests.m */; };
+		04041C711BEC791A009C49E6 /* SideMenuListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04041C701BEC791A009C49E6 /* SideMenuListViewController.m */; };
+		04041C741BEC7958009C49E6 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04041C731BEC7958009C49E6 /* MainViewController.m */; };
+		04041C771BEC7A02009C49E6 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04041C761BEC7A02009C49E6 /* SWRevealViewController.m */; };
+		04041C7A1BEC8A53009C49E6 /* CaseEntryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04041C791BEC8A53009C49E6 /* CaseEntryViewController.m */; };
+		04041C7C1BECA234009C49E6 /* dropDownImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 04041C7B1BECA234009C49E6 /* dropDownImage.png */; };
+		04041C7F1BECB873009C49E6 /* FeedbackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04041C7E1BECB873009C49E6 /* FeedbackViewController.m */; };
+		04041C811BECD6FA009C49E6 /* sidemenuicon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 04041C801BECD6FA009C49E6 /* sidemenuicon.jpg */; };
+		04723EE51BEDE8B00054D36F /* DoctorLogin.m in Sources */ = {isa = PBXBuildFile; fileRef = 04723EE41BEDE8B00054D36F /* DoctorLogin.m */; };
+		04D47EBC1BF07A7B0018B5C3 /* DoctorAlreadyRegistered.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D47EBB1BF07A7B0018B5C3 /* DoctorAlreadyRegistered.m */; };
+		04D47EBF1BF0C7140018B5C3 /* NewUserOTPScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D47EBE1BF0C7130018B5C3 /* NewUserOTPScreen.m */; };
+		04D47EC21BF0DB280018B5C3 /* PasswordGenarationScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D47EC11BF0DB280018B5C3 /* PasswordGenarationScreen.m */; };
+		04D47EC51BF0E42F0018B5C3 /* ProfileScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D47EC41BF0E42F0018B5C3 /* ProfileScreen.m */; };
+		04ED20761BEDD6F10039A139 /* emax_logo.gif in Resources */ = {isa = PBXBuildFile; fileRef = 04ED20751BEDD6F10039A139 /* emax_logo.gif */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +53,29 @@
 		04041C5F1BEC7678009C49E6 /* IvoclarLabTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IvoclarLabTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		04041C641BEC7678009C49E6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		04041C651BEC7678009C49E6 /* IvoclarLabTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IvoclarLabTests.m; sourceTree = "<group>"; };
+		04041C6F1BEC7919009C49E6 /* SideMenuListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SideMenuListViewController.h; sourceTree = "<group>"; };
+		04041C701BEC791A009C49E6 /* SideMenuListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SideMenuListViewController.m; sourceTree = "<group>"; };
+		04041C721BEC7958009C49E6 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
+		04041C731BEC7958009C49E6 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
+		04041C751BEC7A02009C49E6 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
+		04041C761BEC7A02009C49E6 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
+		04041C781BEC8A53009C49E6 /* CaseEntryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CaseEntryViewController.h; sourceTree = "<group>"; };
+		04041C791BEC8A53009C49E6 /* CaseEntryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CaseEntryViewController.m; sourceTree = "<group>"; };
+		04041C7B1BECA234009C49E6 /* dropDownImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dropDownImage.png; sourceTree = "<group>"; };
+		04041C7D1BECB873009C49E6 /* FeedbackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedbackViewController.h; sourceTree = "<group>"; };
+		04041C7E1BECB873009C49E6 /* FeedbackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedbackViewController.m; sourceTree = "<group>"; };
+		04041C801BECD6FA009C49E6 /* sidemenuicon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sidemenuicon.jpg; sourceTree = "<group>"; };
+		04723EE31BEDE8B00054D36F /* DoctorLogin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DoctorLogin.h; sourceTree = "<group>"; };
+		04723EE41BEDE8B00054D36F /* DoctorLogin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DoctorLogin.m; sourceTree = "<group>"; };
+		04D47EBA1BF07A7B0018B5C3 /* DoctorAlreadyRegistered.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DoctorAlreadyRegistered.h; sourceTree = "<group>"; };
+		04D47EBB1BF07A7B0018B5C3 /* DoctorAlreadyRegistered.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DoctorAlreadyRegistered.m; sourceTree = "<group>"; };
+		04D47EBD1BF0C7130018B5C3 /* NewUserOTPScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewUserOTPScreen.h; sourceTree = "<group>"; };
+		04D47EBE1BF0C7130018B5C3 /* NewUserOTPScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewUserOTPScreen.m; sourceTree = "<group>"; };
+		04D47EC01BF0DB280018B5C3 /* PasswordGenarationScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PasswordGenarationScreen.h; sourceTree = "<group>"; };
+		04D47EC11BF0DB280018B5C3 /* PasswordGenarationScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PasswordGenarationScreen.m; sourceTree = "<group>"; };
+		04D47EC31BF0E42F0018B5C3 /* ProfileScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileScreen.h; sourceTree = "<group>"; };
+		04D47EC41BF0E42F0018B5C3 /* ProfileScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileScreen.m; sourceTree = "<group>"; };
+		04ED20751BEDD6F10039A139 /* emax_logo.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = emax_logo.gif; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,10 +117,33 @@
 		04041C481BEC7678009C49E6 /* IvoclarLab */ = {
 			isa = PBXGroup;
 			children = (
+				04041C7B1BECA234009C49E6 /* dropDownImage.png */,
+				04041C801BECD6FA009C49E6 /* sidemenuicon.jpg */,
+				04ED20751BEDD6F10039A139 /* emax_logo.gif */,
 				04041C4D1BEC7678009C49E6 /* AppDelegate.h */,
 				04041C4E1BEC7678009C49E6 /* AppDelegate.m */,
 				04041C501BEC7678009C49E6 /* ViewController.h */,
 				04041C511BEC7678009C49E6 /* ViewController.m */,
+				04723EE31BEDE8B00054D36F /* DoctorLogin.h */,
+				04723EE41BEDE8B00054D36F /* DoctorLogin.m */,
+				04D47EBA1BF07A7B0018B5C3 /* DoctorAlreadyRegistered.h */,
+				04D47EBB1BF07A7B0018B5C3 /* DoctorAlreadyRegistered.m */,
+				04D47EBD1BF0C7130018B5C3 /* NewUserOTPScreen.h */,
+				04D47EBE1BF0C7130018B5C3 /* NewUserOTPScreen.m */,
+				04D47EC01BF0DB280018B5C3 /* PasswordGenarationScreen.h */,
+				04D47EC11BF0DB280018B5C3 /* PasswordGenarationScreen.m */,
+				04D47EC31BF0E42F0018B5C3 /* ProfileScreen.h */,
+				04D47EC41BF0E42F0018B5C3 /* ProfileScreen.m */,
+				04041C6F1BEC7919009C49E6 /* SideMenuListViewController.h */,
+				04041C701BEC791A009C49E6 /* SideMenuListViewController.m */,
+				04041C721BEC7958009C49E6 /* MainViewController.h */,
+				04041C731BEC7958009C49E6 /* MainViewController.m */,
+				04041C751BEC7A02009C49E6 /* SWRevealViewController.h */,
+				04041C761BEC7A02009C49E6 /* SWRevealViewController.m */,
+				04041C781BEC8A53009C49E6 /* CaseEntryViewController.h */,
+				04041C791BEC8A53009C49E6 /* CaseEntryViewController.m */,
+				04041C7D1BECB873009C49E6 /* FeedbackViewController.h */,
+				04041C7E1BECB873009C49E6 /* FeedbackViewController.m */,
 				04041C531BEC7678009C49E6 /* Main.storyboard */,
 				04041C561BEC7678009C49E6 /* Images.xcassets */,
 				04041C581BEC7678009C49E6 /* LaunchScreen.xib */,
@@ -199,8 +258,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04041C7C1BECA234009C49E6 /* dropDownImage.png in Resources */,
 				04041C551BEC7678009C49E6 /* Main.storyboard in Resources */,
+				04ED20761BEDD6F10039A139 /* emax_logo.gif in Resources */,
 				04041C5A1BEC7678009C49E6 /* LaunchScreen.xib in Resources */,
+				04041C811BECD6FA009C49E6 /* sidemenuicon.jpg in Resources */,
 				04041C571BEC7678009C49E6 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -219,9 +281,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04041C711BEC791A009C49E6 /* SideMenuListViewController.m in Sources */,
+				04723EE51BEDE8B00054D36F /* DoctorLogin.m in Sources */,
+				04041C7A1BEC8A53009C49E6 /* CaseEntryViewController.m in Sources */,
+				04D47EBC1BF07A7B0018B5C3 /* DoctorAlreadyRegistered.m in Sources */,
+				04D47EC51BF0E42F0018B5C3 /* ProfileScreen.m in Sources */,
 				04041C521BEC7678009C49E6 /* ViewController.m in Sources */,
+				04D47EBF1BF0C7140018B5C3 /* NewUserOTPScreen.m in Sources */,
 				04041C4F1BEC7678009C49E6 /* AppDelegate.m in Sources */,
+				04041C741BEC7958009C49E6 /* MainViewController.m in Sources */,
+				04D47EC21BF0DB280018B5C3 /* PasswordGenarationScreen.m in Sources */,
 				04041C4C1BEC7678009C49E6 /* main.m in Sources */,
+				04041C771BEC7A02009C49E6 /* SWRevealViewController.m in Sources */,
+				04041C7F1BECB873009C49E6 /* FeedbackViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -414,6 +486,7 @@
 				04041C6B1BEC7678009C49E6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		04041C6C1BEC7678009C49E6 /* Build configuration list for PBXNativeTarget "IvoclarLabTests" */ = {
 			isa = XCConfigurationList;
@@ -422,6 +495,7 @@
 				04041C6E1BEC7678009C49E6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
