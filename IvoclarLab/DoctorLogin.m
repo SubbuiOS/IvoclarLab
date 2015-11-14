@@ -27,6 +27,7 @@ NSString * currentDescription;
 
 UILabel * tagLabel;
 
+
 @implementation DoctorLogin
 
 - (void)viewDidLoad {
@@ -82,10 +83,9 @@ UILabel * tagLabel;
                              "</soap:Body>\n"
                              "</soap:Envelope>\n",_doctorEmailTF.text,_doctorMobileNoTF.text];
     
-    
     [self login:checkMobile tag:0];
-    
-    
+        
+   
    
     
     
@@ -93,7 +93,7 @@ UILabel * tagLabel;
 
 -(void) login : (NSString * )message tag: (int)tagValue
 {
-    
+   
     
     NSURL *url = [NSURL URLWithString:@"http://www.kurnoolcity.com/wsdemo/zenoservice.asmx"];
     NSMutableURLRequest *theRequest = [NSMutableURLRequest requestWithURL:url];
@@ -123,6 +123,7 @@ UILabel * tagLabel;
     [theRequest setHTTPMethod:@"POST"];
     [theRequest setHTTPBody: [message dataUsingEncoding:NSUTF8StringEncoding]];
     
+        
     theConnection = [[NSURLConnection alloc] initWithRequest:theRequest delegate:self];
     
     if( theConnection )
@@ -134,7 +135,7 @@ UILabel * tagLabel;
         NSLog(@"theConnection is NULL");
     }
     
-  
+
     
 }
 
@@ -209,6 +210,7 @@ UILabel * tagLabel;
     if([elementName isEqual: @"SendOTPResult"])
     {
         
+        
         NewUserOTPScreen * OTPScreen = [self.storyboard instantiateViewControllerWithIdentifier:@"OTPScreen"];
         
         [self presentViewController:OTPScreen animated:YES completion:nil];
@@ -216,6 +218,8 @@ UILabel * tagLabel;
         [self saveDataInPlist:currentDescription];
         
         NSLog(@" present doctor id  %@",currentDescription);
+            
+       
     }
     
 

@@ -8,7 +8,7 @@
 
 #import "ViewController.h"
 
-@interface DoctorAlreadyRegistered : ViewController
+@interface DoctorAlreadyRegistered : ViewController<NSXMLParserDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *registeredMobileNoTF;
 @property (weak, nonatomic) IBOutlet UITextField *registeredPasswordTF;

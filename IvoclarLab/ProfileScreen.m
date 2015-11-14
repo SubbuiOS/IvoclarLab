@@ -7,6 +7,7 @@
 //
 
 #import "ProfileScreen.h"
+#import "SWRevealViewController.h"
 
 @interface ProfileScreen ()
 
@@ -15,12 +16,36 @@ NSURLConnection * urlConnection;
 NSMutableData * webData;
 NSString * currentDescription;
 NSString * filteredDoctorID;
+NSData *myData;
+NSMutableDictionary *jsonData;
+UITableViewCell * cell;
+UITableView * statesTableView;
+UITableView * cityTableView;
+
 
 @implementation ProfileScreen
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    SWRevealViewController *revealViewController = self.revealViewController;
+    if ( revealViewController )
+    {
+        [self.sidebarButton setTarget: self.revealViewController];
+        [self.sidebarButton setAction: @selector( revealToggle: )];
+        [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
+    }
+    
+    self.navigationController.navigationBar.barTintColor = [UIColor blueColor];
+    // self.navigationController.navigationBar.translucent = NO;
+    
+    self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
+    
+    [self.navigationController.navigationBar
+     setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -93,7 +118,7 @@ NSString * filteredDoctorID;
                           "<StateName>%@</StateName>\n"
                           "</UpdateProfile>\n"
                           "</soap:Body>\n"
-                          "</soap:Envelope>\n",filteredDoctorID,_doctorNameTF.text,_emailTF.text,_cityTF.text,_areaNameTF.text,_pincodeTF.text,_stateNameTF.text];
+                          "</soap:Envelope>\n",filteredDoctorID,_doctorNameTF.text,_emailTF.text,_cityDDOutlet.titleLabel.text,_areaNameTF.text,_pincodeTF.text,_stateDDOutlet.titleLabel.text];
     
     
     NSURL *url = [NSURL URLWithString:@"http://www.kurnoolcity.com/wsdemo/zenoservice.asmx"];
@@ -147,7 +172,8 @@ NSString * filteredDoctorID;
     
     NSLog(@"%@",data);
     
-    NSData *myData = [data dataUsingEncoding:NSUTF8StringEncoding];
+    myData = [data dataUsingEncoding:NSUTF8StringEncoding];
+
     
     NSXMLParser *xmlParser = [[NSXMLParser alloc] initWithData:myData];
     
@@ -171,27 +197,211 @@ NSString * filteredDoctorID;
   namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
 {
     
-    NSLog(@"element names :%@\n\n",elementName);
     
     if ([elementName isEqual:@"UpdateProfileResult"]) {
         
         NSLog(@"Status :%@",currentDescription);
+    }
+    if ([elementName isEqual:@"GetStatesResult"]) {
+    
+        NSLog(@"%@",currentDescription);
+        NSData *objectData = [currentDescription dataUsingEncoding:NSUTF8StringEncoding];
+        jsonData = [NSJSONSerialization JSONObjectWithData:objectData options:NSJSONReadingMutableContainers error:nil];
+        
+        
+       // NSLog(@"json data %@",json);
+        statesTableView = [[UITableView alloc]initWithFrame:CGRectMake(20, 250, 340, 150) style:UITableViewStylePlain];
+        statesTableView.delegate = self;
+        statesTableView.dataSource = self;
+        statesTableView.hidden = NO;
+        
+        [self.view addSubview:statesTableView];
+        
+    
+    }
+    
+    if ([elementName isEqual:@"GetCityResult"]) {
+        
+        NSLog(@"%@",currentDescription);
+        NSData *objectData = [currentDescription dataUsingEncoding:NSUTF8StringEncoding];
+        jsonData = [NSJSONSerialization JSONObjectWithData:objectData options:NSJSONReadingMutableContainers error:nil];
+        
+        
+        // NSLog(@"json data %@",json);
+        cityTableView = [[UITableView alloc]initWithFrame:CGRectMake(20, 300, 340, 170) style:UITableViewStylePlain];
+        cityTableView.delegate = self;
+        cityTableView.dataSource = self;
+        cityTableView.hidden = NO;
+        
+        [self.view addSubview:cityTableView];
     }
     
     
 }
 
 
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return jsonData.count;
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    NSString * identifier = @"DropDown";
+    
+    cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+    }
+    
+    if (tableView == statesTableView) {
+        
+        cell.textLabel.text = [[jsonData valueForKey:@"StateName"]objectAtIndex:indexPath.row];
+    }
+    
+    else if (tableView == cityTableView) {
+        
+        cell.textLabel.text = [[jsonData valueForKey:@"CityName"]objectAtIndex:indexPath.row];
+    }
+
+    
+    
+    return cell;
+    
+    
+    
+}
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSString * label1;
+    NSString * label2;
+
+    
+    if (tableView == statesTableView) {
+        
+        label1 = [[jsonData valueForKey:@"StateName"]objectAtIndex:indexPath.row];
+        
+        tableView.hidden = YES;
+
+    }
+    if (tableView == cityTableView) {
+        
+        label2 = [[jsonData valueForKey:@"CityName"]objectAtIndex:indexPath.row];
+
+        tableView.hidden = YES;
+
+    }
+    
+    _stateDDOutlet.titleLabel.text = label1;
+    _cityDDOutlet.titleLabel.text = label2;
+    
+}
 
 
 
+- (IBAction)stateDropDown:(id)sender {
+    
+    NSString * states = [NSString stringWithFormat:
+                         @"<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
+                         "<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n"
+                         "<soap:Body>\n"
+                         "<GetStates xmlns=\"http://www.kurnoolcity.com/wsdemo\">"
+                         "<temp>-</temp>\n"
+                         "</GetStates>\n"
+                         "</soap:Body>\n"
+                         "</soap:Envelope>\n"];
+    
+    
+    NSURL *url = [NSURL URLWithString:@"http://www.kurnoolcity.com/wsdemo/zenoservice.asmx"];
+    NSMutableURLRequest *theRequest = [NSMutableURLRequest requestWithURL:url];
+    
+    NSString *msgLength = [NSString stringWithFormat:@"%lu", (unsigned long)[states length]];
+    
+    [theRequest addValue: @"text/xml; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+    
+    [theRequest addValue: @"http://www.kurnoolcity.com/wsdemo/GetStates" forHTTPHeaderField:@"SOAPAction"];
+    
+    
+    
+    
+    [theRequest addValue: @"www.kurnoolcity.com" forHTTPHeaderField:@"Host"];
+    
+    [theRequest addValue: msgLength forHTTPHeaderField:@"Content-Length"];
+    [theRequest setHTTPMethod:@"POST"];
+    [theRequest setHTTPBody: [states dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    urlConnection = [[NSURLConnection alloc] initWithRequest:theRequest delegate:self];
+    
+    if( urlConnection )
+    {
+        webData = [NSMutableData data];
+    }
+    else
+    {
+        NSLog(@"theConnection is NULL");
+    }
 
+    
+}
+- (IBAction)cityDropDown:(id)sender {
+    
+    
+    
+    if ([_stateDDOutlet.titleLabel.text isEqual:nil]) {
+        
+        UIAlertView * cityAlert = [[UIAlertView alloc]initWithTitle:@"Alert" message:@"Please Select the State First" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+        [cityAlert show];
+    }
+    
+    else
+    {
+    
+    NSString * states = [NSString stringWithFormat:
+                         @"<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
+                         "<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n"
+                         "<soap:Body>\n"
+                         "<GetCity xmlns=\"http://www.kurnoolcity.com/wsdemo\">"
+                         "<StateName>%@</StateName>\n"
+                         "</GetCity>\n"
+                         "</soap:Body>\n"
+                         "</soap:Envelope>\n",_stateDDOutlet.titleLabel.text];
+   
 
-
-
-
-
-
-
-
+    
+    NSURL *url = [NSURL URLWithString:@"http://www.kurnoolcity.com/wsdemo/zenoservice.asmx"];
+    NSMutableURLRequest *theRequest = [NSMutableURLRequest requestWithURL:url];
+    
+    NSString *msgLength = [NSString stringWithFormat:@"%lu", (unsigned long)[states length]];
+    
+    [theRequest addValue: @"text/xml; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+    
+    [theRequest addValue: @"http://www.kurnoolcity.com/wsdemo/GetCity" forHTTPHeaderField:@"SOAPAction"];
+    
+    
+    
+    
+    [theRequest addValue: @"www.kurnoolcity.com" forHTTPHeaderField:@"Host"];
+    
+    [theRequest addValue: msgLength forHTTPHeaderField:@"Content-Length"];
+    [theRequest setHTTPMethod:@"POST"];
+    [theRequest setHTTPBody: [states dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    urlConnection = [[NSURLConnection alloc] initWithRequest:theRequest delegate:self];
+    
+    if( urlConnection )
+    {
+        webData = [NSMutableData data];
+    }
+    else
+    {
+        NSLog(@"theConnection is NULL");
+    }
+    
+    }
+    
+    
+    
+    
+}
 @end

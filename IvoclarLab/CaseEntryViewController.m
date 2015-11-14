@@ -58,7 +58,6 @@ NSMutableArray * arr;
     
     dropDownTV.delegate = self;
     dropDownTV.dataSource = self;
-    
     [self.view addSubview:dropDownTV];
     
    

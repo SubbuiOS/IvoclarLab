@@ -8,7 +8,10 @@
 
 #import "ViewController.h"
 
-@interface ProfileScreen : ViewController<NSXMLParserDelegate>
+@interface ProfileScreen : ViewController<NSXMLParserDelegate,UITableViewDataSource,UITableViewDelegate>
+
+
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *sidebarButton;
 
 
 - (IBAction)profileSubmit:(id)sender;
@@ -27,6 +30,10 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *stateNameTF;
 
+- (IBAction)stateDropDown:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *stateDDOutlet;
+- (IBAction)cityDropDown:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *cityDDOutlet;
 
 
 
