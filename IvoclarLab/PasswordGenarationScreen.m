@@ -7,7 +7,7 @@
 //
 
 #import "PasswordGenarationScreen.h"
-//#import "ProfileScreen.h"
+#import "ProfileScreen.h"
 #import "SWRevealViewController.h"
 
 @interface PasswordGenarationScreen ()
@@ -40,11 +40,10 @@
     
     if ([_passwordTF.text isEqual:_reenterPasswordTF.text]) {
         
-        SWRevealViewController * sideMenu = [self.storyboard instantiateViewControllerWithIdentifier:@"SWRevealViewController"];
+        ProfileScreen * sideMenu = [self.storyboard instantiateViewControllerWithIdentifier:@"profilePage"];
         
+        //[self.revealViewController pushFrontViewController:sideMenu animated:YES];
         [self presentViewController:sideMenu animated:YES completion:nil];
-        
-        
         
     }
     

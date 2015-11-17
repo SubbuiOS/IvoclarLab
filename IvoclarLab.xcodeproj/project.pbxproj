@@ -26,6 +26,11 @@
 		04D47EBF1BF0C7140018B5C3 /* NewUserOTPScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D47EBE1BF0C7130018B5C3 /* NewUserOTPScreen.m */; };
 		04D47EC21BF0DB280018B5C3 /* PasswordGenarationScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D47EC11BF0DB280018B5C3 /* PasswordGenarationScreen.m */; };
 		04D47EC51BF0E42F0018B5C3 /* ProfileScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D47EC41BF0E42F0018B5C3 /* ProfileScreen.m */; };
+		04DCFF5B1BFBBABA00BD03E9 /* CaseHistoryCustomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DCFF591BFBBABA00BD03E9 /* CaseHistoryCustomCell.m */; };
+		04DCFF5C1BFBBABA00BD03E9 /* CaseHistoryCustomCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04DCFF5A1BFBBABA00BD03E9 /* CaseHistoryCustomCell.xib */; };
+		04DF4CD31BFA73AF0041D185 /* PartnersCustomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DF4CD11BFA73AF0041D185 /* PartnersCustomCell.m */; };
+		04DF4CD41BFA73AF0041D185 /* PartnersCustomCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04DF4CD21BFA73AF0041D185 /* PartnersCustomCell.xib */; };
+		04DF4CD71BFAD6330041D185 /* CaseHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DF4CD61BFAD6330041D185 /* CaseHistory.m */; };
 		04ED20761BEDD6F10039A139 /* emax_logo.gif in Resources */ = {isa = PBXBuildFile; fileRef = 04ED20751BEDD6F10039A139 /* emax_logo.gif */; };
 /* End PBXBuildFile section */
 
@@ -75,6 +80,14 @@
 		04D47EC11BF0DB280018B5C3 /* PasswordGenarationScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PasswordGenarationScreen.m; sourceTree = "<group>"; };
 		04D47EC31BF0E42F0018B5C3 /* ProfileScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileScreen.h; sourceTree = "<group>"; };
 		04D47EC41BF0E42F0018B5C3 /* ProfileScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileScreen.m; sourceTree = "<group>"; };
+		04DCFF581BFBBABA00BD03E9 /* CaseHistoryCustomCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CaseHistoryCustomCell.h; sourceTree = "<group>"; };
+		04DCFF591BFBBABA00BD03E9 /* CaseHistoryCustomCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CaseHistoryCustomCell.m; sourceTree = "<group>"; };
+		04DCFF5A1BFBBABA00BD03E9 /* CaseHistoryCustomCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CaseHistoryCustomCell.xib; sourceTree = "<group>"; };
+		04DF4CD01BFA73AF0041D185 /* PartnersCustomCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PartnersCustomCell.h; sourceTree = "<group>"; };
+		04DF4CD11BFA73AF0041D185 /* PartnersCustomCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PartnersCustomCell.m; sourceTree = "<group>"; };
+		04DF4CD21BFA73AF0041D185 /* PartnersCustomCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PartnersCustomCell.xib; sourceTree = "<group>"; };
+		04DF4CD51BFAD6330041D185 /* CaseHistory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CaseHistory.h; sourceTree = "<group>"; };
+		04DF4CD61BFAD6330041D185 /* CaseHistory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CaseHistory.m; sourceTree = "<group>"; };
 		04ED20751BEDD6F10039A139 /* emax_logo.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = emax_logo.gif; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -142,6 +155,14 @@
 				04041C761BEC7A02009C49E6 /* SWRevealViewController.m */,
 				04041C781BEC8A53009C49E6 /* CaseEntryViewController.h */,
 				04041C791BEC8A53009C49E6 /* CaseEntryViewController.m */,
+				04DF4CD51BFAD6330041D185 /* CaseHistory.h */,
+				04DF4CD61BFAD6330041D185 /* CaseHistory.m */,
+				04DCFF581BFBBABA00BD03E9 /* CaseHistoryCustomCell.h */,
+				04DCFF591BFBBABA00BD03E9 /* CaseHistoryCustomCell.m */,
+				04DCFF5A1BFBBABA00BD03E9 /* CaseHistoryCustomCell.xib */,
+				04DF4CD01BFA73AF0041D185 /* PartnersCustomCell.h */,
+				04DF4CD11BFA73AF0041D185 /* PartnersCustomCell.m */,
+				04DF4CD21BFA73AF0041D185 /* PartnersCustomCell.xib */,
 				04041C7D1BECB873009C49E6 /* FeedbackViewController.h */,
 				04041C7E1BECB873009C49E6 /* FeedbackViewController.m */,
 				04041C531BEC7678009C49E6 /* Main.storyboard */,
@@ -261,9 +282,11 @@
 				04041C7C1BECA234009C49E6 /* dropDownImage.png in Resources */,
 				04041C551BEC7678009C49E6 /* Main.storyboard in Resources */,
 				04ED20761BEDD6F10039A139 /* emax_logo.gif in Resources */,
+				04DCFF5C1BFBBABA00BD03E9 /* CaseHistoryCustomCell.xib in Resources */,
 				04041C5A1BEC7678009C49E6 /* LaunchScreen.xib in Resources */,
 				04041C811BECD6FA009C49E6 /* sidemenuicon.jpg in Resources */,
 				04041C571BEC7678009C49E6 /* Images.xcassets in Resources */,
+				04DF4CD41BFA73AF0041D185 /* PartnersCustomCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -281,7 +304,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04DF4CD71BFAD6330041D185 /* CaseHistory.m in Sources */,
 				04041C711BEC791A009C49E6 /* SideMenuListViewController.m in Sources */,
+				04DF4CD31BFA73AF0041D185 /* PartnersCustomCell.m in Sources */,
 				04723EE51BEDE8B00054D36F /* DoctorLogin.m in Sources */,
 				04041C7A1BEC8A53009C49E6 /* CaseEntryViewController.m in Sources */,
 				04D47EBC1BF07A7B0018B5C3 /* DoctorAlreadyRegistered.m in Sources */,
@@ -290,6 +315,7 @@
 				04D47EBF1BF0C7140018B5C3 /* NewUserOTPScreen.m in Sources */,
 				04041C4F1BEC7678009C49E6 /* AppDelegate.m in Sources */,
 				04041C741BEC7958009C49E6 /* MainViewController.m in Sources */,
+				04DCFF5B1BFBBABA00BD03E9 /* CaseHistoryCustomCell.m in Sources */,
 				04D47EC21BF0DB280018B5C3 /* PasswordGenarationScreen.m in Sources */,
 				04041C4C1BEC7678009C49E6 /* main.m in Sources */,
 				04041C771BEC7A02009C49E6 /* SWRevealViewController.m in Sources */,

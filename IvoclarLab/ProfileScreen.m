@@ -8,6 +8,7 @@
 
 #import "ProfileScreen.h"
 #import "SWRevealViewController.h"
+#import "CaseEntryViewController.h"
 
 @interface ProfileScreen ()
 
@@ -17,7 +18,8 @@ NSMutableData * webData;
 NSString * currentDescription;
 NSString * filteredDoctorID;
 NSData *myData;
-NSMutableDictionary *jsonData;
+NSMutableDictionary *jsonStatesData;
+NSMutableDictionary * jsonCityData;
 UITableViewCell * cell;
 UITableView * statesTableView;
 UITableView * cityTableView;
@@ -44,7 +46,9 @@ UITableView * cityTableView;
     
     [self.navigationController.navigationBar
      setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
-
+    statesTableView = [[UITableView alloc]initWithFrame:CGRectMake(20, 300, 340, 150) style:UITableViewStylePlain];
+    
+    cityTableView = [[UITableView alloc]initWithFrame:CGRectMake(20, 350, 340, 150) style:UITableViewStylePlain];
     
 }
 
@@ -62,6 +66,65 @@ UITableView * cityTableView;
     // Pass the selected object to the new view controller.
 }
 */
+
+- (void)saveDataInPlist:(NSString *)doctorName {
+    
+    //get the plist document path
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSString *plistFilePath = [documentsDirectory stringByAppendingPathComponent:@"OTPResult.plist"];
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSMutableDictionary *data = [[NSMutableDictionary alloc]init];
+    NSMutableArray *contentArray= [[NSMutableArray alloc]init];
+    
+    if (![fileManager fileExistsAtPath: plistFilePath])
+    {
+        NSLog(@"File does not exist");
+        
+        // If the file doesn’t exist, create an empty plist file
+        plistFilePath = [documentsDirectory stringByAppendingPathComponent:@"OTPResult.plist"];
+        //NSLog(@"path is %@",plistFilePath);
+        
+    }
+    else{
+        NSLog(@"File exists, Get data if anything stored");
+        
+        contentArray = [[NSMutableArray alloc] initWithContentsOfFile:plistFilePath];
+    }
+    
+    
+    NSString *docName = doctorName;
+    
+    //check all the textfields have values
+    if ([docName length] >0) {
+        
+        //add values to dictionary
+        [data setValue:docName forKey:@"DoctorName"];
+        
+        //add dictionary to array
+        [contentArray addObject:data];
+        
+        //write array to plist file
+        if([contentArray writeToFile:plistFilePath atomically:YES]){
+            
+            //NSLog(@"saved");
+            
+            
+//            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Saved in plist" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+//            [alert show];
+            
+        }
+        else {
+            NSLog(@"Couldn't saved");
+            
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Couldn't Saved in plist" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+            [alert show];
+        }
+    }
+    
+}
+
 
 - (IBAction)profileSubmit:(id)sender {
     
@@ -87,7 +150,7 @@ UITableView * cityTableView;
         
         NSLog(@"File exists, Get data if anything stored");
         contentArray = [[NSMutableArray alloc] initWithContentsOfFile:plistFilePath];
-        NSLog(@"contant array is %@",contentArray);
+        NSLog(@"content array is %@",contentArray);
         
     }
     
@@ -95,11 +158,17 @@ UITableView * cityTableView;
     for (int i= 0; i<[contentArray count]; i++) {
         
         data= [contentArray objectAtIndex:i];
+        if ([data objectForKey:@"DoctorID"]) {
+            
+        
+        
         NSString *drID = [data objectForKey:@"DoctorID"];
+        
+        NSLog(@"dr id :%@",drID);
         
         NSCharacterSet *invalidCharSet = [[NSCharacterSet characterSetWithCharactersInString:@"0123456789"]invertedSet];
         filteredDoctorID = [[drID componentsSeparatedByCharactersInSet:invalidCharSet]componentsJoinedByString:@""];
-        
+        }
        
     }
     
@@ -201,16 +270,27 @@ UITableView * cityTableView;
     if ([elementName isEqual:@"UpdateProfileResult"]) {
         
         NSLog(@"Status :%@",currentDescription);
+        
+        if ([currentDescription isEqual:@"\"Y\""]) {
+            
+            CaseEntryViewController * caseEntry = [self.storyboard instantiateViewControllerWithIdentifier:@"caseEntry"];
+            
+            [self.revealViewController pushFrontViewController:caseEntry animated:YES];
+            
+            [self saveDataInPlist:_doctorNameTF.text];
+            
+        }
+        
     }
     if ([elementName isEqual:@"GetStatesResult"]) {
     
         NSLog(@"%@",currentDescription);
         NSData *objectData = [currentDescription dataUsingEncoding:NSUTF8StringEncoding];
-        jsonData = [NSJSONSerialization JSONObjectWithData:objectData options:NSJSONReadingMutableContainers error:nil];
+        jsonStatesData = [NSJSONSerialization JSONObjectWithData:objectData options:NSJSONReadingMutableContainers error:nil];
         
         
        // NSLog(@"json data %@",json);
-        statesTableView = [[UITableView alloc]initWithFrame:CGRectMake(20, 250, 340, 150) style:UITableViewStylePlain];
+       
         statesTableView.delegate = self;
         statesTableView.dataSource = self;
         statesTableView.hidden = NO;
@@ -224,11 +304,11 @@ UITableView * cityTableView;
         
         NSLog(@"%@",currentDescription);
         NSData *objectData = [currentDescription dataUsingEncoding:NSUTF8StringEncoding];
-        jsonData = [NSJSONSerialization JSONObjectWithData:objectData options:NSJSONReadingMutableContainers error:nil];
+        jsonCityData = [NSJSONSerialization JSONObjectWithData:objectData options:NSJSONReadingMutableContainers error:nil];
         
         
         // NSLog(@"json data %@",json);
-        cityTableView = [[UITableView alloc]initWithFrame:CGRectMake(20, 300, 340, 170) style:UITableViewStylePlain];
+        
         cityTableView.delegate = self;
         cityTableView.dataSource = self;
         cityTableView.hidden = NO;
@@ -242,7 +322,16 @@ UITableView * cityTableView;
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return jsonData.count;
+    if (tableView == statesTableView) {
+        return jsonStatesData.count;
+
+    }
+    else
+    {
+        return jsonCityData.count;
+
+    }
+    
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -257,12 +346,12 @@ UITableView * cityTableView;
     
     if (tableView == statesTableView) {
         
-        cell.textLabel.text = [[jsonData valueForKey:@"StateName"]objectAtIndex:indexPath.row];
+        cell.textLabel.text = [[jsonStatesData valueForKey:@"StateName"]objectAtIndex:indexPath.row];
     }
     
     else if (tableView == cityTableView) {
         
-        cell.textLabel.text = [[jsonData valueForKey:@"CityName"]objectAtIndex:indexPath.row];
+        cell.textLabel.text = [[jsonCityData valueForKey:@"CityName"]objectAtIndex:indexPath.row];
     }
 
     
@@ -274,27 +363,24 @@ UITableView * cityTableView;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString * label1;
-    NSString * label2;
-
+    
     
     if (tableView == statesTableView) {
         
-        label1 = [[jsonData valueForKey:@"StateName"]objectAtIndex:indexPath.row];
+        [_stateDDOutlet setTitle:[[jsonStatesData valueForKey:@"StateName"]objectAtIndex:indexPath.row] forState:UIControlStateNormal];
         
-        tableView.hidden = YES;
+        statesTableView.hidden = YES;
 
     }
     if (tableView == cityTableView) {
         
-        label2 = [[jsonData valueForKey:@"CityName"]objectAtIndex:indexPath.row];
+        [_cityDDOutlet setTitle:[[jsonCityData valueForKey:@"CityName"]objectAtIndex:indexPath.row] forState:UIControlStateNormal];
 
-        tableView.hidden = YES;
+        cityTableView.hidden = YES;
 
     }
     
-    _stateDDOutlet.titleLabel.text = label1;
-    _cityDDOutlet.titleLabel.text = label2;
+   
     
 }
 
@@ -347,17 +433,17 @@ UITableView * cityTableView;
 - (IBAction)cityDropDown:(id)sender {
     
     
+//    
+//    if ([_stateDDOutlet.titleLabel.text isEqual:nil]) {
+//        
+//        UIAlertView * cityAlert = [[UIAlertView alloc]initWithTitle:@"Alert" message:@"Please Select the State First" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+//        [cityAlert show];
+//    }
+//    
+//    else
+//    {
     
-    if ([_stateDDOutlet.titleLabel.text isEqual:nil]) {
-        
-        UIAlertView * cityAlert = [[UIAlertView alloc]initWithTitle:@"Alert" message:@"Please Select the State First" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-        [cityAlert show];
-    }
-    
-    else
-    {
-    
-    NSString * states = [NSString stringWithFormat:
+    NSString * city = [NSString stringWithFormat:
                          @"<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
                          "<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n"
                          "<soap:Body>\n"
@@ -372,7 +458,7 @@ UITableView * cityTableView;
     NSURL *url = [NSURL URLWithString:@"http://www.kurnoolcity.com/wsdemo/zenoservice.asmx"];
     NSMutableURLRequest *theRequest = [NSMutableURLRequest requestWithURL:url];
     
-    NSString *msgLength = [NSString stringWithFormat:@"%lu", (unsigned long)[states length]];
+    NSString *msgLength = [NSString stringWithFormat:@"%lu", (unsigned long)[city length]];
     
     [theRequest addValue: @"text/xml; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
     
@@ -385,7 +471,7 @@ UITableView * cityTableView;
     
     [theRequest addValue: msgLength forHTTPHeaderField:@"Content-Length"];
     [theRequest setHTTPMethod:@"POST"];
-    [theRequest setHTTPBody: [states dataUsingEncoding:NSUTF8StringEncoding]];
+    [theRequest setHTTPBody: [city dataUsingEncoding:NSUTF8StringEncoding]];
     
     urlConnection = [[NSURLConnection alloc] initWithRequest:theRequest delegate:self];
     
@@ -398,7 +484,7 @@ UITableView * cityTableView;
         NSLog(@"theConnection is NULL");
     }
     
-    }
+    //}
     
     
     

@@ -7,12 +7,12 @@
 //
 
 #import "ViewController.h"
-#import "SWRevealViewController.h"
+//#import "SWRevealViewController.h"
 
 @interface MainViewController : ViewController
 
 
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *sidebarButton;
+//@property (weak, nonatomic) IBOutlet UIBarButtonItem *sidebarButton;
 
 
 

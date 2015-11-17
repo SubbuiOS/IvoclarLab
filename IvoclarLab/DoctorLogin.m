@@ -150,7 +150,11 @@ UILabel * tagLabel;
 }
 -(void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
-    NSLog(@"ERROR with theConenction");
+    NSLog(@"ERROR with theConenction  %@",error);
+    
+    UIAlertView * connectionError = [[UIAlertView alloc]initWithTitle:@"Warning" message:@"Error in Connection....Please try again later" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+    [connectionError show];
+    
     
 }
 -(void)connectionDidFinishLoading:(NSURLConnection *)connection
