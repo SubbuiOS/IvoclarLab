@@ -11,6 +11,11 @@
 
 @interface SideMenuListViewController : ViewController<UITableViewDataSource,UITableViewDelegate>
 
+{
+    NSMutableArray * menuArray;
+    UITableViewCell * cell;
+}
+
 
 @property (weak, nonatomic) IBOutlet UITableView *sidebarMenuTV;
 

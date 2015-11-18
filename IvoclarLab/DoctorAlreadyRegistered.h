@@ -10,6 +10,14 @@
 
 @interface DoctorAlreadyRegistered : ViewController<NSXMLParserDelegate>
 
+
+{
+    NSURLConnection * urlConnection;
+    NSMutableData * webData;
+    NSString * currentDescription;
+
+}
+
 @property (weak, nonatomic) IBOutlet UITextField *registeredMobileNoTF;
 @property (weak, nonatomic) IBOutlet UITextField *registeredPasswordTF;
 

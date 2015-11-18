@@ -16,18 +16,6 @@
 
 @end
 
-NSString *OTPMessage;
-NSString * checkMobile;
-
-NSURLConnection *theConnection;
-
-NSMutableData * webData;
-
-NSString * currentDescription;
-
-UILabel * tagLabel;
-
-
 @implementation DoctorLogin
 
 - (void)viewDidLoad {
@@ -56,6 +44,8 @@ UILabel * tagLabel;
 - (IBAction)submitActionDoctor:(id)sender {
     
     
+    //Check Mobile string
+    
     checkMobile = [NSString stringWithFormat:
                              @"<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
                              "<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n"
@@ -69,6 +59,7 @@ UILabel * tagLabel;
 
     
     
+    //OTP String
     
     OTPMessage = [NSString stringWithFormat:
                              @"<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
@@ -83,7 +74,13 @@ UILabel * tagLabel;
                              "</soap:Body>\n"
                              "</soap:Envelope>\n",_doctorEmailTF.text,_doctorMobileNoTF.text];
     
-    [self login:checkMobile tag:0];
+    
+    // first check the mobile is already registered or not
+    // tag 0 represents check mobile
+    //tag 1 represents OTP
+    
+        [self login:checkMobile tag:0];
+    
         
    
    
@@ -194,6 +191,9 @@ UILabel * tagLabel;
         
         if ([currentDescription isEqual:@"\"Y\""]) {
             
+            // Y represents already a registered user
+            
+            
             DoctorAlreadyRegistered * registeredLogin = [self.storyboard instantiateViewControllerWithIdentifier:@"alreadyRegistered"];
             
             
@@ -205,6 +205,10 @@ UILabel * tagLabel;
         }
         
         if ([currentDescription isEqual:@"\"N\""]) {
+            
+            // N represents new user
+            // so OTP should be sent
+            
             [self login:OTPMessage tag:1];
             
             
@@ -214,12 +218,15 @@ UILabel * tagLabel;
     if([elementName isEqual: @"SendOTPResult"])
     {
         
-        
+    
         NewUserOTPScreen * OTPScreen = [self.storyboard instantiateViewControllerWithIdentifier:@"OTPScreen"];
         
         [self presentViewController:OTPScreen animated:YES completion:nil];
         
         [self saveDataInPlist:currentDescription];
+        
+        
+        //Here we will get doctor ID in current Description and we are storing it
         
         NSLog(@" present doctor id  %@",currentDescription);
             

@@ -9,6 +9,18 @@
 #import "ViewController.h"
 
 @interface DoctorLogin : ViewController<NSXMLParserDelegate,UITextFieldDelegate>
+{
+    
+    NSString *OTPMessage;
+    NSString * checkMobile;
+    NSURLConnection *theConnection;
+    NSMutableData * webData;
+    NSString * currentDescription;
+    UILabel * tagLabel;
+
+    
+}
+
 @property (weak, nonatomic) IBOutlet UITextField *doctorEmailTF;
 
 @property (weak, nonatomic) IBOutlet UITextField *doctorMobileNoTF;

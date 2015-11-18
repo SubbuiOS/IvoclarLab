@@ -12,14 +12,16 @@
 
 @end
 
-NSMutableArray * menuArray;
-UITableViewCell * cell;
-
 @implementation SideMenuListViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    
+    // This View Controller is for displaying the contents in sidemenu
+    
+    
     menuArray = [[NSMutableArray alloc]initWithObjects:@"CaseEntry",@"Profile",@"CaseHistory",@"Feedback",@"Update Mobile",@"Complaints",@"CaseDelivery",@"Home", nil];
     _sidebarMenuTV.delegate = self;
     _sidebarMenuTV.dataSource = self;

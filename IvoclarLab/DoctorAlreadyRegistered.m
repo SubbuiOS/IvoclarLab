@@ -14,9 +14,6 @@
 
 @end
 
-NSURLConnection * urlConnection;
-NSMutableData * webData;
-NSString * currentDescription;
 
 @implementation DoctorAlreadyRegistered
 
@@ -51,6 +48,9 @@ NSString * currentDescription;
 */
 
 - (IBAction)registeredSubmit:(id)sender {
+    
+    
+    // Goes to Profile Screen after submitting
     
     SWRevealViewController * sideMenu = [self.storyboard instantiateViewControllerWithIdentifier:@"SWRevealViewController"];
     

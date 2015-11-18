@@ -15,32 +15,7 @@
 
 @end
 
-UITableView * natureOfWorkTV;
-UITableView * crownBrandTV;
-UITableView * typeOfCaseTV;
-UITableView * partnerMTV;
-UITableView * partnerLTV;
-UITableViewCell * cell;
 
-NSMutableArray * natureOfWorkArray;
-NSMutableArray * crownBrandArray;
-NSMutableArray * typeOfCaseArray;
-NSMutableDictionary * partnerMDict;
-NSMutableDictionary * partnerLDict;
-
-
-NSMutableData * webData;
-NSURLConnection * urlConnection;
-NSString * currentDescription;
-NSString * filteredDoctorID;
-NSString * filteredDoctorName;
-
-UIAlertView * partnerAlert;
-UIAlertView * submitCEAlert;
-UIAlertView * trackAlert;
-UIAlertView * confirmationAlert;
-UIView * partnerLView;
-UIButton * partnerLbutton;
 
 @implementation CaseEntryViewController
 
@@ -150,7 +125,8 @@ UIButton * partnerLbutton;
             
             NSString * welcomeString = [appendString stringByAppendingString:filteredDoctorName];
             
-        
+        //Appending a string to the Doctor name
+            
             _welcomeNameLabel.text = welcomeString;
             NSLog(@"doc name :%@",welcomeString);
         
@@ -158,7 +134,7 @@ UIButton * partnerLbutton;
         
     }
 
-    
+    // Get CaseId using below service
     
     NSString * profile = [NSString stringWithFormat:
                           @"<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
@@ -247,6 +223,9 @@ UIButton * partnerLbutton;
 }
 - (IBAction)selectPartner:(id)sender {
     
+    
+    //First we will get Mpartners by clicking the button
+    
     NSString * profile = [NSString stringWithFormat:
                           @"<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
                           "<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n"
@@ -303,10 +282,8 @@ UIButton * partnerLbutton;
     //[formatter setDateFormat:@"MMM dd, YYYY"];
     [formatter setDateStyle:NSDateFormatterMediumStyle];
     
-    
     //get the date today
     NSString *dateToday = [formatter stringFromDate:[NSDate date]];
-    
     
     NSString * text = [NSString stringWithFormat:@"Please note that your order has been sent to %@ dates %@ for %@ Bridges.You will be contacted shortly.You are Requested to please click on Received option once your case is delivered to you to close the complete order cycle.",_partnerNameLabel.text, dateToday,_noOfUnitsTF.text];
     
@@ -316,7 +293,7 @@ UIButton * partnerLbutton;
     [submitCEAlert show];
     
     
-
+    //Insert the cases
     
     NSString * submitCE = [NSString stringWithFormat:
                           @"<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
@@ -437,6 +414,8 @@ UIButton * partnerLbutton;
         partnerMDict = [NSJSONSerialization JSONObjectWithData:objectData options:NSJSONReadingMutableContainers error:nil];
         NSLog(@"partner dictionary :%@",partnerMDict);
         
+        // To Display more Partners we are adding a tableview to the alertView
+        
         partnerAlert = [[UIAlertView alloc]initWithTitle:@"Select Partner" message:@"\n" delegate:self cancelButtonTitle:@"More" otherButtonTitles:nil, nil];
         
         partnerMTV = [[UITableView alloc]initWithFrame:CGRectMake(0, 5, 200, 150) style:UITableViewStylePlain];
@@ -459,6 +438,8 @@ UIButton * partnerLbutton;
         partnerLDict = [NSJSONSerialization JSONObjectWithData:objectData options:NSJSONReadingMutableContainers error:nil];
         NSLog(@"partner dictionary :%@",partnerLDict);
         
+        
+        // Displaying a view consisting of a tableView as a Custom alertView
         
       partnerLView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 400, 800)];
         partnerLView.alpha=1;
@@ -500,12 +481,7 @@ UIButton * partnerLbutton;
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     
-    
-    
     if (alertView == partnerAlert) {
-        
-           //[partnerAlert setValue:partnerTV forKey:@"accessoryView"];
-    
     
     NSString * profile = [NSString stringWithFormat:
                           @"<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
@@ -572,6 +548,9 @@ UIButton * partnerLbutton;
             
             //NSLog(@"title0 %@",[alertView buttonTitleAtIndex:buttonIndex]);
             
+            
+            // 0 represents Place another Order button is selected
+            
             _natureOfWorkOutlet.titleLabel.text = nil;
             _crownBrandDDOutlet.titleLabel.text = nil;
             _noOfUnitsTF.text = nil;
@@ -586,6 +565,8 @@ UIButton * partnerLbutton;
         else
         {
            // NSLog(@"title1 %@",[alertView buttonTitleAtIndex:buttonIndex]);
+            
+            // 1 represents Goto HomePage button is selected
             
             MainViewController * homePage = [self.storyboard instantiateViewControllerWithIdentifier:@"homePage"];
             
@@ -671,6 +652,8 @@ UIButton * partnerLbutton;
     else
     {
         
+        //Displaying Custom Cells
+        
         PartnersCustomCell * partnerCell = [tableView dequeueReusableCellWithIdentifier:@"partnerCell"];
         if (partnerCell == nil) {
             
@@ -692,6 +675,11 @@ UIButton * partnerLbutton;
             }
             else
             {
+                
+                
+                // First the Mpartner data should be in row 0
+                // After that L partners should be displayed
+                
                 
                 if (indexPath.row == 0) {
                     

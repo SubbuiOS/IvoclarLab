@@ -14,14 +14,6 @@
 
 @end
 
-NSURLConnection * urlConnection;
-NSMutableData * webData;
-NSString * currentDescription;
-NSString * filteredDoctorID;
-NSMutableDictionary * CHDict;
-
-UITableView * caseHistoryTV;
-
 @implementation CaseHistory
 
 - (void)viewDidLoad {
@@ -215,6 +207,8 @@ UITableView * caseHistoryTV;
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+    //Displaying the Custom Cells
     
     CaseHistoryCustomCell * caseHistoryCell = [tableView dequeueReusableCellWithIdentifier:@"caseHistoryCell"];
     if (caseHistoryCell == nil) {

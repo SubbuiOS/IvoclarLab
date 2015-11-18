@@ -10,6 +10,19 @@
 
 @interface ProfileScreen : ViewController<NSXMLParserDelegate,UITableViewDataSource,UITableViewDelegate>
 
+{
+    NSURLConnection * urlConnection;
+    NSMutableData * webData;
+    NSString * currentDescription;
+    NSString * filteredDoctorID;
+    NSData *myData;
+    NSMutableDictionary *jsonStatesData;
+    NSMutableDictionary * jsonCityData;
+    UITableViewCell * cell;
+    UITableView * statesTableView;
+    UITableView * cityTableView;
+}
+
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *sidebarButton;
 

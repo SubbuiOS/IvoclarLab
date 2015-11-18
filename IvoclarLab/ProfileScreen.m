@@ -13,17 +13,6 @@
 @interface ProfileScreen ()
 
 @end
-NSURLConnection * urlConnection;
-NSMutableData * webData;
-NSString * currentDescription;
-NSString * filteredDoctorID;
-NSData *myData;
-NSMutableDictionary *jsonStatesData;
-NSMutableDictionary * jsonCityData;
-UITableViewCell * cell;
-UITableView * statesTableView;
-UITableView * cityTableView;
-
 
 @implementation ProfileScreen
 
@@ -46,6 +35,7 @@ UITableView * cityTableView;
     
     [self.navigationController.navigationBar
      setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+    
     statesTableView = [[UITableView alloc]initWithFrame:CGRectMake(20, 300, 340, 150) style:UITableViewStylePlain];
     
     cityTableView = [[UITableView alloc]initWithFrame:CGRectMake(20, 350, 340, 150) style:UITableViewStylePlain];
@@ -172,6 +162,7 @@ UITableView * cityTableView;
        
     }
     
+    //Update Profile
     
     NSString * profile = [NSString stringWithFormat:
                           @"<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
@@ -273,6 +264,8 @@ UITableView * cityTableView;
         
         if ([currentDescription isEqual:@"\"Y\""]) {
             
+            // If Y, profile is updated successfully
+            
             CaseEntryViewController * caseEntry = [self.storyboard instantiateViewControllerWithIdentifier:@"caseEntry"];
             
             [self.revealViewController pushFrontViewController:caseEntry animated:YES];
@@ -285,6 +278,10 @@ UITableView * cityTableView;
     if ([elementName isEqual:@"GetStatesResult"]) {
     
         NSLog(@"%@",currentDescription);
+        
+        // We have to convert the current Description text to JSON format
+        // And we are Storing the data into a mutabledictionary
+        
         NSData *objectData = [currentDescription dataUsingEncoding:NSUTF8StringEncoding];
         jsonStatesData = [NSJSONSerialization JSONObjectWithData:objectData options:NSJSONReadingMutableContainers error:nil];
         
@@ -303,6 +300,11 @@ UITableView * cityTableView;
     if ([elementName isEqual:@"GetCityResult"]) {
         
         NSLog(@"%@",currentDescription);
+        
+        // We have to convert the current Description text to JSON format
+        // And we are Storing the data into a mutabledictionary
+
+        
         NSData *objectData = [currentDescription dataUsingEncoding:NSUTF8StringEncoding];
         jsonCityData = [NSJSONSerialization JSONObjectWithData:objectData options:NSJSONReadingMutableContainers error:nil];
         
@@ -388,6 +390,10 @@ UITableView * cityTableView;
 
 - (IBAction)stateDropDown:(id)sender {
     
+    
+    // This is a Drop Down Menu created by using a button and tableview(statesTV)
+    // And Getting the states by calling the below service
+    
     NSString * states = [NSString stringWithFormat:
                          @"<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
                          "<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n"
@@ -433,15 +439,11 @@ UITableView * cityTableView;
 - (IBAction)cityDropDown:(id)sender {
     
     
-//    
-//    if ([_stateDDOutlet.titleLabel.text isEqual:nil]) {
-//        
-//        UIAlertView * cityAlert = [[UIAlertView alloc]initWithTitle:@"Alert" message:@"Please Select the State First" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-//        [cityAlert show];
-//    }
-//    
-//    else
-//    {
+
+    
+    // This is a Drop Down Menu created by using a button and tableview(cityTV)
+    // And Getting the City names by calling the below service
+    
     
     NSString * city = [NSString stringWithFormat:
                          @"<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"

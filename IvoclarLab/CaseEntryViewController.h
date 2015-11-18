@@ -10,6 +10,39 @@
 
 
 @interface CaseEntryViewController : ViewController<UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource,NSXMLParserDelegate,UIAlertViewDelegate>
+
+
+{
+    UITableView * natureOfWorkTV;
+    UITableView * crownBrandTV;
+    UITableView * typeOfCaseTV;
+    UITableView * partnerMTV;
+    UITableView * partnerLTV;
+    UITableViewCell * cell;
+    
+    NSMutableArray * natureOfWorkArray;
+    NSMutableArray * crownBrandArray;
+    NSMutableArray * typeOfCaseArray;
+    NSMutableDictionary * partnerMDict;
+    NSMutableDictionary * partnerLDict;
+    
+    
+    NSMutableData * webData;
+    NSURLConnection * urlConnection;
+    NSString * currentDescription;
+    NSString * filteredDoctorID;
+    NSString * filteredDoctorName;
+    
+    UIAlertView * partnerAlert;
+    UIAlertView * submitCEAlert;
+    UIAlertView * trackAlert;
+    UIAlertView * confirmationAlert;
+    UIView * partnerLView;
+    UIButton * partnerLbutton;
+    
+}
+
+
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *CESidebarButton;
 
 @property (weak, nonatomic) IBOutlet UILabel *partnerNameLabel;

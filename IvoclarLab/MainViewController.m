@@ -16,21 +16,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
- //   SWRevealViewController *revealViewController = self.revealViewController;
-   // if ( revealViewController )
-    //{
-      //  [self.sidebarButton setTarget: self.revealViewController];
-        //[self.sidebarButton setAction: @selector( revealToggle: )];
-        //[self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
-    //}
-    
-    //self.navigationController.navigationBar.barTintColor = [UIColor blueColor];
-    // self.navigationController.navigationBar.translucent = NO;
-    
-    //self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
-    
-    //[self.navigationController.navigationBar
-     //setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
 
     // Do any additional setup after loading the view.
 }

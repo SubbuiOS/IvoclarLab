@@ -10,6 +10,16 @@
 
 @interface NewUserOTPScreen : ViewController<NSXMLParserDelegate>
 
+
+{
+    
+    NSURLConnection * urlConnection;
+    NSMutableData * webData;
+    NSString * currentDescription;
+    NSString *filteredDoctorID;
+    
+}
+
 - (IBAction)OTPSubmit:(id)sender;
 
 @property (weak, nonatomic) IBOutlet UITextField *doctorIDTF;
