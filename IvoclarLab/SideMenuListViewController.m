@@ -7,6 +7,8 @@
 //
 
 #import "SideMenuListViewController.h"
+#import "UpdateMobileScreen.h"
+#import "ComplaintsScreen.h"
 
 @interface SideMenuListViewController ()
 
@@ -76,6 +78,22 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    
+    if ([[segue identifier] isEqualToString:@"updateMobile"]) {
+        
+        UpdateMobileScreen * mobileUpdate = [segue destinationViewController];
+        
+        [self.revealViewController pushFrontViewController:mobileUpdate animated:YES];
+        
+    }
+    else if ([[segue identifier] isEqualToString:@"complaintSegue"])
+    {
+        
+        
+    }
+    
+    
+    
 }
 
 

@@ -10,6 +10,7 @@
 #import "SWRevealViewController.h"
 #import "PartnersCustomCell.h"
 #import "MainViewController.h"
+#import "CaseHistory.h"
 
 @interface CaseEntryViewController ()
 
@@ -45,30 +46,42 @@
     _partnerNameTitle.hidden = YES;
     
     
-    natureOfWorkTV = [[UITableView alloc]initWithFrame:CGRectMake(33 ,215, 300, 150) style:UITableViewStylePlain];
+    natureOfWorkTV = [[UITableView alloc]initWithFrame:CGRectMake(33 ,150, 300, 150) style:UITableViewStylePlain];
     
     natureOfWorkArray = [[NSMutableArray alloc]initWithObjects:@"Select Nature Of Work",@"Ceramic",@"PFM",nil];
     
-    crownBrandTV = [[UITableView alloc]initWithFrame:CGRectMake(43 ,280 , 180, 150) style:UITableViewStylePlain];
+    crownBrandTV = [[UITableView alloc]initWithFrame:CGRectMake(43 ,190 , 180, 150) style:UITableViewStylePlain];
     
     crownBrandArray = [[NSMutableArray alloc]initWithObjects:@"Zenostar",@"e.max", nil];
     
     
     
-    typeOfCaseTV = [[UITableView alloc]initWithFrame:CGRectMake(33, 380, 200, 150) style:UITableViewStylePlain];
+    typeOfCaseTV = [[UITableView alloc]initWithFrame:CGRectMake(33, 290, 200, 150) style:UITableViewStylePlain];
     typeOfCaseArray = [[NSMutableArray alloc]initWithObjects:@"Crowns",@"Bridges",@"Veneer", nil];
     
     
     partnerLbutton = [UIButton buttonWithType:UIButtonTypeSystem];
     
     [partnerLbutton setTitle:@"Ok" forState:UIControlStateNormal];
-    partnerLbutton.frame = CGRectMake(150, 640, 100, 40);
+    partnerLbutton.frame = CGRectMake(150, 540, 100, 40);
     [partnerLbutton addTarget:self action:@selector(partnerLbuttonIsClicked) forControlEvents:UIControlEventTouchUpInside];
     [partnerLbutton setBackgroundColor:[UIColor redColor]];
     
     //partnerMTV = [[UITableView alloc]initWithFrame:CGRectMake(0, 5, 200, 150) style:UITableViewStylePlain];
     
     //partnerLTV = [[UITableView alloc]initWithFrame:CGRectMake(30, 70, 300, 550) style:UITableViewStylePlain];
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
 }
 
@@ -114,7 +127,7 @@
             
             
         }
-        else
+        else if([data objectForKey:@"DoctorName"])
         {
             NSString *drName = [data objectForKey:@"DoctorName"];
         
@@ -175,6 +188,15 @@
     {
         NSLog(@"theConnection is NULL");
     }
+    
+    
+    
+    
+    
+  
+    
+    
+    
     
 }
 
@@ -447,7 +469,7 @@
         
         [partnerLView addSubview:partnerLbutton];
         
-        partnerLTV = [[UITableView alloc]initWithFrame:CGRectMake(30, 70, 300, 550) style:UITableViewStylePlain];
+        partnerLTV = [[UITableView alloc]initWithFrame:CGRectMake(30, 25, 300, 500) style:UITableViewStylePlain];
 
         [partnerLView addSubview:partnerLTV];
         partnerLTV.delegate = self;
@@ -551,14 +573,8 @@
             
             // 0 represents Place another Order button is selected
             
-            _natureOfWorkOutlet.titleLabel.text = nil;
-            _crownBrandDDOutlet.titleLabel.text = nil;
-            _noOfUnitsTF.text = nil;
-            _noOfUnitsTF.placeholder = @"No of units";
-            _typeOfCaseOutlet.titleLabel.text = nil;
-            _partnerNameLabel.text = nil;
-            _partnerNameLabel.hidden = YES;
-            _partnerNameTitle.hidden = YES;
+            CaseEntryViewController * caseEntry = [self.storyboard instantiateViewControllerWithIdentifier:@"pageControl"];
+             [self.revealViewController pushFrontViewController:caseEntry animated:YES];
             
             
         }
@@ -717,7 +733,25 @@
 {
     if (tableView == natureOfWorkTV) {
         
-        [_natureOfWorkOutlet setTitle:[natureOfWorkArray objectAtIndex:indexPath.row] forState:UIControlStateNormal];
+        if ([[natureOfWorkArray objectAtIndex:indexPath.row] isEqual:@"PFM"])
+        {
+            
+            UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"Note" message:@"Please note this App is being updated for PFM and Ips e.max labs.You can however register and start the High Quality Zirconia Work-Zenostar immediately from Your Closest Ivoclar Vivadent Recognised Lab" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+            
+            [alert show];
+            
+            
+            [_natureOfWorkOutlet setTitle:@"Select Nature Of Work" forState:UIControlStateNormal];
+            
+            [_crownBrandDDOutlet setTitle:@"" forState:UIControlStateNormal];
+            
+            
+        }
+        
+        else
+        {
+            [_natureOfWorkOutlet setTitle:[natureOfWorkArray objectAtIndex:indexPath.row] forState:UIControlStateNormal];
+        }
         
         natureOfWorkTV.hidden = YES;
 
@@ -735,6 +769,7 @@
             
             [alert show];
             
+            [_crownBrandDDOutlet setTitle:@"" forState:UIControlStateNormal];
             
         }
         

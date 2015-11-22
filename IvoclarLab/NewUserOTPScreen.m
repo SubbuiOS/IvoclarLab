@@ -67,8 +67,13 @@
     //print the plist result data on console
     for (int i= 0; i<[contentArray count]; i++) {
         
+    
+            
         data= [contentArray objectAtIndex:i];
-        NSString *drID = [data objectForKey:@"DoctorID"];
+
+        if ([data objectForKey:@"DoctorID"]) {
+        
+            NSString *drID = [data objectForKey:@"DoctorID"];
         
         
         
@@ -76,7 +81,7 @@
             filteredDoctorID = [[drID componentsSeparatedByCharactersInSet:invalidCharSet]componentsJoinedByString:@""];
         
         //_doctorIDTF.text = filteredDoctorID;
-        
+        }
         
        // NSLog(@"Data From Plist: Doctor ID = %@",drID);
     }

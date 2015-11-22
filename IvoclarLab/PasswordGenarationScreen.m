@@ -42,8 +42,8 @@
         
         ProfileScreen * sideMenu = [self.storyboard instantiateViewControllerWithIdentifier:@"profilePage"];
         
-        //[self.revealViewController pushFrontViewController:sideMenu animated:YES];
-        [self presentViewController:sideMenu animated:YES completion:nil];
+        [self.revealViewController pushFrontViewController:sideMenu animated:YES];
+        //[self presentViewController:sideMenu animated:YES completion:nil];
         
     }
     

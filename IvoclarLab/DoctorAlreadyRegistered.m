@@ -50,9 +50,11 @@
 - (IBAction)registeredSubmit:(id)sender {
     
     
-    // Goes to Profile Screen after submitting
+    // Goes to CaseEntry Screen after submitting
     
     SWRevealViewController * sideMenu = [self.storyboard instantiateViewControllerWithIdentifier:@"SWRevealViewController"];
+    
+    //[self.revealViewController pushFrontViewController:sideMenu animated:YES];
     
     [self presentViewController:sideMenu animated:YES completion:nil];
 }

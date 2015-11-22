@@ -20,6 +20,9 @@
     UITableView * caseHistoryTV;
 
 }
+@property NSUInteger index;
+
+
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *CHSidebarButton;
 
 @end

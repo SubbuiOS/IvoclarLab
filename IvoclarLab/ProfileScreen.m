@@ -8,7 +8,7 @@
 
 #import "ProfileScreen.h"
 #import "SWRevealViewController.h"
-#import "CaseEntryViewController.h"
+#import "PagingControl.h"
 
 @interface ProfileScreen ()
 
@@ -266,7 +266,7 @@
             
             // If Y, profile is updated successfully
             
-            CaseEntryViewController * caseEntry = [self.storyboard instantiateViewControllerWithIdentifier:@"caseEntry"];
+            PagingControl * caseEntry = [self.storyboard instantiateViewControllerWithIdentifier:@"pageControl"];
             
             [self.revealViewController pushFrontViewController:caseEntry animated:YES];
             

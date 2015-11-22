@@ -23,7 +23,6 @@
     UITableView * cityTableView;
 }
 
-
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *sidebarButton;
 
 

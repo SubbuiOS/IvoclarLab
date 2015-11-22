@@ -79,6 +79,8 @@
     // tag 0 represents check mobile
     //tag 1 represents OTP
     
+    [self saveDoctorMobileInPlist:_doctorMobileNoTF.text];
+    
         [self login:checkMobile tag:0];
     
         
@@ -87,6 +89,66 @@
     
     
 }
+
+- (void)saveDoctorMobileInPlist:(NSString *)doctorMobile {
+    
+    //get the plist document path
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSString *plistFilePath = [documentsDirectory stringByAppendingPathComponent:@"OTPResult.plist"];
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSMutableDictionary *data = [[NSMutableDictionary alloc]init];
+    NSMutableArray *contentArray= [[NSMutableArray alloc]init];
+    
+    if (![fileManager fileExistsAtPath: plistFilePath])
+    {
+        NSLog(@"File does not exist");
+        
+        // If the file doesn’t exist, create an empty plist file
+        plistFilePath = [documentsDirectory stringByAppendingPathComponent:@"OTPResult.plist"];
+        //NSLog(@"path is %@",plistFilePath);
+        
+    }
+    else{
+        NSLog(@"File exists, Get data if anything stored");
+        
+        contentArray = [[NSMutableArray alloc] initWithContentsOfFile:plistFilePath];
+    }
+    
+    
+    NSString *docMobile = doctorMobile;
+    
+    //check all the textfields have values
+    if ([docMobile length] >0) {
+        
+        //add values to dictionary
+        [data setValue:docMobile forKey:@"DoctorMobile"];
+        
+        //add dictionary to array
+        [contentArray addObject:data];
+        
+        //write array to plist file
+        if([contentArray writeToFile:plistFilePath atomically:YES]){
+            
+            //NSLog(@"saved");
+            
+            
+            //            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Saved in plist" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+            //            [alert show];
+            
+        }
+        else {
+            NSLog(@"Couldn't saved");
+            
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Couldn't Saved in plist" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+            [alert show];
+        }
+    }
+    
+}
+
+
 
 -(void) login : (NSString * )message tag: (int)tagValue
 {

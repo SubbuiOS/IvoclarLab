@@ -40,7 +40,10 @@
     UIView * partnerLView;
     UIButton * partnerLbutton;
     
+    
 }
+
+@property NSUInteger index;
 
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *CESidebarButton;

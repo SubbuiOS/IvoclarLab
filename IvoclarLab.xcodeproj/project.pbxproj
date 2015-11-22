@@ -21,17 +21,26 @@
 		04041C7C1BECA234009C49E6 /* dropDownImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 04041C7B1BECA234009C49E6 /* dropDownImage.png */; };
 		04041C7F1BECB873009C49E6 /* FeedbackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04041C7E1BECB873009C49E6 /* FeedbackViewController.m */; };
 		04041C811BECD6FA009C49E6 /* sidemenuicon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 04041C801BECD6FA009C49E6 /* sidemenuicon.jpg */; };
+		04372DE81C01215800AD71FE /* CaseDelivery.m in Sources */ = {isa = PBXBuildFile; fileRef = 04372DE71C01215800AD71FE /* CaseDelivery.m */; };
 		04723EE51BEDE8B00054D36F /* DoctorLogin.m in Sources */ = {isa = PBXBuildFile; fileRef = 04723EE41BEDE8B00054D36F /* DoctorLogin.m */; };
+		04C929481BFECA3700C8ADE4 /* PagingControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C929471BFECA3700C8ADE4 /* PagingControl.m */; };
 		04D47EBC1BF07A7B0018B5C3 /* DoctorAlreadyRegistered.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D47EBB1BF07A7B0018B5C3 /* DoctorAlreadyRegistered.m */; };
 		04D47EBF1BF0C7140018B5C3 /* NewUserOTPScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D47EBE1BF0C7130018B5C3 /* NewUserOTPScreen.m */; };
 		04D47EC21BF0DB280018B5C3 /* PasswordGenarationScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D47EC11BF0DB280018B5C3 /* PasswordGenarationScreen.m */; };
 		04D47EC51BF0E42F0018B5C3 /* ProfileScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D47EC41BF0E42F0018B5C3 /* ProfileScreen.m */; };
+		04D8A5AF1BFFB3EB0025CA52 /* GUITabPagerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D8A5AE1BFFB3EB0025CA52 /* GUITabPagerViewController.m */; };
+		04D8A5B21BFFB40D0025CA52 /* GUITabScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D8A5B11BFFB40D0025CA52 /* GUITabScrollView.m */; };
 		04DCFF5B1BFBBABA00BD03E9 /* CaseHistoryCustomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DCFF591BFBBABA00BD03E9 /* CaseHistoryCustomCell.m */; };
 		04DCFF5C1BFBBABA00BD03E9 /* CaseHistoryCustomCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04DCFF5A1BFBBABA00BD03E9 /* CaseHistoryCustomCell.xib */; };
 		04DF4CD31BFA73AF0041D185 /* PartnersCustomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DF4CD11BFA73AF0041D185 /* PartnersCustomCell.m */; };
 		04DF4CD41BFA73AF0041D185 /* PartnersCustomCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04DF4CD21BFA73AF0041D185 /* PartnersCustomCell.xib */; };
 		04DF4CD71BFAD6330041D185 /* CaseHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DF4CD61BFAD6330041D185 /* CaseHistory.m */; };
 		04ED20761BEDD6F10039A139 /* emax_logo.gif in Resources */ = {isa = PBXBuildFile; fileRef = 04ED20751BEDD6F10039A139 /* emax_logo.gif */; };
+		04F977F91BFFF08F009B038F /* UpdateMobileScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F977F81BFFF08F009B038F /* UpdateMobileScreen.m */; };
+		04F977FC1C0001BB009B038F /* ComplaintsScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F977FB1C0001BB009B038F /* ComplaintsScreen.m */; };
+		04F977FF1C000519009B038F /* checked_checkbox.png in Resources */ = {isa = PBXBuildFile; fileRef = 04F977FD1C000519009B038F /* checked_checkbox.png */; };
+		04F978001C000519009B038F /* tickMarkCheckBox.png in Resources */ = {isa = PBXBuildFile; fileRef = 04F977FE1C000519009B038F /* tickMarkCheckBox.png */; };
+		04F978021C0005DF009B038F /* unchecked_checkbox.png in Resources */ = {isa = PBXBuildFile; fileRef = 04F978011C0005DF009B038F /* unchecked_checkbox.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,8 +79,12 @@
 		04041C7D1BECB873009C49E6 /* FeedbackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedbackViewController.h; sourceTree = "<group>"; };
 		04041C7E1BECB873009C49E6 /* FeedbackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedbackViewController.m; sourceTree = "<group>"; };
 		04041C801BECD6FA009C49E6 /* sidemenuicon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sidemenuicon.jpg; sourceTree = "<group>"; };
+		04372DE61C01215800AD71FE /* CaseDelivery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CaseDelivery.h; sourceTree = "<group>"; };
+		04372DE71C01215800AD71FE /* CaseDelivery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CaseDelivery.m; sourceTree = "<group>"; };
 		04723EE31BEDE8B00054D36F /* DoctorLogin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DoctorLogin.h; sourceTree = "<group>"; };
 		04723EE41BEDE8B00054D36F /* DoctorLogin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DoctorLogin.m; sourceTree = "<group>"; };
+		04C929461BFECA3700C8ADE4 /* PagingControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PagingControl.h; sourceTree = "<group>"; };
+		04C929471BFECA3700C8ADE4 /* PagingControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PagingControl.m; sourceTree = "<group>"; };
 		04D47EBA1BF07A7B0018B5C3 /* DoctorAlreadyRegistered.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DoctorAlreadyRegistered.h; sourceTree = "<group>"; };
 		04D47EBB1BF07A7B0018B5C3 /* DoctorAlreadyRegistered.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DoctorAlreadyRegistered.m; sourceTree = "<group>"; };
 		04D47EBD1BF0C7130018B5C3 /* NewUserOTPScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewUserOTPScreen.h; sourceTree = "<group>"; };
@@ -80,6 +93,10 @@
 		04D47EC11BF0DB280018B5C3 /* PasswordGenarationScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PasswordGenarationScreen.m; sourceTree = "<group>"; };
 		04D47EC31BF0E42F0018B5C3 /* ProfileScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileScreen.h; sourceTree = "<group>"; };
 		04D47EC41BF0E42F0018B5C3 /* ProfileScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileScreen.m; sourceTree = "<group>"; };
+		04D8A5AD1BFFB3EB0025CA52 /* GUITabPagerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GUITabPagerViewController.h; sourceTree = "<group>"; };
+		04D8A5AE1BFFB3EB0025CA52 /* GUITabPagerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GUITabPagerViewController.m; sourceTree = "<group>"; };
+		04D8A5B01BFFB40D0025CA52 /* GUITabScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GUITabScrollView.h; sourceTree = "<group>"; };
+		04D8A5B11BFFB40D0025CA52 /* GUITabScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GUITabScrollView.m; sourceTree = "<group>"; };
 		04DCFF581BFBBABA00BD03E9 /* CaseHistoryCustomCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CaseHistoryCustomCell.h; sourceTree = "<group>"; };
 		04DCFF591BFBBABA00BD03E9 /* CaseHistoryCustomCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CaseHistoryCustomCell.m; sourceTree = "<group>"; };
 		04DCFF5A1BFBBABA00BD03E9 /* CaseHistoryCustomCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CaseHistoryCustomCell.xib; sourceTree = "<group>"; };
@@ -89,6 +106,13 @@
 		04DF4CD51BFAD6330041D185 /* CaseHistory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CaseHistory.h; sourceTree = "<group>"; };
 		04DF4CD61BFAD6330041D185 /* CaseHistory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CaseHistory.m; sourceTree = "<group>"; };
 		04ED20751BEDD6F10039A139 /* emax_logo.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = emax_logo.gif; sourceTree = "<group>"; };
+		04F977F71BFFF08F009B038F /* UpdateMobileScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpdateMobileScreen.h; sourceTree = "<group>"; };
+		04F977F81BFFF08F009B038F /* UpdateMobileScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpdateMobileScreen.m; sourceTree = "<group>"; };
+		04F977FA1C0001BB009B038F /* ComplaintsScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComplaintsScreen.h; sourceTree = "<group>"; };
+		04F977FB1C0001BB009B038F /* ComplaintsScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ComplaintsScreen.m; sourceTree = "<group>"; };
+		04F977FD1C000519009B038F /* checked_checkbox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checked_checkbox.png; sourceTree = "<group>"; };
+		04F977FE1C000519009B038F /* tickMarkCheckBox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tickMarkCheckBox.png; sourceTree = "<group>"; };
+		04F978011C0005DF009B038F /* unchecked_checkbox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unchecked_checkbox.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,6 +156,9 @@
 			children = (
 				04041C7B1BECA234009C49E6 /* dropDownImage.png */,
 				04041C801BECD6FA009C49E6 /* sidemenuicon.jpg */,
+				04F977FD1C000519009B038F /* checked_checkbox.png */,
+				04F977FE1C000519009B038F /* tickMarkCheckBox.png */,
+				04F978011C0005DF009B038F /* unchecked_checkbox.png */,
 				04ED20751BEDD6F10039A139 /* emax_logo.gif */,
 				04041C4D1BEC7678009C49E6 /* AppDelegate.h */,
 				04041C4E1BEC7678009C49E6 /* AppDelegate.m */,
@@ -155,6 +182,12 @@
 				04041C761BEC7A02009C49E6 /* SWRevealViewController.m */,
 				04041C781BEC8A53009C49E6 /* CaseEntryViewController.h */,
 				04041C791BEC8A53009C49E6 /* CaseEntryViewController.m */,
+				04D8A5AD1BFFB3EB0025CA52 /* GUITabPagerViewController.h */,
+				04D8A5AE1BFFB3EB0025CA52 /* GUITabPagerViewController.m */,
+				04D8A5B01BFFB40D0025CA52 /* GUITabScrollView.h */,
+				04D8A5B11BFFB40D0025CA52 /* GUITabScrollView.m */,
+				04C929461BFECA3700C8ADE4 /* PagingControl.h */,
+				04C929471BFECA3700C8ADE4 /* PagingControl.m */,
 				04DF4CD51BFAD6330041D185 /* CaseHistory.h */,
 				04DF4CD61BFAD6330041D185 /* CaseHistory.m */,
 				04DCFF581BFBBABA00BD03E9 /* CaseHistoryCustomCell.h */,
@@ -165,6 +198,12 @@
 				04DF4CD21BFA73AF0041D185 /* PartnersCustomCell.xib */,
 				04041C7D1BECB873009C49E6 /* FeedbackViewController.h */,
 				04041C7E1BECB873009C49E6 /* FeedbackViewController.m */,
+				04F977F71BFFF08F009B038F /* UpdateMobileScreen.h */,
+				04F977F81BFFF08F009B038F /* UpdateMobileScreen.m */,
+				04F977FA1C0001BB009B038F /* ComplaintsScreen.h */,
+				04F977FB1C0001BB009B038F /* ComplaintsScreen.m */,
+				04372DE61C01215800AD71FE /* CaseDelivery.h */,
+				04372DE71C01215800AD71FE /* CaseDelivery.m */,
 				04041C531BEC7678009C49E6 /* Main.storyboard */,
 				04041C561BEC7678009C49E6 /* Images.xcassets */,
 				04041C581BEC7678009C49E6 /* LaunchScreen.xib */,
@@ -280,12 +319,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				04041C7C1BECA234009C49E6 /* dropDownImage.png in Resources */,
+				04F977FF1C000519009B038F /* checked_checkbox.png in Resources */,
 				04041C551BEC7678009C49E6 /* Main.storyboard in Resources */,
+				04F978021C0005DF009B038F /* unchecked_checkbox.png in Resources */,
 				04ED20761BEDD6F10039A139 /* emax_logo.gif in Resources */,
 				04DCFF5C1BFBBABA00BD03E9 /* CaseHistoryCustomCell.xib in Resources */,
 				04041C5A1BEC7678009C49E6 /* LaunchScreen.xib in Resources */,
 				04041C811BECD6FA009C49E6 /* sidemenuicon.jpg in Resources */,
 				04041C571BEC7678009C49E6 /* Images.xcassets in Resources */,
+				04F978001C000519009B038F /* tickMarkCheckBox.png in Resources */,
 				04DF4CD41BFA73AF0041D185 /* PartnersCustomCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -305,12 +347,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				04DF4CD71BFAD6330041D185 /* CaseHistory.m in Sources */,
+				04372DE81C01215800AD71FE /* CaseDelivery.m in Sources */,
 				04041C711BEC791A009C49E6 /* SideMenuListViewController.m in Sources */,
 				04DF4CD31BFA73AF0041D185 /* PartnersCustomCell.m in Sources */,
 				04723EE51BEDE8B00054D36F /* DoctorLogin.m in Sources */,
 				04041C7A1BEC8A53009C49E6 /* CaseEntryViewController.m in Sources */,
+				04F977FC1C0001BB009B038F /* ComplaintsScreen.m in Sources */,
+				04C929481BFECA3700C8ADE4 /* PagingControl.m in Sources */,
+				04D8A5AF1BFFB3EB0025CA52 /* GUITabPagerViewController.m in Sources */,
 				04D47EBC1BF07A7B0018B5C3 /* DoctorAlreadyRegistered.m in Sources */,
 				04D47EC51BF0E42F0018B5C3 /* ProfileScreen.m in Sources */,
+				04D8A5B21BFFB40D0025CA52 /* GUITabScrollView.m in Sources */,
 				04041C521BEC7678009C49E6 /* ViewController.m in Sources */,
 				04D47EBF1BF0C7140018B5C3 /* NewUserOTPScreen.m in Sources */,
 				04041C4F1BEC7678009C49E6 /* AppDelegate.m in Sources */,
@@ -319,6 +366,7 @@
 				04D47EC21BF0DB280018B5C3 /* PasswordGenarationScreen.m in Sources */,
 				04041C4C1BEC7678009C49E6 /* main.m in Sources */,
 				04041C771BEC7A02009C49E6 /* SWRevealViewController.m in Sources */,
+				04F977F91BFFF08F009B038F /* UpdateMobileScreen.m in Sources */,
 				04041C7F1BECB873009C49E6 /* FeedbackViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
