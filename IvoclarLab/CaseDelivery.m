@@ -31,7 +31,15 @@
     self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
     
-    caseIdTV = [[UITableView alloc]initWithFrame:CGRectMake(16, 230, 350, 300) style:UITableViewStylePlain];
+    
+    _caseIdPicker.layer.borderColor = [UIColor whiteColor].CGColor;
+    _caseIdPicker.layer.borderWidth = 1;
+    _caseIdPicker.hidden = YES;
+    _caseReceivedButtonOulet.hidden = NO;
+    _caseReceivedLabel.hidden = NO;
+    _confirmButtonOutlet.hidden = NO;
+    
+  //  caseIdTV = [[UITableView alloc]initWithFrame:CGRectMake(16, 230, 350, 300) style:UITableViewStylePlain];
     caseRecievedCheckBoxSelected = NO;
     
 
@@ -107,6 +115,11 @@
 - (IBAction)caseIdDDAction:(id)sender
 {
     
+    
+    [_caseIdPicker reloadAllComponents];
+    [_caseIdPicker selectRow:0 inComponent:0 animated:YES];
+    
+    
     [self getDataFromPlist];
     
     NSString * caseId = [NSString stringWithFormat:
@@ -119,67 +132,37 @@
                          "</soap:Body>\n"
                          "</soap:Envelope>\n",filteredDoctorID];
     
-    NSURL * url = [NSURL URLWithString:@"http://www.kurnoolcity.com/wsdemo/zenoservice.asmx"];
-    NSMutableURLRequest * request = [NSMutableURLRequest requestWithURL:url];
-    NSString * msgLength = [NSString stringWithFormat:@"%lu",(unsigned long)[caseId length]];
     
-    [request addValue:@"text/xml; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+    [[CommonAppManager sharedAppManager]soapService:caseId url:@"GetCaseIds" withDelegate:self];
     
-    [request addValue:@"http://www.kurnoolcity.com/wsdemo/GetCaseIds" forHTTPHeaderField:@"SOAPAction"];
+       
     
-    [request addValue:msgLength forHTTPHeaderField:@"Content-Length"];
+}
+
+-(void)connectionData:(NSData*)data status:(BOOL)status
+{
     
-    [request addValue:@"www.kurnoolcity.com" forHTTPHeaderField:@"Host"];
-    
-    [request setHTTPMethod:@"POST"];
-    [request setHTTPBody:[caseId dataUsingEncoding:NSUTF8StringEncoding]];
-    
-    NSURLConnection * urlConnection = [[NSURLConnection alloc]initWithRequest:request delegate:self];
-    
-    if (urlConnection) {
+    if (status) {
         
-        webData = [NSMutableData alloc];
+        NSData *connectionData = data;
+        
+        NSXMLParser *xmlParser = [[NSXMLParser alloc] initWithData:connectionData];
+        
+        xmlParser.delegate = self;
+        
+        [xmlParser parse];
+        
+        
     }
-    else
-    {
-        NSLog(@"connection is NULL");
+    else{
+        
+        
+        UIAlertView * connectionError = [[UIAlertView alloc]initWithTitle:@"Warning" message:@"Error in Connection....Please try again later" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+        [connectionError show];
     }
-    
-    
     
 }
 
-
--(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
-{
-    [webData setLength: 0];
-}
--(void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
-{
-    [webData appendData:data];
-}
--(void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
-{
-    NSLog(@"ERROR with theConenction");
-    
-}
--(void)connectionDidFinishLoading:(NSURLConnection *)connection
-{
-    // NSLog(@"DONE. Received Bytes: %lu", (unsigned long)[webData length]);
-    NSString *data = [[NSString alloc] initWithBytes: [webData mutableBytes] length:[webData length] encoding:NSUTF8StringEncoding];
-    
-    NSLog(@"%@",data);
-    
-    NSData * myData = [data dataUsingEncoding:NSUTF8StringEncoding];
-    
-    
-    NSXMLParser *xmlParser = [[NSXMLParser alloc] initWithData:myData];
-    
-    xmlParser.delegate = self;
-    
-    [xmlParser parse];
-    
-}
 
 -(void) parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName
   namespaceURI:(NSString *)namespaceURI qualifiedName:
@@ -203,11 +186,18 @@
         caseIdDictionary = [NSJSONSerialization JSONObjectWithData:objectData options:NSJSONReadingMutableContainers error:nil];
         NSLog(@"partner dictionary :%@",caseIdDictionary);
         
-        caseIdTV.hidden = NO;
+        //caseIdTV.hidden = NO;
         
-        [self.view addSubview:caseIdTV];
-        caseIdTV.dataSource = self;
-        caseIdTV.delegate = self;
+        //[self.view addSubview:caseIdTV];
+        
+        _caseIdPicker.hidden = NO;
+        
+        _caseReceivedButtonOulet.hidden = YES;
+        _caseReceivedLabel.hidden = YES;
+        _confirmButtonOutlet.hidden = YES;
+        
+        _caseIdPicker.dataSource = self;
+        _caseIdPicker.delegate = self;
     }
 }
 
@@ -244,7 +234,7 @@
     
     if (tableView == caseIdTV) {
         
-        [_caseIdDDOutlet setTitle:[[caseIdDictionary valueForKey:@"CaseId"]objectAtIndex:indexPath.row] forState:UIControlStateNormal];
+        _caseIdLabel.text = [[caseIdDictionary valueForKey:@"CaseId"]objectAtIndex:indexPath.row];
         
         caseIdTV.hidden=YES;
     }
@@ -253,6 +243,52 @@
     
 }
 
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+{
+    return 1;
+}
+
+
+-(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+{
+    return caseIdDictionary.count;
+}
+
+-(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+{
+    
+    return [[caseIdDictionary valueForKey:@"CaseId"]objectAtIndex:row];
+    
+}
+
+
+- (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view
+{
+    
+    UILabel *pickerViewLabel = (id)view;
+    
+    if (!pickerViewLabel) {
+        pickerViewLabel= [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, [pickerView rowSizeForComponent:component].width - 10.0f, [pickerView rowSizeForComponent:component].height)];
+    }
+    
+    pickerViewLabel.backgroundColor = [UIColor clearColor];
+    pickerViewLabel.text =[[caseIdDictionary valueForKey:@"CaseId"]objectAtIndex:row];
+    pickerViewLabel.font = [UIFont fontWithName:@"ChalkboardSE-Regular" size:20];
+    
+    return pickerViewLabel;
+}
+
+-(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+{
+
+    _caseIdLabel.text = [[caseIdDictionary valueForKey:@"CaseId"]objectAtIndex:row];
+    
+    _caseIdPicker.hidden=YES;
+    _caseReceivedButtonOulet.hidden = NO;
+    _caseReceivedLabel.hidden = NO;
+    _confirmButtonOutlet.hidden = NO;
+    
+}
 
 
 

@@ -13,6 +13,7 @@
 
 @end
 
+UIActivityIndicatorView * spinner;
 
 @implementation NewUserOTPScreen
 
@@ -38,6 +39,14 @@
 
 - (IBAction)OTPSubmit:(id)sender {
     
+    
+    
+    
+    spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    spinner.center = CGPointMake(170, 400);
+    //spinner.tag = 12;
+    [self.view addSubview:spinner];
+    [spinner startAnimating];
     
     //get the plist document path
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -100,65 +109,37 @@
      "</soap:Envelope>\n",filteredDoctorID,_OTPTF.text];
 
     
-    NSURL *url = [NSURL URLWithString:@"http://www.kurnoolcity.com/wsdemo/zenoservice.asmx"];
-    NSMutableURLRequest *theRequest = [NSMutableURLRequest requestWithURL:url];
     
-    NSString *msgLength = [NSString stringWithFormat:@"%lu", (unsigned long)[OTPValidation length]];
+    [[CommonAppManager sharedAppManager]soapService:OTPValidation url:@"CheckOTP" withDelegate:self];
     
-    [theRequest addValue: @"text/xml; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
-    
-    
-        [theRequest addValue: @"http://www.kurnoolcity.com/wsdemo/CheckOTP" forHTTPHeaderField:@"SOAPAction"];
-   
-    
-    [theRequest addValue: @"www.kurnoolcity.com" forHTTPHeaderField:@"Host"];
-    
-    [theRequest addValue: msgLength forHTTPHeaderField:@"Content-Length"];
-    [theRequest setHTTPMethod:@"POST"];
-    [theRequest setHTTPBody: [OTPValidation dataUsingEncoding:NSUTF8StringEncoding]];
-    
-    urlConnection = [[NSURLConnection alloc] initWithRequest:theRequest delegate:self];
-    
-    if( urlConnection )
-    {
-        webData = [NSMutableData data];
-    }
-    else
-    {
-        NSLog(@"theConnection is NULL");
-    }
-   
-    
+       
 }
--(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
+-(void)connectionData:(NSData*)data status:(BOOL)status
 {
-        [webData setLength: 0];
-}
--(void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data{
-        [webData appendData:data];
-    }
--(void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
-    {
-        NSLog(@"ERROR with theConenction");
+    
+    if (status) {
         
-    }
--(void)connectionDidFinishLoading:(NSURLConnection *)connection
-    {
-        // NSLog(@"DONE. Received Bytes: %lu", (unsigned long)[webData length]);
-        NSString *data = [[NSString alloc] initWithBytes: [webData mutableBytes] length:[webData length] encoding:NSUTF8StringEncoding];
         
-       // NSLog(@"%@",data);
         
-        NSData *myData = [data dataUsingEncoding:NSUTF8StringEncoding];
+        NSData *connectionData = data;
         
-        NSXMLParser *xmlParser = [[NSXMLParser alloc] initWithData:myData];
+        NSXMLParser *xmlParser = [[NSXMLParser alloc] initWithData:connectionData];
         
         xmlParser.delegate = self;
         
         [xmlParser parse];
         
+        
+    }
+    else{
+        
+        
+        UIAlertView * connectionError = [[UIAlertView alloc]initWithTitle:@"Warning" message:@"Error in Connection....Please try again later" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+        [connectionError show];
     }
     
+}
+
 -(void) parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName
 namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict
 {
@@ -172,6 +153,8 @@ namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes
 - (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName
 namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
 {
+    
+    [spinner stopAnimating];
     
     if ([elementName isEqual:@"CheckOTPResult"]) {
         

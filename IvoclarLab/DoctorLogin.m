@@ -12,15 +12,24 @@
 
 #import "NewUserOTPScreen.h"
 
+
 @interface DoctorLogin ()
 
 @end
+
+UIActivityIndicatorView *spinner;
 
 @implementation DoctorLogin
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    self.navigationItem.title = @"Ivoclar Lab";
+    [self.navigationController.navigationBar
+     setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+
+
     
     _doctorEmailTF.delegate = self;
 
@@ -81,9 +90,15 @@
     
     [self saveDoctorMobileInPlist:_doctorMobileNoTF.text];
     
-        [self login:checkMobile tag:0];
     
-        
+    spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    spinner.center = CGPointMake(170, 400);
+    //spinner.tag = 12;
+    [self.view addSubview:spinner];
+    [spinner startAnimating];
+    
+        [[CommonAppManager sharedAppManager] soapService:checkMobile url:@"CheckMobile" withDelegate:self];
+    
    
    
     
@@ -150,86 +165,30 @@
 
 
 
--(void) login : (NSString * )message tag: (int)tagValue
+
+-(void)connectionData:(NSData*)data status:(BOOL)status
 {
-   
     
-    NSURL *url = [NSURL URLWithString:@"http://www.kurnoolcity.com/wsdemo/zenoservice.asmx"];
-    NSMutableURLRequest *theRequest = [NSMutableURLRequest requestWithURL:url];
-    
-    NSString *msgLength = [NSString stringWithFormat:@"%lu", (unsigned long)[message length]];
-    
-    [theRequest addValue: @"text/xml; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
-    
-    if (tagValue == 0)
-    {
-        [theRequest addValue: @"http://www.kurnoolcity.com/wsdemo/CheckMobile" forHTTPHeaderField:@"SOAPAction"];
+    if (status) {
+        
+        
+        
+        NSData *connectionData = data;
+        
+        NSXMLParser *xmlParser = [[NSXMLParser alloc] initWithData:connectionData];
+        
+        xmlParser.delegate = self;
+        
+        [xmlParser parse];
+
         
     }
-    
-
-    
-   else  if(tagValue==1)
-    {
-        [theRequest addValue: @"http://www.kurnoolcity.com/wsdemo/SendOTP" forHTTPHeaderField:@"SOAPAction"];
-
-    }
-    
-    
-    [theRequest addValue: @"www.kurnoolcity.com" forHTTPHeaderField:@"Host"];
-    
-    [theRequest addValue: msgLength forHTTPHeaderField:@"Content-Length"];
-    [theRequest setHTTPMethod:@"POST"];
-    [theRequest setHTTPBody: [message dataUsingEncoding:NSUTF8StringEncoding]];
-    
+    else{
+        [spinner stopAnimating];
         
-    theConnection = [[NSURLConnection alloc] initWithRequest:theRequest delegate:self];
-    
-    if( theConnection )
-    {
-        webData = [NSMutableData data];
+        UIAlertView * connectionError = [[UIAlertView alloc]initWithTitle:@"Warning" message:@"Error in Connection....Please try again later" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+        [connectionError show];
     }
-    else
-    {
-        NSLog(@"theConnection is NULL");
-    }
-    
-
-    
-}
-
-
--(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
-{
-    [webData setLength: 0];
-}
--(void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
-{
-    [webData appendData:data];
-}
--(void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
-{
-    NSLog(@"ERROR with theConenction  %@",error);
-    
-    UIAlertView * connectionError = [[UIAlertView alloc]initWithTitle:@"Warning" message:@"Error in Connection....Please try again later" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-    [connectionError show];
-    
-    
-}
--(void)connectionDidFinishLoading:(NSURLConnection *)connection
-{
-   // NSLog(@"DONE. Received Bytes: %lu", (unsigned long)[webData length]);
-    NSString *data = [[NSString alloc] initWithBytes: [webData mutableBytes] length:[webData length] encoding:NSUTF8StringEncoding];
-    
-    NSLog(@"%@",data);
-    
-    NSData *myData = [data dataUsingEncoding:NSUTF8StringEncoding];
-    
-    NSXMLParser *xmlParser = [[NSXMLParser alloc] initWithData:myData];
-    
-    xmlParser.delegate = self;
-    
-    [xmlParser parse];
     
 }
 
@@ -255,6 +214,7 @@
             
             // Y represents already a registered user
             
+            [spinner stopAnimating];
             
             DoctorAlreadyRegistered * registeredLogin = [self.storyboard instantiateViewControllerWithIdentifier:@"alreadyRegistered"];
             
@@ -271,7 +231,11 @@
             // N represents new user
             // so OTP should be sent
             
-            [self login:OTPMessage tag:1];
+            
+            [[CommonAppManager sharedAppManager] soapService:checkMobile url:@"SendOTP" withDelegate:self];
+
+            
+            //[self login:OTPMessage tag:1];
             
             
         }
@@ -280,7 +244,8 @@
     if([elementName isEqual: @"SendOTPResult"])
     {
         
-    
+        [spinner stopAnimating];
+        
         NewUserOTPScreen * OTPScreen = [self.storyboard instantiateViewControllerWithIdentifier:@"OTPScreen"];
         
         [self presentViewController:OTPScreen animated:YES completion:nil];

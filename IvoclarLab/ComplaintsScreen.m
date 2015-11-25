@@ -13,19 +13,6 @@
 
 @end
 
-NSString *currentDescription;
-NSMutableData * webData;
-NSURLConnection * urlConnection;
-NSString * filteredDoctorID;
-NSDictionary * caseIdDictionary;
-
-NSString * materialQuality;
-NSString * labService;
-NSString * callBackFromCompany;
-NSString * callBackFromLab;
-
-UITextField * otherComplaints;
-
 
 
 @implementation ComplaintsScreen
@@ -52,7 +39,7 @@ UITextField * otherComplaints;
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName :[UIColor whiteColor]}];
     
     
-    complaintTypeArray = [[NSMutableArray alloc]initWithObjects:@"Case Related Complaint",@"Others", nil];
+    complaintTypeArray = [[NSMutableArray alloc]initWithObjects:@"Select Complaint Type",@"Case Related Complaint",@"Others", nil];
     
     complaintTypeTV = [[UITableView alloc]initWithFrame:CGRectMake(20, 180, 400, 100) style:UITableViewStylePlain];
     
@@ -72,6 +59,16 @@ UITextField * otherComplaints;
     otherComplaints.borderStyle = UITextBorderStyleLine;
     
     otherComplaints.hidden = YES;
+    
+    
+    _complaintTypePicker.layer.borderColor = [UIColor clearColor].CGColor;
+    _complaintTypePicker.layer.borderWidth = 1;
+    _complaintTypePicker.hidden = YES;
+    
+    _caseIdPicker.layer.borderColor = [UIColor clearColor].CGColor;
+    _caseIdPicker.layer.borderWidth = 1;
+    _caseIdPicker.hidden = YES;
+    
     
 
     
@@ -146,13 +143,37 @@ UITextField * otherComplaints;
 
 - (IBAction)complaintTypeDD:(id)sender {
     
-    complaintTypeTV.hidden = NO;
+    //complaintTypeTV.hidden = NO;
     
-    [self.view addSubview:complaintTypeTV];
+    //[self.view addSubview:complaintTypeTV];
     
-    complaintTypeTV.dataSource = self;
-    complaintTypeTV.delegate = self;
+    //complaintTypeTV.dataSource = self;
+    //complaintTypeTV.delegate = self;
     
+    
+    [_complaintTypePicker reloadAllComponents];
+    [_complaintTypePicker selectRow:0 inComponent:0 animated:YES];
+
+    
+    _complaintTypePicker.hidden = NO;
+    
+    _complaintTypePicker.delegate = self;
+    _complaintTypePicker.dataSource = self;
+    
+    
+    _qualityButtonOutlet.alpha = 0.05;
+    _qualityLabel.alpha = 0.05;
+    _notSatisfiedServiceButtonOutlet.alpha = 0.05;
+    _notSatisfiedServiceLabel.alpha = 0.05;
+    _caseIdLabel.alpha = 0.05;
+    _caseIdDDOutlet.alpha = 0.05;
+    _commentsTF.alpha = 0.05;
+    _callBackFromCompanyButtonOutlet.alpha = 0.05;
+    _callBackFromCompanyLabel.alpha = 0.05;
+    _callBackFromLabButtonOutlet.alpha = 0.05;
+    _callBackFromLabLabel.alpha = 0.05;
+    otherComplaints.alpha = 0.05;
+
     
     
     
@@ -163,10 +184,13 @@ UITextField * otherComplaints;
     
     
     
+
+    [_caseIdPicker reloadAllComponents];
+    [_caseIdPicker selectRow:0 inComponent:0 animated:YES];
     [self getDataFromPlist];
     
     
-    NSString * profile = [NSString stringWithFormat:
+    NSString * caseIdList = [NSString stringWithFormat:
                           @"<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
                           "<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n"
                           "<soap:Body>\n"
@@ -177,71 +201,35 @@ UITextField * otherComplaints;
                           "</soap:Envelope>\n",filteredDoctorID];
     
     
+    [[CommonAppManager sharedAppManager]soapService:caseIdList url:@"GetCaseIds" withDelegate:self];
     
     
-    NSURL *url = [NSURL URLWithString:@"http://www.kurnoolcity.com/wsdemo/zenoservice.asmx"];
-    NSMutableURLRequest *theRequest = [NSMutableURLRequest requestWithURL:url];
+   }
+
+
+-(void)connectionData:(NSData*)data status:(BOOL)status
+{
     
-    NSString *msgLength = [NSString stringWithFormat:@"%lu", (unsigned long)[profile length]];
-    
-    [theRequest addValue: @"text/xml; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
-    
-    [theRequest addValue: @"http://www.kurnoolcity.com/wsdemo/GetCaseIds" forHTTPHeaderField:@"SOAPAction"];
-    
-    
-    
-    
-    [theRequest addValue: @"www.kurnoolcity.com" forHTTPHeaderField:@"Host"];
-    
-    [theRequest addValue: msgLength forHTTPHeaderField:@"Content-Length"];
-    [theRequest setHTTPMethod:@"POST"];
-    [theRequest setHTTPBody: [profile dataUsingEncoding:NSUTF8StringEncoding]];
-    
-    urlConnection = [[NSURLConnection alloc] initWithRequest:theRequest delegate:self];
-    
-    if( urlConnection )
-    {
-        webData = [NSMutableData data];
+    if (status) {
+        
+        NSData *connectionData = data;
+        
+        NSXMLParser *xmlParser = [[NSXMLParser alloc] initWithData:connectionData];
+        
+        xmlParser.delegate = self;
+        
+        [xmlParser parse];
+        
+        
     }
-    else
-    {
-        NSLog(@"theConnection is NULL");
+    else{
+        
+        
+        UIAlertView * connectionError = [[UIAlertView alloc]initWithTitle:@"Warning" message:@"Error in Connection....Please try again later" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+        [connectionError show];
     }
     
-    
 }
-
--(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
-{
-    [webData setLength: 0];
-}
--(void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
-{
-    [webData appendData:data];
-}
--(void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
-{
-    NSLog(@"ERROR with theConenction");
-    
-}
--(void)connectionDidFinishLoading:(NSURLConnection *)connection
-{
-    // NSLog(@"DONE. Received Bytes: %lu", (unsigned long)[webData length]);
-    NSString *data = [[NSString alloc] initWithBytes: [webData mutableBytes] length:[webData length] encoding:NSUTF8StringEncoding];
-    
-    NSLog(@"%@",data);
-    
-    NSData * myData = [data dataUsingEncoding:NSUTF8StringEncoding];
-    
-    
-    NSXMLParser *xmlParser = [[NSXMLParser alloc] initWithData:myData];
-    
-    xmlParser.delegate = self;
-    
-    [xmlParser parse];
-    
-}
-
 -(void) parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName
   namespaceURI:(NSString *)namespaceURI qualifiedName:
 (NSString *)qName attributes:(NSDictionary *)attributeDict
@@ -264,11 +252,27 @@ UITextField * otherComplaints;
         caseIdDictionary = [NSJSONSerialization JSONObjectWithData:objectData options:NSJSONReadingMutableContainers error:nil];
         NSLog(@"partner dictionary :%@",caseIdDictionary);
         
-        caseIdTV.hidden = NO;
+        //caseIdTV.hidden = NO;
 
-        [self.view addSubview:caseIdTV];
-        caseIdTV.dataSource = self;
-        caseIdTV.delegate = self;
+       // [self.view addSubview:caseIdTV];
+        //caseIdTV.dataSource = self;
+        //caseIdTV.delegate = self;
+        
+        _caseIdPicker.hidden = NO;
+        _caseIdPicker.delegate = self;
+        _caseIdPicker.dataSource = self;
+        
+        _qualityButtonOutlet.alpha = 0.05;
+        _qualityLabel.alpha = 0.05;
+        _notSatisfiedServiceButtonOutlet.alpha = 0.05;
+        _notSatisfiedServiceLabel.alpha = 0.05;
+        _commentsTF.alpha = 0.05;
+        _callBackFromCompanyButtonOutlet.alpha = 0.05;
+        _callBackFromCompanyLabel.alpha = 0.05;
+        _callBackFromLabButtonOutlet.alpha = 0.05;
+        _callBackFromLabLabel.alpha = 0.05;
+        otherComplaints.alpha = 0.05;
+
         
         
     }
@@ -329,16 +333,16 @@ UITextField * otherComplaints;
     
     if (tableView == complaintTypeTV) {
         
+        [_complaintTypeLabel setText:[complaintTypeArray objectAtIndex:indexPath.row]];
     
-    
-    [_complaintTypeDDOutlet setTitle:[complaintTypeArray objectAtIndex:indexPath.row] forState:UIControlStateNormal];
     complaintTypeTV.hidden = YES;
     
     
-    if (indexPath.row == 1)
+    if (indexPath.row == 2)
     {
         
         _caseIdDDOutlet.hidden=YES;
+        _caseIdLabel.hidden = YES;
         _callBackFromCompanyLabel.hidden = YES;
         _callBackFromCompanyButtonOutlet.hidden = YES;
         _callBackFromLabButtonOutlet.hidden = YES;
@@ -358,6 +362,7 @@ UITextField * otherComplaints;
     else
     {
         _caseIdDDOutlet.hidden=NO;
+        _caseIdLabel.hidden = NO;
         _callBackFromCompanyLabel.hidden = NO;
         _callBackFromCompanyButtonOutlet.hidden = NO;
         _callBackFromLabButtonOutlet.hidden = NO;
@@ -376,7 +381,8 @@ UITextField * otherComplaints;
     }
     else
     {
-        [_caseIdDDOutlet setTitle:[[caseIdDictionary valueForKey:@"CaseId"]objectAtIndex:indexPath.row] forState:UIControlStateNormal];
+        
+        [_caseIdLabel setText:[[caseIdDictionary valueForKey:@"CaseId"]objectAtIndex:indexPath.row]];
         
         caseIdTV.hidden=YES;
     }
@@ -386,6 +392,158 @@ UITextField * otherComplaints;
 }
 
 
+
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+{
+    return 1;
+}
+
+
+-(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+{
+    if (pickerView == _complaintTypePicker)
+    {
+        return complaintTypeArray.count;
+    }
+    else
+    {
+        return caseIdDictionary.count;
+    }
+}
+
+-(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+{
+    if (pickerView == _complaintTypePicker)
+    {
+        return [complaintTypeArray objectAtIndex:row];
+        
+    }
+    else
+    {
+        return [[caseIdDictionary valueForKey:@"CaseId"]objectAtIndex:row];
+        
+    }
+    
+}
+
+
+- (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view
+{
+    
+    UILabel *pickerViewLabel = (id)view;
+    
+    if (!pickerViewLabel) {
+        pickerViewLabel= [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, [pickerView rowSizeForComponent:component].width - 10.0f, [pickerView rowSizeForComponent:component].height)];
+    }
+    
+    pickerViewLabel.backgroundColor = [UIColor clearColor];
+    
+    if (pickerView == _complaintTypePicker)
+    {
+        pickerViewLabel.text =[complaintTypeArray objectAtIndex:row];
+        pickerViewLabel.font = [UIFont fontWithName:@"ChalkboardSE-Regular" size:16];
+
+    }
+    else
+    {
+           pickerViewLabel.text =[[caseIdDictionary valueForKey:@"CaseId"]objectAtIndex:row];
+        pickerViewLabel.font = [UIFont fontWithName:@"ChalkboardSE-Regular" size:20];
+
+    }
+ 
+    
+    return pickerViewLabel;
+}
+
+-(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+{
+    
+    if (pickerView == _complaintTypePicker)
+    {
+        _complaintTypeLabel.text =[complaintTypeArray objectAtIndex:row];
+        
+        _complaintTypePicker.hidden = YES;
+        
+        _qualityButtonOutlet.alpha = 1;
+        _qualityLabel.alpha = 1;
+        _notSatisfiedServiceButtonOutlet.alpha = 1;
+        _notSatisfiedServiceLabel.alpha = 1;
+        _caseIdLabel.alpha = 1;
+        _caseIdDDOutlet.alpha = 1;
+        _commentsTF.alpha = 1;
+        _callBackFromCompanyButtonOutlet.alpha = 1;
+        _callBackFromCompanyLabel.alpha = 1;
+        _callBackFromLabButtonOutlet.alpha = 1;
+        _callBackFromLabLabel.alpha = 1;
+        otherComplaints.alpha = 1;
+
+        
+        
+        if (row == 2)
+        {
+            
+            _caseIdDDOutlet.hidden=YES;
+            _caseIdLabel.hidden = YES;
+            _callBackFromCompanyLabel.hidden = YES;
+            _callBackFromCompanyButtonOutlet.hidden = YES;
+            _callBackFromLabButtonOutlet.hidden = YES;
+            _callBackFromLabLabel.hidden = YES;
+            _notSatisfiedServiceButtonOutlet.hidden = YES;
+            _notSatisfiedServiceLabel.hidden = YES;
+            _qualityButtonOutlet.hidden = YES;
+            _qualityLabel.hidden = YES;
+            _commentsTF.hidden = YES;
+            
+            otherComplaints.hidden = NO;
+            [self.view addSubview:otherComplaints];
+            
+            
+        }
+        
+        else
+        {
+            _caseIdDDOutlet.hidden=NO;
+            _caseIdLabel.hidden = NO;
+            _callBackFromCompanyLabel.hidden = NO;
+            _callBackFromCompanyButtonOutlet.hidden = NO;
+            _callBackFromLabButtonOutlet.hidden = NO;
+            _callBackFromLabLabel.hidden = NO;
+            _notSatisfiedServiceButtonOutlet.hidden = NO;
+            _notSatisfiedServiceLabel.hidden = NO;
+            _qualityButtonOutlet.hidden = NO;
+            _qualityLabel.hidden = NO;
+            _commentsTF.hidden = NO;
+            
+            otherComplaints.hidden = YES;
+            
+            
+        }
+
+        
+        
+    }
+    else
+    {
+        _caseIdLabel.text = [[caseIdDictionary valueForKey:@"CaseId"]objectAtIndex:row];
+        
+        _caseIdPicker.hidden=YES;
+        
+        _qualityButtonOutlet.alpha = 1;
+        _qualityLabel.alpha = 1;
+        _notSatisfiedServiceButtonOutlet.alpha = 1;
+        _notSatisfiedServiceLabel.alpha = 1;
+        _commentsTF.alpha = 1;
+        _callBackFromCompanyButtonOutlet.alpha = 1;
+        _callBackFromCompanyLabel.alpha = 1;
+        _callBackFromLabButtonOutlet.alpha = 1;
+        _callBackFromLabLabel.alpha = 1;
+        otherComplaints.alpha = 1;
+        
+
+    }
+    
+    
+}
 
 
 - (IBAction)complaintSubmit:(id)sender
@@ -407,36 +565,12 @@ UITextField * otherComplaints;
                                   "<CalBackLab>%@</CalBackLab>\n"
                                   "</InsertComplaints>\n"
                                   "</soap:Body>\n"
-                                  "</soap:Envelope>\n",filteredDoctorID,_complaintTypeDDOutlet.titleLabel.text,_caseIdDDOutlet.titleLabel.text,otherComplaints,materialQuality,labService,_commentsTF.text,callBackFromCompany,callBackFromLab];
+                                  "</soap:Envelope>\n",filteredDoctorID,_complaintTypeLabel.text,_caseIdLabel.text,otherComplaints.text,materialQuality,labService,_commentsTF.text,callBackFromCompany,callBackFromLab];
     
-    NSURL * url = [NSURL URLWithString:@"http://www.kurnoolcity.com/wsdemo/zenoservice.asmx"];
-    NSMutableURLRequest * request = [NSMutableURLRequest requestWithURL:url];
     
-    NSString * msgLength = [NSString stringWithFormat:@"%lu",(unsigned long)[insertComplaint length]];
+    [[CommonAppManager sharedAppManager]soapService:insertComplaint url:@"InsertComplaints" withDelegate:self];
     
-    [request addValue:@"text/xml; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
     
-    [request addValue:@"http://www.kurnoolcity.com/wsdemo/InsertComplaints" forHTTPHeaderField:@"SOAPAction"];
-    
-    [request addValue:@"www.kurnoolcity.com" forHTTPHeaderField:@"Host"];
-    
-    [request addValue:msgLength forHTTPHeaderField:@"Content-Length"];
-    
-    [request setHTTPMethod:@"POST"];
-    
-    [request setHTTPBody:[insertComplaint dataUsingEncoding:NSUTF8StringEncoding]];
-    
-    NSURLConnection * urlConnection = [[NSURLConnection alloc]initWithRequest:request delegate:self];
-    
-    if (urlConnection) {
-        
-        webData = [NSMutableData data];
-    }
-    else
-    {
-        NSLog(@"urlConnection is NULL");
-    }
-
     
 }
 

@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CommonAppManager.h"
 
-@interface ComplaintsScreen : UIViewController<UITableViewDataSource,UITableViewDelegate,NSXMLParserDelegate>
+@interface ComplaintsScreen : UIViewController<UITableViewDataSource,UITableViewDelegate,NSXMLParserDelegate,UIPickerViewDataSource,UIPickerViewDelegate>
 
 {
     NSMutableArray * complaintTypeArray;
@@ -19,6 +20,20 @@
     BOOL notSatisfiedServiceCheckboxSelected;
     BOOL callBackFromCompanyCheckboxSelected;
     BOOL callBackFromLabCheckboxSelected;
+    
+    NSString *currentDescription;
+    NSMutableData * webData;
+    NSURLConnection * urlConnection;
+    NSString * filteredDoctorID;
+    NSDictionary * caseIdDictionary;
+    
+    NSString * materialQuality;
+    NSString * labService;
+    NSString * callBackFromCompany;
+    NSString * callBackFromLab;
+    
+    UITextField * otherComplaints;
+
 
 
 }
@@ -58,8 +73,23 @@
 - (IBAction)notSatisfiedServiceButtonAction:(id)sender;
 - (IBAction)callBackFromCompanyButtonAction:(id)sender;
 - (IBAction)callBackFromLabButtonAction:(id)sender;
+@property (weak, nonatomic) IBOutlet UILabel *complaintTypeLabel;
+
+@property (weak, nonatomic) IBOutlet UIPickerView *complaintTypePicker;
+@property (weak, nonatomic) IBOutlet UILabel *caseIdLabel;
+
+@property (weak, nonatomic) IBOutlet UIPickerView *caseIdPicker;
 
 
+
+
+
+
+
+
+
+
+-(void)connectionData:(NSData*)data status:(BOOL)status;
 
 
 

@@ -7,8 +7,9 @@
 //
 
 #import "ViewController.h"
+#import "CommonAppManager.h"
 
-@interface ProfileScreen : ViewController<NSXMLParserDelegate,UITableViewDataSource,UITableViewDelegate>
+@interface ProfileScreen : ViewController<NSXMLParserDelegate,UITableViewDataSource,UITableViewDelegate,UIPickerViewDelegate,UIPickerViewDataSource>
 
 {
     NSURLConnection * urlConnection;
@@ -47,10 +48,14 @@
 - (IBAction)cityDropDown:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *cityDDOutlet;
 
+-(void)connectionData:(NSData*)data status:(BOOL)status;
 
+@property (weak, nonatomic) IBOutlet UILabel *selectYourStateLabel;
 
+@property (weak, nonatomic) IBOutlet UILabel *selectYourCityLabel;
 
-
+@property (weak, nonatomic) IBOutlet UIPickerView *statePicker;
+@property (weak, nonatomic) IBOutlet UIPickerView *cityPicker;
 
 
 

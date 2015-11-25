@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "CommonAppManager.h"
 
 @interface DoctorAlreadyRegistered : ViewController<NSXMLParserDelegate>
 
@@ -28,7 +29,7 @@
 - (IBAction)newUserRegistration:(id)sender;
 
 
-
+-(void)connectionData:(NSData*)data status:(BOOL)status;
 
 
 

@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "CommonAppManager.h"
 
 @interface NewUserOTPScreen : ViewController<NSXMLParserDelegate>
 
@@ -25,6 +26,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *doctorIDTF;
 @property (weak, nonatomic) IBOutlet UITextField *OTPTF;
 
+-(void)connectionData:(NSData*)data status:(BOOL)status;
 
 
 

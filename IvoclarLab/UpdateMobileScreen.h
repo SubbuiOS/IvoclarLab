@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CommonAppManager.h"
 
 @interface UpdateMobileScreen : UIViewController<NSXMLParserDelegate>
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *updateMobileSideMenu;
@@ -14,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *mobileNumberTF;
 - (IBAction)updateMobile:(id)sender;
 
+-(void)connectionData:(NSData*)data status:(BOOL)status;
 
 
 

@@ -7,9 +7,10 @@
 //
 
 #import "ViewController.h"
+#import "CommonAppManager.h"
 
 
-@interface CaseEntryViewController : ViewController<UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource,NSXMLParserDelegate,UIAlertViewDelegate>
+@interface CaseEntryViewController : ViewController<UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource,NSXMLParserDelegate,UIAlertViewDelegate,UIPickerViewDataSource,UIPickerViewDelegate>
 
 
 {
@@ -66,6 +67,27 @@
 @property (weak, nonatomic) IBOutlet UIButton *typeOfCaseOutlet;
 - (IBAction)selectPartner:(id)sender;
 - (IBAction)submitCaseEntry:(id)sender;
+
+@property (weak, nonatomic) IBOutlet UILabel *selectNatureOfWorkLabel;
+@property (weak, nonatomic) IBOutlet UILabel *crownBrandLabel;
+
+
+@property (weak, nonatomic) IBOutlet UILabel *typeOfCaseLabel;
+
+@property (weak, nonatomic) IBOutlet UIPickerView *crownBrandPicker;
+
+@property (weak, nonatomic) IBOutlet UIPickerView *natureOfWorkPicker;
+@property (weak, nonatomic) IBOutlet UIPickerView *typeOfCasePicker;
+
+-(void)connectionData:(NSData*)data status:(BOOL)status;
+
+
+
+
+
+
+
+
 
 
 

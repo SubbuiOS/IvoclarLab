@@ -14,6 +14,8 @@
 
 @end
 
+UIActivityIndicatorView * spinner;
+
 @implementation ProfileScreen
 
 - (void)viewDidLoad {
@@ -36,9 +38,18 @@
     [self.navigationController.navigationBar
      setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
     
-    statesTableView = [[UITableView alloc]initWithFrame:CGRectMake(20, 300, 340, 150) style:UITableViewStylePlain];
+    //statesTableView = [[UITableView alloc]initWithFrame:CGRectMake(20, 300, 340, 150) style:UITableViewStylePlain];
     
-    cityTableView = [[UITableView alloc]initWithFrame:CGRectMake(20, 350, 340, 150) style:UITableViewStylePlain];
+    //cityTableView = [[UITableView alloc]initWithFrame:CGRectMake(20, 350, 340, 150) style:UITableViewStylePlain];
+    
+    _statePicker.layer.borderColor = [UIColor clearColor].CGColor;
+    _statePicker.layer.borderWidth = 1;
+    _statePicker.hidden = YES;
+    
+    _statePicker.layer.borderColor = [UIColor clearColor].CGColor;
+    _statePicker.layer.borderWidth = 1;
+    _statePicker.hidden = YES;
+    
     
 }
 
@@ -120,6 +131,13 @@
     
     
     
+    spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    spinner.center = CGPointMake(170, 525);
+    //spinner.tag = 12;
+    [self.view addSubview:spinner];
+    [spinner startAnimating];
+    
+    
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
     NSString *plistFilePath = [documentsDirectory stringByAppendingPathComponent:@"OTPResult.plist"];
@@ -178,70 +196,37 @@
                           "<StateName>%@</StateName>\n"
                           "</UpdateProfile>\n"
                           "</soap:Body>\n"
-                          "</soap:Envelope>\n",filteredDoctorID,_doctorNameTF.text,_emailTF.text,_cityDDOutlet.titleLabel.text,_areaNameTF.text,_pincodeTF.text,_stateDDOutlet.titleLabel.text];
+                          "</soap:Envelope>\n",filteredDoctorID,_doctorNameTF.text,_emailTF.text,_selectYourCityLabel.text,_areaNameTF.text,_pincodeTF.text,_selectYourStateLabel.text];
     
+    [[CommonAppManager sharedAppManager]soapService:profile url:@"UpdateProfile" withDelegate:self];
     
-    NSURL *url = [NSURL URLWithString:@"http://www.kurnoolcity.com/wsdemo/zenoservice.asmx"];
-    NSMutableURLRequest *theRequest = [NSMutableURLRequest requestWithURL:url];
+
     
-    NSString *msgLength = [NSString stringWithFormat:@"%lu", (unsigned long)[profile length]];
+}
+-(void)connectionData:(NSData*)data status:(BOOL)status
+{
     
-    [theRequest addValue: @"text/xml; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
-    
-        [theRequest addValue: @"http://www.kurnoolcity.com/wsdemo/UpdateProfile" forHTTPHeaderField:@"SOAPAction"];
+    if (status) {
         
-    
-    
-    
-    [theRequest addValue: @"www.kurnoolcity.com" forHTTPHeaderField:@"Host"];
-    
-    [theRequest addValue: msgLength forHTTPHeaderField:@"Content-Length"];
-    [theRequest setHTTPMethod:@"POST"];
-    [theRequest setHTTPBody: [profile dataUsingEncoding:NSUTF8StringEncoding]];
-    
-    urlConnection = [[NSURLConnection alloc] initWithRequest:theRequest delegate:self];
-    
-    if( urlConnection )
-    {
-        webData = [NSMutableData data];
+        NSData *connectionData = data;
+        
+        NSXMLParser *xmlParser = [[NSXMLParser alloc] initWithData:connectionData];
+        
+        xmlParser.delegate = self;
+        
+        [xmlParser parse];
+        
+        
     }
-    else
-    {
-        NSLog(@"theConnection is NULL");
-   }
+    else{
+        
+        
+        UIAlertView * connectionError = [[UIAlertView alloc]initWithTitle:@"Warning" message:@"Error in Connection....Please try again later" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+        [connectionError show];
+    }
     
 }
 
--(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
-{
-    [webData setLength: 0];
-}
--(void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
-{
-    [webData appendData:data];
-}
--(void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
-{
-    NSLog(@"ERROR with theConenction");
-    
-}
--(void)connectionDidFinishLoading:(NSURLConnection *)connection
-{
-    // NSLog(@"DONE. Received Bytes: %lu", (unsigned long)[webData length]);
-    NSString *data = [[NSString alloc] initWithBytes: [webData mutableBytes] length:[webData length] encoding:NSUTF8StringEncoding];
-    
-    NSLog(@"%@",data);
-    
-    myData = [data dataUsingEncoding:NSUTF8StringEncoding];
-
-    
-    NSXMLParser *xmlParser = [[NSXMLParser alloc] initWithData:myData];
-    
-    xmlParser.delegate = self;
-    
-    [xmlParser parse];
-    
-}
 
 -(void) parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName
   namespaceURI:(NSString *)namespaceURI qualifiedName:
@@ -258,9 +243,12 @@
 {
     
     
+    
     if ([elementName isEqual:@"UpdateProfileResult"]) {
         
         NSLog(@"Status :%@",currentDescription);
+        
+        [spinner stopAnimating];
         
         if ([currentDescription isEqual:@"\"Y\""]) {
             
@@ -287,12 +275,24 @@
         
         
        // NSLog(@"json data %@",json);
-       
-        statesTableView.delegate = self;
-        statesTableView.dataSource = self;
-        statesTableView.hidden = NO;
+//       
+//        statesTableView.delegate = self;
+//        statesTableView.dataSource = self;
+//        statesTableView.hidden = NO;
+//        
+//        [self.view addSubview:statesTableView];
         
-        [self.view addSubview:statesTableView];
+        
+        _statePicker.hidden = NO;
+        
+        _statePicker.delegate = self;
+        _statePicker.dataSource = self;
+        
+        _selectYourCityLabel.alpha = 0.05;
+        _cityDDOutlet.alpha = 0.05;
+        _areaNameTF.alpha = 0.05;
+        _pincodeTF.alpha = 0.05;
+        
         
     
     }
@@ -311,11 +311,23 @@
         
         // NSLog(@"json data %@",json);
         
-        cityTableView.delegate = self;
-        cityTableView.dataSource = self;
-        cityTableView.hidden = NO;
+//        cityTableView.delegate = self;
+//        cityTableView.dataSource = self;
+//        cityTableView.hidden = NO;
+//        
+//        [self.view addSubview:cityTableView];
         
-        [self.view addSubview:cityTableView];
+        _cityPicker.hidden = NO;
+        
+        _cityPicker.delegate = self;
+        _cityPicker.dataSource = self;
+        
+        //_selectYourCityLabel.alpha = 0.05;
+        //_cityDDOutlet.alpha = 0.05;
+        _areaNameTF.alpha = 0.05;
+        _pincodeTF.alpha = 0.05;
+        
+        
     }
     
     
@@ -391,6 +403,15 @@
 - (IBAction)stateDropDown:(id)sender {
     
     
+    
+    [_selectYourCityLabel setText:@"Select Your City"];
+    
+    [_statePicker reloadAllComponents];
+    [_statePicker selectRow:0 inComponent:0 animated:YES];
+    
+
+    
+    
     // This is a Drop Down Menu created by using a button and tableview(statesTV)
     // And Getting the states by calling the below service
     
@@ -405,41 +426,21 @@
                          "</soap:Envelope>\n"];
     
     
-    NSURL *url = [NSURL URLWithString:@"http://www.kurnoolcity.com/wsdemo/zenoservice.asmx"];
-    NSMutableURLRequest *theRequest = [NSMutableURLRequest requestWithURL:url];
-    
-    NSString *msgLength = [NSString stringWithFormat:@"%lu", (unsigned long)[states length]];
-    
-    [theRequest addValue: @"text/xml; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
-    
-    [theRequest addValue: @"http://www.kurnoolcity.com/wsdemo/GetStates" forHTTPHeaderField:@"SOAPAction"];
+    [[CommonAppManager sharedAppManager]soapService:states url:@"GetStates" withDelegate:self];
     
     
     
-    
-    [theRequest addValue: @"www.kurnoolcity.com" forHTTPHeaderField:@"Host"];
-    
-    [theRequest addValue: msgLength forHTTPHeaderField:@"Content-Length"];
-    [theRequest setHTTPMethod:@"POST"];
-    [theRequest setHTTPBody: [states dataUsingEncoding:NSUTF8StringEncoding]];
-    
-    urlConnection = [[NSURLConnection alloc] initWithRequest:theRequest delegate:self];
-    
-    if( urlConnection )
-    {
-        webData = [NSMutableData data];
-    }
-    else
-    {
-        NSLog(@"theConnection is NULL");
-    }
-
     
 }
 - (IBAction)cityDropDown:(id)sender {
     
     
 
+    [_cityPicker reloadAllComponents];
+    [_cityPicker selectRow:0 inComponent:0 animated:YES];
+    
+
+    
     
     // This is a Drop Down Menu created by using a button and tableview(cityTV)
     // And Getting the City names by calling the below service
@@ -453,43 +454,118 @@
                          "<StateName>%@</StateName>\n"
                          "</GetCity>\n"
                          "</soap:Body>\n"
-                         "</soap:Envelope>\n",_stateDDOutlet.titleLabel.text];
+                         "</soap:Envelope>\n",_selectYourStateLabel.text];
    
 
-    
-    NSURL *url = [NSURL URLWithString:@"http://www.kurnoolcity.com/wsdemo/zenoservice.asmx"];
-    NSMutableURLRequest *theRequest = [NSMutableURLRequest requestWithURL:url];
-    
-    NSString *msgLength = [NSString stringWithFormat:@"%lu", (unsigned long)[city length]];
-    
-    [theRequest addValue: @"text/xml; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
-    
-    [theRequest addValue: @"http://www.kurnoolcity.com/wsdemo/GetCity" forHTTPHeaderField:@"SOAPAction"];
+    [[CommonAppManager sharedAppManager]soapService:city url:@"GetCity" withDelegate:self];
     
     
-    
-    
-    [theRequest addValue: @"www.kurnoolcity.com" forHTTPHeaderField:@"Host"];
-    
-    [theRequest addValue: msgLength forHTTPHeaderField:@"Content-Length"];
-    [theRequest setHTTPMethod:@"POST"];
-    [theRequest setHTTPBody: [city dataUsingEncoding:NSUTF8StringEncoding]];
-    
-    urlConnection = [[NSURLConnection alloc] initWithRequest:theRequest delegate:self];
-    
-    if( urlConnection )
-    {
-        webData = [NSMutableData data];
+}
+
+
+-(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+{
+    return 1;
+}
+
+-(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+{
+    if (pickerView == _statePicker) {
+        return jsonStatesData.count;
+        
     }
     else
     {
-        NSLog(@"theConnection is NULL");
+        return jsonCityData.count;
+        
+    }
+}
+
+
+-(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+{
+    if (pickerView == _statePicker)
+    {
+        return [[jsonStatesData valueForKey:@"StateName"]objectAtIndex:row];
     }
     
-    //}
+    else {
+        
+        return [[jsonCityData valueForKey:@"CityName"]objectAtIndex:row];
+    }
     
+    
+}
+
+
+- (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view
+{
+    
+    UILabel *pickerViewLabel = (id)view;
+    
+    if (!pickerViewLabel) {
+        pickerViewLabel= [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, [pickerView rowSizeForComponent:component].width - 10.0f, [pickerView rowSizeForComponent:component].height)];
+    }
+    
+    pickerViewLabel.backgroundColor = [UIColor clearColor];
+    
+    if (pickerView == _statePicker)
+    {
+        pickerViewLabel.text =[[jsonStatesData valueForKey:@"StateName"]objectAtIndex:row];
+        
+    }
+    
+    else
+    {
+        pickerViewLabel.text =[[jsonCityData valueForKey:@"CityName"]objectAtIndex:row];
+
+    }
+    pickerViewLabel.font = [UIFont fontWithName:@"ChalkboardSE-Regular" size:20];
+    
+    return pickerViewLabel;
+}
+
+-(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+{
+    
+    if (pickerView == _statePicker) {
+        
+        [_selectYourStateLabel setText:[[jsonStatesData valueForKey:@"StateName"]objectAtIndex:row]];
+        
+        
+        _statePicker.hidden = YES;
+        
+        _selectYourCityLabel.alpha = 1;
+        _cityDDOutlet.alpha = 1;
+        _areaNameTF.alpha = 1;
+        _pincodeTF.alpha = 1;
+        
+        
+        
+    }
+    if (pickerView == _cityPicker) {
+        
+        [_selectYourCityLabel setText:[[jsonCityData valueForKey:@"CityName"]objectAtIndex:row]];
+        
+        
+        _cityPicker.hidden = YES;
+        
+        //_selectYourCityLabel.alpha = 1;
+        //_cityDDOutlet.alpha = 1;
+        _areaNameTF.alpha = 1;
+        _pincodeTF.alpha = 1;
+        
+        
+    }
+    
+
     
     
     
 }
+
+
+
+
+
 @end

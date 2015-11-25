@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "CommonAppManager.h"
 
 @interface DoctorLogin : ViewController<NSXMLParserDelegate,UITextFieldDelegate>
 {
@@ -17,7 +18,6 @@
     NSMutableData * webData;
     NSString * currentDescription;
     UILabel * tagLabel;
-
     
 }
 
@@ -27,6 +27,7 @@
 
 - (IBAction)submitActionDoctor:(id)sender;
 
+-(void)connectionData:(NSData*)data status:(BOOL)status;
 
 
 

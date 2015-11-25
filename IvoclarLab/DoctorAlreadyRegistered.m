@@ -14,6 +14,7 @@
 
 @end
 
+UIActivityIndicatorView * spinner;
 
 @implementation DoctorAlreadyRegistered
 
@@ -52,7 +53,7 @@
     
     // Goes to CaseEntry Screen after submitting
     
-    SWRevealViewController * sideMenu = [self.storyboard instantiateViewControllerWithIdentifier:@"SWRevealViewController"];
+    SWRevealViewController * sideMenu = [self.storyboard instantiateViewControllerWithIdentifier:@"DoctorSWRevealViewController"];
     
     //[self.revealViewController pushFrontViewController:sideMenu animated:YES];
     
@@ -61,6 +62,13 @@
 
 - (IBAction)forgotPassword:(id)sender {
     
+    
+    
+    spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    spinner.center = CGPointMake(170, 400);
+    //spinner.tag = 12;
+    [self.view addSubview:spinner];
+    [spinner startAnimating];
     
    NSString * forgotPassword = [NSString stringWithFormat:
                   @"<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
@@ -73,71 +81,39 @@
                   "</soap:Envelope>\n",_registeredMobileNoTF.text];
     
     
-    NSURL *url = [NSURL URLWithString:@"http://www.kurnoolcity.com/wsdemo/zenoservice.asmx"];
-    NSMutableURLRequest *theRequest = [NSMutableURLRequest requestWithURL:url];
     
-    NSString *msgLength = [NSString stringWithFormat:@"%lu", (unsigned long)[forgotPassword length]];
-    
-    [theRequest addValue: @"text/xml; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
-    
-    [theRequest addValue: @"http://www.kurnoolcity.com/wsdemo/ForgotPassword" forHTTPHeaderField:@"SOAPAction"];
+    [[CommonAppManager sharedAppManager] soapService:forgotPassword url:@"ForgotPassword" withDelegate:self];
     
     
+        
     
+}
+-(void)connectionData:(NSData*)data status:(BOOL)status
+{
     
-    [theRequest addValue: @"www.kurnoolcity.com" forHTTPHeaderField:@"Host"];
-    
-    [theRequest addValue: msgLength forHTTPHeaderField:@"Content-Length"];
-    [theRequest setHTTPMethod:@"POST"];
-    [theRequest setHTTPBody: [forgotPassword dataUsingEncoding:NSUTF8StringEncoding]];
-    
-    urlConnection = [[NSURLConnection alloc] initWithRequest:theRequest delegate:self];
-    
-    if( urlConnection )
-    {
-        webData = [NSMutableData data];
+    if (status) {
+        
+        
+        
+        NSData *connectionData = data;
+        
+        NSXMLParser *xmlParser = [[NSXMLParser alloc] initWithData:connectionData];
+        
+        xmlParser.delegate = self;
+        
+        [xmlParser parse];
+        
+        
     }
-    else
-    {
-        NSLog(@"theConnection is NULL");
-
-    
-    
+    else{
+        
+        
+        UIAlertView * connectionError = [[UIAlertView alloc]initWithTitle:@"Warning" message:@"Error in Connection....Please try again later" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+        [connectionError show];
     }
     
-    
 }
 
-
--(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
-{
-    [webData setLength: 0];
-}
--(void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
-{
-    [webData appendData:data];
-}
--(void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
-{
-    NSLog(@"ERROR with theConenction");
-    
-}
--(void)connectionDidFinishLoading:(NSURLConnection *)connection
-{
-    // NSLog(@"DONE. Received Bytes: %lu", (unsigned long)[webData length]);
-    NSString *data = [[NSString alloc] initWithBytes: [webData mutableBytes] length:[webData length] encoding:NSUTF8StringEncoding];
-    
-    NSLog(@"%@",data);
-    
-    NSData *myData = [data dataUsingEncoding:NSUTF8StringEncoding];
-    
-    NSXMLParser *xmlParser = [[NSXMLParser alloc] initWithData:myData];
-    
-    xmlParser.delegate = self;
-    
-    [xmlParser parse];
-    
-}
 
 -(void) parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName
   namespaceURI:(NSString *)namespaceURI qualifiedName:
@@ -152,6 +128,8 @@
 - (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName
   namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
 {
+    
+    [spinner stopAnimating];
     
     //NSLog(@"element names :%@\n\n",elementName);
     

@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "SWRevealViewController.h"
+#import "CommonAppManager.h"
 
 @interface SideMenuListViewController : ViewController<UITableViewDataSource,UITableViewDelegate>
 
@@ -19,7 +20,7 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *sidebarMenuTV;
 
-
+-(void) sideMenuList : (NSMutableArray *) sideMenuListArray;
 
 
 @end

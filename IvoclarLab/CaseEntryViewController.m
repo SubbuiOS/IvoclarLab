@@ -16,8 +16,6 @@
 
 @end
 
-
-
 @implementation CaseEntryViewController
 
 - (void)viewDidLoad {
@@ -46,26 +44,26 @@
     _partnerNameTitle.hidden = YES;
     
     
-    natureOfWorkTV = [[UITableView alloc]initWithFrame:CGRectMake(33 ,150, 300, 150) style:UITableViewStylePlain];
+  //  natureOfWorkTV = [[UITableView alloc]initWithFrame:CGRectMake(33 ,150, 300, 150) style:UITableViewStylePlain];
     
     natureOfWorkArray = [[NSMutableArray alloc]initWithObjects:@"Select Nature Of Work",@"Ceramic",@"PFM",nil];
     
-    crownBrandTV = [[UITableView alloc]initWithFrame:CGRectMake(43 ,190 , 180, 150) style:UITableViewStylePlain];
+   // crownBrandTV = [[UITableView alloc]initWithFrame:CGRectMake(43 ,190 , 180, 150) style:UITableViewStylePlain];
     
     crownBrandArray = [[NSMutableArray alloc]initWithObjects:@"Zenostar",@"e.max", nil];
     
     
     
-    typeOfCaseTV = [[UITableView alloc]initWithFrame:CGRectMake(33, 290, 200, 150) style:UITableViewStylePlain];
+    //typeOfCaseTV = [[UITableView alloc]initWithFrame:CGRectMake(33, 290, 200, 150) style:UITableViewStylePlain];
     typeOfCaseArray = [[NSMutableArray alloc]initWithObjects:@"Crowns",@"Bridges",@"Veneer", nil];
     
     
     partnerLbutton = [UIButton buttonWithType:UIButtonTypeSystem];
     
     [partnerLbutton setTitle:@"Ok" forState:UIControlStateNormal];
-    partnerLbutton.frame = CGRectMake(150, 540, 100, 40);
+    partnerLbutton.frame = CGRectMake(130, 528, 100, 20);
     [partnerLbutton addTarget:self action:@selector(partnerLbuttonIsClicked) forControlEvents:UIControlEventTouchUpInside];
-    [partnerLbutton setBackgroundColor:[UIColor redColor]];
+    [partnerLbutton setBackgroundColor:[UIColor cyanColor]];
     
     //partnerMTV = [[UITableView alloc]initWithFrame:CGRectMake(0, 5, 200, 150) style:UITableViewStylePlain];
     
@@ -73,7 +71,18 @@
     
     
     
+    _natureOfWorkPicker.layer.borderColor = [UIColor clearColor].CGColor;
+    _natureOfWorkPicker.layer.borderWidth = 1;
+    _natureOfWorkPicker.hidden = YES;
     
+    _crownBrandPicker.layer.borderColor = [UIColor clearColor].CGColor;
+    _crownBrandPicker.layer.borderWidth = 1;
+    _crownBrandPicker.hidden = YES;
+    
+    _typeOfCasePicker.layer.borderColor = [UIColor clearColor].CGColor;
+    _typeOfCasePicker.layer.borderWidth = 1;
+    _typeOfCasePicker.hidden = YES;
+
     
     
     
@@ -149,7 +158,7 @@
 
     // Get CaseId using below service
     
-    NSString * profile = [NSString stringWithFormat:
+    NSString * caseId = [NSString stringWithFormat:
                           @"<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
                           "<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n"
                           "<soap:Body>\n"
@@ -160,56 +169,64 @@
                           "</soap:Envelope>\n",filteredDoctorID];
     
     
-    NSURL *url = [NSURL URLWithString:@"http://www.kurnoolcity.com/wsdemo/zenoservice.asmx"];
-    NSMutableURLRequest *theRequest = [NSMutableURLRequest requestWithURL:url];
-    
-    NSString *msgLength = [NSString stringWithFormat:@"%lu", (unsigned long)[profile length]];
-    
-    [theRequest addValue: @"text/xml; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
-    
-    [theRequest addValue: @"http://www.kurnoolcity.com/wsdemo/GetCaseId" forHTTPHeaderField:@"SOAPAction"];
-    
-    
-    
-    
-    [theRequest addValue: @"www.kurnoolcity.com" forHTTPHeaderField:@"Host"];
-    
-    [theRequest addValue: msgLength forHTTPHeaderField:@"Content-Length"];
-    [theRequest setHTTPMethod:@"POST"];
-    [theRequest setHTTPBody: [profile dataUsingEncoding:NSUTF8StringEncoding]];
-    
-    urlConnection = [[NSURLConnection alloc] initWithRequest:theRequest delegate:self];
-    
-    if( urlConnection )
-    {
-        webData = [NSMutableData data];
-    }
-    else
-    {
-        NSLog(@"theConnection is NULL");
-    }
-    
-    
-    
-    
-    
-  
-    
-    
+    [[CommonAppManager sharedAppManager]soapService:caseId url:@"GetCaseId" withDelegate:self];
     
     
 }
 
+-(void)connectionData:(NSData*)data status:(BOOL)status
+{
+    
+    if (status) {
+        
+        NSData *connectionData = data;
+        
+        NSXMLParser *xmlParser = [[NSXMLParser alloc] initWithData:connectionData];
+        
+        xmlParser.delegate = self;
+        
+        [xmlParser parse];
+        
+        
+    }
+    else{
+        
+        
+        UIAlertView * connectionError = [[UIAlertView alloc]initWithTitle:@"Warning" message:@"Error in Connection....Please try again later" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+        [connectionError show];
+    }
+    
+}
+
+
 - (IBAction)natureOfWork:(id)sender {
     
     
-    natureOfWorkTV.hidden = NO;
+//    natureOfWorkTV.hidden = NO;
+//    
+//    natureOfWorkTV.delegate = self;
+//    natureOfWorkTV.dataSource = self;
+//    [self.view addSubview:natureOfWorkTV];
     
-    natureOfWorkTV.delegate = self;
-    natureOfWorkTV.dataSource = self;
-    [self.view addSubview:natureOfWorkTV];
     
-    _crownBrandDDOutlet.titleLabel.text = nil;
+    [_natureOfWorkPicker reloadAllComponents];
+    [_natureOfWorkPicker selectRow:0 inComponent:0 animated:YES];
+    
+    
+    _natureOfWorkPicker.hidden = NO;
+    
+    _natureOfWorkPicker.delegate = self;
+    _natureOfWorkPicker.dataSource = self;
+
+    
+    _crownBrandDDOutlet.alpha = 0.05;
+    _crownBrandLabel.alpha = 0.05;
+    _noOfUnitsTF.alpha = 0.05;
+    _typeOfCaseOutlet.alpha = 0.05;
+    _typeOfCaseLabel.alpha = 0.05;
+    
+    
+    _crownBrandLabel.text = nil;
     
 }
 
@@ -217,29 +234,58 @@
 {
     
     
-    if ([_natureOfWorkOutlet.titleLabel.text isEqual:@"Ceramic"]) {
+    if ([_selectNatureOfWorkLabel.text isEqual:@"Ceramic"]) {
+        
+//        
+//        crownBrandTV.hidden = NO;
+//        
+//        crownBrandTV.delegate = self;
+//        crownBrandTV.dataSource = self;
+//        [self.view addSubview:crownBrandTV];
         
         
-        crownBrandTV.hidden = NO;
-        
-        crownBrandTV.delegate = self;
-        crownBrandTV.dataSource = self;
-        [self.view addSubview:crownBrandTV];
+        [_crownBrandPicker reloadAllComponents];
+        [_crownBrandPicker selectRow:0 inComponent:0 animated:YES];
         
         
+        _crownBrandPicker.hidden = NO;
+        
+        _crownBrandPicker.delegate = self;
+        _crownBrandPicker.dataSource = self;
+        
+        
+       // _crownBrandDDOutlet.alpha = 0.05;
+        //_crownBrandLabel.alpha = 0.05;
+        _noOfUnitsTF.alpha = 0.05;
+        _typeOfCaseOutlet.alpha = 0.05;
+        _typeOfCaseLabel.alpha = 0.05;
+        
+
         
     }
     
 }
 - (IBAction)typeOfCase:(id)sender {
     
-    typeOfCaseTV.hidden = NO;
+//    typeOfCaseTV.hidden = NO;
+//    
+//    typeOfCaseTV.delegate = self;
+//    typeOfCaseTV.dataSource = self;
+//    [self.view addSubview:typeOfCaseTV];
     
-    typeOfCaseTV.delegate = self;
-    typeOfCaseTV.dataSource = self;
-    [self.view addSubview:typeOfCaseTV];
+    
+    [_typeOfCasePicker reloadAllComponents];
+    [_typeOfCasePicker selectRow:0 inComponent:0 animated:YES];
     
     
+    _typeOfCasePicker.hidden = NO;
+    
+    _typeOfCasePicker.delegate = self;
+    _typeOfCasePicker.dataSource = self;
+    
+   
+    
+
     
     
 }
@@ -248,7 +294,7 @@
     
     //First we will get Mpartners by clicking the button
     
-    NSString * profile = [NSString stringWithFormat:
+    NSString * MPartner = [NSString stringWithFormat:
                           @"<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
                           "<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n"
                           "<soap:Body>\n"
@@ -258,38 +304,7 @@
                           "</soap:Body>\n"
                           "</soap:Envelope>\n",filteredDoctorID];
     
-    
-    
-    NSURL *url = [NSURL URLWithString:@"http://www.kurnoolcity.com/wsdemo/zenoservice.asmx"];
-    NSMutableURLRequest *theRequest = [NSMutableURLRequest requestWithURL:url];
-    
-    NSString *msgLength = [NSString stringWithFormat:@"%lu", (unsigned long)[profile length]];
-    
-    [theRequest addValue: @"text/xml; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
-    
-    [theRequest addValue: @"http://www.kurnoolcity.com/wsdemo/GetMPartners" forHTTPHeaderField:@"SOAPAction"];
-    
-    
-    
-    
-    [theRequest addValue: @"www.kurnoolcity.com" forHTTPHeaderField:@"Host"];
-    
-    [theRequest addValue: msgLength forHTTPHeaderField:@"Content-Length"];
-    [theRequest setHTTPMethod:@"POST"];
-    [theRequest setHTTPBody: [profile dataUsingEncoding:NSUTF8StringEncoding]];
-    
-    urlConnection = [[NSURLConnection alloc] initWithRequest:theRequest delegate:self];
-    
-    if( urlConnection )
-    {
-        webData = [NSMutableData data];
-    }
-    else
-    {
-        NSLog(@"theConnection is NULL");
-    }
-    
-    
+    [[CommonAppManager sharedAppManager]soapService:MPartner url:@"GetMPartners" withDelegate:self];
     
     
     
@@ -330,77 +345,13 @@
                           "<CaseId>%@</CaseId>\n"
                           "</InsertCases>\n"
                           "</soap:Body>\n"
-                          "</soap:Envelope>\n",filteredDoctorID,_crownBrandDDOutlet.titleLabel.text,_noOfUnitsTF.text,_typeOfCaseOutlet.titleLabel.text,_partnerNameLabel.text,_caseIdLabel.text];
+                          "</soap:Envelope>\n",filteredDoctorID,_crownBrandLabel.text,_noOfUnitsTF.text,_typeOfCaseLabel.text,_partnerNameLabel.text,_caseIdLabel.text];
     
 
-    
-    NSURL *url = [NSURL URLWithString:@"http://www.kurnoolcity.com/wsdemo/zenoservice.asmx"];
-    NSMutableURLRequest *theRequest = [NSMutableURLRequest requestWithURL:url];
-    
-    NSString *msgLength = [NSString stringWithFormat:@"%lu", (unsigned long)[submitCE length]];
-    
-    [theRequest addValue: @"text/xml; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
-    
-    [theRequest addValue: @"http://www.kurnoolcity.com/wsdemo/InsertCases" forHTTPHeaderField:@"SOAPAction"];
+    [[CommonAppManager sharedAppManager]soapService:submitCE url:@"InsertCases" withDelegate:self];
     
     
     
-    
-    [theRequest addValue: @"www.kurnoolcity.com" forHTTPHeaderField:@"Host"];
-    
-    [theRequest addValue: msgLength forHTTPHeaderField:@"Content-Length"];
-    [theRequest setHTTPMethod:@"POST"];
-    [theRequest setHTTPBody: [submitCE dataUsingEncoding:NSUTF8StringEncoding]];
-    
-    urlConnection = [[NSURLConnection alloc] initWithRequest:theRequest delegate:self];
-    
-    if( urlConnection )
-    {
-        webData = [NSMutableData data];
-    }
-    else
-    {
-        NSLog(@"theConnection is NULL");
-    }
-    
-
-    
-    
-    
-    
-}
-
-
-
-
--(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
-{
-    [webData setLength: 0];
-}
--(void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
-{
-    [webData appendData:data];
-}
--(void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
-{
-    NSLog(@"ERROR with theConenction");
-    
-}
--(void)connectionDidFinishLoading:(NSURLConnection *)connection
-{
-    // NSLog(@"DONE. Received Bytes: %lu", (unsigned long)[webData length]);
-    NSString *data = [[NSString alloc] initWithBytes: [webData mutableBytes] length:[webData length] encoding:NSUTF8StringEncoding];
-    
-    NSLog(@"%@",data);
-    
-   NSData *myData = [data dataUsingEncoding:NSUTF8StringEncoding];
-    
-    
-    NSXMLParser *xmlParser = [[NSXMLParser alloc] initWithData:myData];
-    
-    xmlParser.delegate = self;
-    
-    [xmlParser parse];
     
 }
 
@@ -505,7 +456,7 @@
     
     if (alertView == partnerAlert) {
     
-    NSString * profile = [NSString stringWithFormat:
+    NSString * LPartner = [NSString stringWithFormat:
                           @"<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
                           "<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n"
                           "<soap:Body>\n"
@@ -515,38 +466,11 @@
                           "</soap:Body>\n"
                           "</soap:Envelope>\n",filteredDoctorID];
 
-    
-    NSURL *url = [NSURL URLWithString:@"http://www.kurnoolcity.com/wsdemo/zenoservice.asmx"];
-    NSMutableURLRequest *theRequest = [NSMutableURLRequest requestWithURL:url];
-    
-    NSString *msgLength = [NSString stringWithFormat:@"%lu", (unsigned long)[profile length]];
-    
-    [theRequest addValue: @"text/xml; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
-    
-    [theRequest addValue: @"http://www.kurnoolcity.com/wsdemo/GetLPartners" forHTTPHeaderField:@"SOAPAction"];
-    
-    
-    
-    
-    [theRequest addValue: @"www.kurnoolcity.com" forHTTPHeaderField:@"Host"];
-    
-    [theRequest addValue: msgLength forHTTPHeaderField:@"Content-Length"];
-    [theRequest setHTTPMethod:@"POST"];
-    [theRequest setHTTPBody: [profile dataUsingEncoding:NSUTF8StringEncoding]];
-    
-    urlConnection = [[NSURLConnection alloc] initWithRequest:theRequest delegate:self];
-    
-    if( urlConnection )
-    {
-        webData = [NSMutableData data];
-    }
-    else
-    {
-        NSLog(@"theConnection is NULL");
-    }
+        
+        [[CommonAppManager sharedAppManager]soapService:LPartner url:@"GetLPartners" withDelegate:self];
+        
     
     }
-    
     else if (alertView == submitCEAlert)
     {
         
@@ -605,21 +529,7 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (tableView == natureOfWorkTV) {
-        
-        return natureOfWorkArray.count;
-
-    }
-    else if (tableView == crownBrandTV)
-    {
-        return crownBrandArray.count;
-
-    }
-    else if (tableView == typeOfCaseTV)
-    {
-        return typeOfCaseArray.count;
-    }
-    else if (tableView == partnerMTV)
+    if (tableView == partnerMTV)
     {
         return partnerMDict.count;
     }
@@ -632,43 +542,7 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    
-    
-    if (!((tableView == partnerMTV)||(tableView == partnerLTV))) {
-        
-    
-    
-    NSString * cellIdentifier = @"cell";
-    
-    cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    
-    if (cell == nil) {
-        
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellIdentifier];
-        
-    }
-    if (tableView == natureOfWorkTV)
-    {
-        
-      cell.textLabel.text = [natureOfWorkArray objectAtIndex:indexPath.row];
-
-    }
-    else if (tableView == crownBrandTV)
-    {
-       cell.textLabel.text = [crownBrandArray objectAtIndex:indexPath.row];
-
-    }
-    else if (tableView == typeOfCaseTV)
-    {
-        cell.textLabel.text = [typeOfCaseArray objectAtIndex:indexPath.row];
-    }
-    }
-    
-    else
-    {
-        
-        //Displaying Custom Cells
+    //Displaying Custom Cells
         
         PartnersCustomCell * partnerCell = [tableView dequeueReusableCellWithIdentifier:@"partnerCell"];
         if (partnerCell == nil) {
@@ -722,75 +596,74 @@
         
         return partnerCell;
 
-        }
-    
-    
-    
-    return cell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (tableView == natureOfWorkTV) {
-        
-        if ([[natureOfWorkArray objectAtIndex:indexPath.row] isEqual:@"PFM"])
-        {
-            
-            UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"Note" message:@"Please note this App is being updated for PFM and Ips e.max labs.You can however register and start the High Quality Zirconia Work-Zenostar immediately from Your Closest Ivoclar Vivadent Recognised Lab" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-            
-            [alert show];
-            
-            
-            [_natureOfWorkOutlet setTitle:@"Select Nature Of Work" forState:UIControlStateNormal];
-            
-            [_crownBrandDDOutlet setTitle:@"" forState:UIControlStateNormal];
-            
-            
-        }
-        
-        else
-        {
-            [_natureOfWorkOutlet setTitle:[natureOfWorkArray objectAtIndex:indexPath.row] forState:UIControlStateNormal];
-        }
-        
-        natureOfWorkTV.hidden = YES;
-
-    }
-    else if (tableView == crownBrandTV)
-    {
-        
-        crownBrandTV.hidden = YES;
-
-        
-        if ([[crownBrandArray objectAtIndex:indexPath.row] isEqual:@"e.max"])
-        {
-            
-            UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"Note" message:@"Please note this App is being updated for PFM and Ips e.max labs.You can however register and start the High Quality Zirconia Work-Zenostar immediately from Your Closest Ivoclar Vivadent Recognised Lab" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-            
-            [alert show];
-            
-            [_crownBrandDDOutlet setTitle:@"" forState:UIControlStateNormal];
-            
-        }
-        
-        else
-        {
-        
-            [_crownBrandDDOutlet setTitle:[crownBrandArray objectAtIndex:indexPath.row] forState:UIControlStateNormal];
-        }
-        
-    }
+//    if (tableView == natureOfWorkTV) {
+//        
+//        if ([[natureOfWorkArray objectAtIndex:indexPath.row] isEqual:@"PFM"])
+//        {
+//            
+//            UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"Note" message:@"Please note this App is being updated for PFM and Ips e.max labs.You can however register and start the High Quality Zirconia Work-Zenostar immediately from Your Closest Ivoclar Vivadent Recognised Lab" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+//            
+//            [alert show];
+//            
+//            _selectNatureOfWorkLabel.text = @"Select Nature Of Work";
+//            
+//            [_crownBrandLabel setText:@""];
+//            
+//        
+//            
+//        }
+//        
+//        else
+//        {
+//           [ _selectNatureOfWorkLabel setText:[natureOfWorkArray objectAtIndex:indexPath.row]];
+//            
+//            
+//            
+//        }
+//        
+//       natureOfWorkTV.hidden = YES;
+//
+//    }
+//    else if (tableView == crownBrandTV)
+//    {
+//        
+//        crownBrandTV.hidden = YES;
+//
+//        
+//        if ([[crownBrandArray objectAtIndex:indexPath.row] isEqual:@"e.max"])
+//        {
+//            
+//            UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"Note" message:@"Please note this App is being updated for PFM and Ips e.max labs.You can however register and start the High Quality Zirconia Work-Zenostar immediately from Your Closest Ivoclar Vivadent Recognised Lab" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+//            
+//            [alert show];
+//            
+//            [_crownBrandLabel setText:@""];
+//            
+//        }
+//        
+//        else
+//        {
+//            
+//            [_crownBrandLabel setText:[crownBrandArray objectAtIndex:indexPath.row]];
+//        
+//        }
+//        
+//    }
+//    
+//    else if (tableView == typeOfCaseTV)
+//    {
+//        [_typeOfCaseLabel setText:[typeOfCaseArray objectAtIndex:indexPath.row]];
+//        
+//        typeOfCaseTV.hidden = YES;
+//
+//    }
     
-    else if (tableView == typeOfCaseTV)
-    {
-        [_typeOfCaseOutlet setTitle:[typeOfCaseArray objectAtIndex:indexPath.row] forState:UIControlStateNormal];
-        
-        typeOfCaseTV.hidden = YES;
-
-    }
-    
-    else if(tableView == partnerLTV)
-    {
+    /*else*/ if(tableView == partnerLTV)
+        {
         
         _partnerNameTitle.hidden = NO;
         _partnerNameLabel.hidden = NO;
@@ -825,6 +698,179 @@
     
     return 45;
 }
+
+
+
+
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+{
+    return 1;
+}
+
+
+-(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+{
+    if (pickerView == _natureOfWorkPicker)
+    {
+        return natureOfWorkArray.count;
+    }
+    else if (pickerView == _crownBrandPicker)
+    {
+        return crownBrandArray.count;
+    }
+    
+    else
+    {
+        return typeOfCaseArray.count;
+    }
+    
+}
+
+-(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+{
+    if (pickerView == _natureOfWorkPicker)
+    {
+        return [natureOfWorkArray objectAtIndex:row];
+        
+    }
+    else if (pickerView == _crownBrandPicker)
+    {
+        return [crownBrandArray objectAtIndex:row];
+        
+    }
+    else
+    {
+        return [typeOfCaseArray objectAtIndex:row];
+    }
+    
+}
+
+
+- (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view
+{
+    
+    UILabel *pickerViewLabel = (id)view;
+    
+    if (!pickerViewLabel) {
+        pickerViewLabel= [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, [pickerView rowSizeForComponent:component].width - 10.0f, [pickerView rowSizeForComponent:component].height)];
+    }
+    
+    pickerViewLabel.backgroundColor = [UIColor clearColor];
+    
+    if (pickerView == _natureOfWorkPicker)
+    {
+        pickerViewLabel.text =[natureOfWorkArray objectAtIndex:row];
+        pickerViewLabel.font = [UIFont fontWithName:@"ChalkboardSE-Regular" size:17];
+        
+    }
+    else if (pickerView == _crownBrandPicker)
+
+    {
+        pickerViewLabel.text =[crownBrandArray objectAtIndex:row];
+        pickerViewLabel.font = [UIFont fontWithName:@"ChalkboardSE-Regular" size:16];
+        
+    }
+    
+    else
+    {
+        pickerViewLabel.text =[typeOfCaseArray objectAtIndex:row];
+        pickerViewLabel.font = [UIFont fontWithName:@"ChalkboardSE-Regular" size:17];
+    }
+    
+    return pickerViewLabel;
+}
+
+-(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+{
+    
+    if (pickerView == _natureOfWorkPicker)
+    {
+        _selectNatureOfWorkLabel.text =[natureOfWorkArray objectAtIndex:row];
+        
+        _natureOfWorkPicker.hidden = YES;
+        
+        _crownBrandDDOutlet.alpha = 1;
+        _crownBrandLabel.alpha = 1;
+        _noOfUnitsTF.alpha = 1;
+        _typeOfCaseOutlet.alpha = 1;
+        _typeOfCaseLabel.alpha = 1;
+        
+
+        
+        if ([[natureOfWorkArray objectAtIndex:row] isEqual:@"PFM"])
+        {
+            
+            UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"Note" message:@"Please note this App is being updated for PFM and Ips e.max labs.You can however register and start the High Quality Zirconia Work-Zenostar immediately from Your Closest Ivoclar Vivadent Recognised Lab" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+            
+            [alert show];
+            
+            _selectNatureOfWorkLabel.text = @"Select Nature Of Work";
+            
+            [_crownBrandLabel setText:@""];
+            
+            
+        }
+        
+        else
+        {
+            [ _selectNatureOfWorkLabel setText:[natureOfWorkArray objectAtIndex:row]];
+            
+        }
+        
+        
+        
+        
+    }
+    else if (pickerView == _crownBrandPicker)
+    {
+        
+        _crownBrandPicker.hidden = YES;
+        
+       // _crownBrandDDOutlet.alpha = 1;
+        //_crownBrandLabel.alpha = 1;
+        _noOfUnitsTF.alpha = 1;
+        _typeOfCaseOutlet.alpha = 1;
+        _typeOfCaseLabel.alpha = 1;
+
+        
+        if ([[crownBrandArray objectAtIndex:row] isEqual:@"e.max"])
+        {
+            
+            UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"Note" message:@"Please note this App is being updated for PFM and Ips e.max labs.You can however register and start the High Quality Zirconia Work-Zenostar immediately from Your Closest Ivoclar Vivadent Recognised Lab" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+            
+            [alert show];
+            
+            [_crownBrandLabel setText:@""];
+            
+        }
+        
+        else
+        {
+            
+            [_crownBrandLabel setText:[crownBrandArray objectAtIndex:row]];
+            
+        }
+        
+    }
+    
+    else if (pickerView == _typeOfCasePicker)
+    {
+        [_typeOfCaseLabel setText:[typeOfCaseArray objectAtIndex:row]];
+        
+        _typeOfCasePicker.hidden = YES;
+        
+    }
+
+    
+}
+
+
+
+
+
+
+
+
 
 /*
 #pragma mark - Navigation

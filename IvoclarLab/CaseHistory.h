@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CommonAppManager.h"
 
 @interface CaseHistory : UIViewController<NSXMLParserDelegate,UITableViewDataSource,UITableViewDelegate>
 
@@ -24,5 +25,9 @@
 
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *CHSidebarButton;
+
+
+-(void)connectionData:(NSData*)data status:(BOOL)status;
+
 
 @end
