@@ -1,36 +1,35 @@
 //
-//  CaseHistory.m
+//  LabCaseHistory.m
 //  IvoclarLab
 //
-//  Created by Mac on 16/11/15.
+//  Created by Mac on 26/11/15.
 //  Copyright (c) 2015 Subramanyam. All rights reserved.
 //
 
-#import "CaseHistory.h"
-#import "SWRevealViewController.h"
-#import "CaseHistoryCustomCell.h"
-#import "CaseEntryViewController.h"
+#import "LabCaseHistory.h"
 
-@interface CaseHistory ()
+@interface LabCaseHistory ()
 
 @end
 
-@implementation CaseHistory
+
+@implementation LabCaseHistory
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-
     
     SWRevealViewController *revealViewController = self.revealViewController;
     if ( revealViewController )
     {
-        [self.CHSidebarButton setTarget: self.revealViewController];
-        [self.CHSidebarButton setAction: @selector( revealToggle: )];
-        //[self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
+        [self.labCaseHistorySideMenu setTarget: self.revealViewController];
+        [self.labCaseHistorySideMenu setAction: @selector( revealToggle: )];
+        [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
     }
     
+    
+    self.navigationItem.title = @"Ivoclar lab";
     self.navigationController.navigationBar.barTintColor = [UIColor blueColor];
     // self.navigationController.navigationBar.translucent = NO;
     
@@ -46,16 +45,17 @@
     [self.navigationController.navigationBar.layer addAnimation: fadeTextAnimation forKey: @"fadeText"];
     self.navigationItem.title = @"Ivoclar Lab";
     
-    caseHistoryTV = [[UITableView alloc]initWithFrame:CGRectMake(0, 88, 374, 520) style:UITableViewStylePlain];
-   
+    
+    labCaseHistoryTV= [[UITableView alloc]initWithFrame:CGRectMake(0, 105, 372, 520) style:UITableViewStylePlain];
+    
+    
+
     
     
 }
 
--(void)viewWillAppear:(BOOL)animated
+-(void) getDataFromPlist
 {
-    
-    
     
     
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -86,40 +86,59 @@
     for (int i= 0; i<[contentArray count]; i++) {
         
         data= [contentArray objectAtIndex:i];
-        if ([data objectForKey:@"DoctorID"]) {
+        if ([data objectForKey:@"LabPersonID"]) {
             
             
             
-            NSString *drID = [data objectForKey:@"DoctorID"];
+            NSString *labID = [data objectForKey:@"LabPersonID"];
             
-            NSLog(@"dr id :%@",drID);
+            NSLog(@"labId without filtering :%@",labID);
             
             NSCharacterSet *invalidCharSet = [[NSCharacterSet characterSetWithCharactersInString:@"0123456789"]invertedSet];
-            filteredDoctorID = [[drID componentsSeparatedByCharactersInSet:invalidCharSet]componentsJoinedByString:@""];
+            filteredLabCaseId = [[labID componentsSeparatedByCharactersInSet:invalidCharSet]componentsJoinedByString:@""];
+            
+            NSLog(@"lab id :%@",filteredLabCaseId);
+            
         }
         
     }
-    
-    NSString * caseHistory = [NSString stringWithFormat:
-                          @"<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
-                          "<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n"
-                          "<soap:Body>\n"
-                          "<CaseHistory xmlns=\"http://www.kurnoolcity.com/wsdemo\">"
-                          "<DoctorId>%@</DoctorId>\n"
-                          "</CaseHistory>\n"
-                          "</soap:Body>\n"
-                          "</soap:Envelope>\n",filteredDoctorID];
-    
-    
-    
-    [[CommonAppManager sharedAppManager]soapService:caseHistory url:@"CaseHistory" withDelegate:self];
-    
-    }
+}
 
--(void)connectionData:(NSData*)data status:(BOOL)status
+-(void)viewWillAppear:(BOOL)animated
 {
     
+    [labCaseHistoryTV reloadData];
+    
+    [self getDataFromPlist];
+    
+    spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    spinner.center = CGPointMake(170, 400);
+    //spinner.tag = 12;
+    [self.view addSubview:spinner];
+    [spinner startAnimating];
+    
+    NSString * caseHistory = [NSString stringWithFormat:
+                              @"<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
+                              "<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n"
+                              "<soap:Body>\n"
+                              "<LabCaseHistory xmlns=\"http://www.kurnoolcity.com/wsdemo\">"
+                              "<LabId>%@</LabId>\n"
+                              "</LabCaseHistory>\n"
+                              "</soap:Body>\n"
+                              "</soap:Envelope>\n",filteredLabCaseId];
+    
+    
+    [[CommonAppManager sharedAppManager]soapService:caseHistory url:@"LabCaseHistory" withDelegate:self];
+    
+
+}
+
+
+-(void)connectionData:(NSData *)data status:(BOOL)status
+{
     if (status) {
+        
+        
         
         NSData *connectionData = data;
         
@@ -138,8 +157,8 @@
         [connectionError show];
     }
     
+    
 }
-
 
 -(void) parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName
   namespaceURI:(NSString *)namespaceURI qualifiedName:
@@ -155,29 +174,37 @@
   namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
 {
     
-    if ([elementName isEqual:@"CaseHistoryResult"]) {
+    [spinner stopAnimating];
+    
+    //NSLog(@"element names :%@\n\n",elementName);
+    
+    if ([elementName isEqual:@"LabCaseHistoryResult"]) {
         
-        NSLog(@"case history %@",currentDescription);
-        
+        NSLog(@"lab login :%@",currentDescription);
+
         NSData *objectData = [currentDescription dataUsingEncoding:NSUTF8StringEncoding];
-        CHDict = [NSJSONSerialization JSONObjectWithData:objectData options:NSJSONReadingMutableContainers error:nil];
-        NSLog(@"partner dictionary :%@",CHDict);
+        
+        caseHistoryDict = [NSJSONSerialization JSONObjectWithData:objectData options:NSJSONReadingMutableContainers error:nil];
+        NSLog(@"partner dictionary :%@",caseHistoryDict);
         
         
-        caseHistoryTV.delegate = self;
-        caseHistoryTV.dataSource = self;
+        labCaseHistoryTV.delegate = self;
+        labCaseHistoryTV.dataSource = self;
         
-        [self.view addSubview:caseHistoryTV];
+        [self.view addSubview:labCaseHistoryTV];
+        
         
         
     }
+    
 }
+
 
 
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return CHDict.count;
+    return caseHistoryDict.count;
 }
 
 
@@ -195,18 +222,21 @@
     
     caseHistoryCell.cellNumberCH.text = [NSString stringWithFormat:@"%ld", indexPath.row+1];
     
-    caseHistoryCell.crownBrandCH.text = [[CHDict valueForKey:@"CrownBrand"]objectAtIndex:indexPath.row];
+    caseHistoryCell.doctorNameCH.text = [[caseHistoryDict valueForKey:@"DoctorName"]objectAtIndex:indexPath.row];
+    caseHistoryCell.docAddressCH.text = [[caseHistoryDict valueForKey:@"Address"]objectAtIndex:indexPath.row];
     
-    caseHistoryCell.crownTypeCH.text = [[CHDict valueForKey:@"CrownType"]objectAtIndex:indexPath.row];
+    caseHistoryCell.crownBrandCH.text = [[caseHistoryDict valueForKey:@"CrownBrand"]objectAtIndex:indexPath.row];
     
-    caseHistoryCell.issueDateCH.text = [[CHDict valueForKey:@"IssueDate"]objectAtIndex:indexPath.row];
+    caseHistoryCell.crownTypeCH.text = [[caseHistoryDict valueForKey:@"CrownType"]objectAtIndex:indexPath.row];
     
-    caseHistoryCell.noOfUnitsCH.text = [[CHDict valueForKey:@"NoofUnits"]objectAtIndex:indexPath.row];
-
-    caseHistoryCell.caseIdCH.text = [[CHDict valueForKey:@"CaseId"]objectAtIndex:indexPath.row];
-
-    caseHistoryCell.caseStatusCH.text = [[CHDict valueForKey:@"CaseStatus"]objectAtIndex:indexPath.row];
-
+    caseHistoryCell.issueDateCH.text = [[caseHistoryDict valueForKey:@"IssueDate"]objectAtIndex:indexPath.row];
+    
+    caseHistoryCell.noOfUnitsCH.text = [[caseHistoryDict valueForKey:@"NoofUnits"]objectAtIndex:indexPath.row];
+    
+    caseHistoryCell.caseIdCH.text = [[caseHistoryDict valueForKey:@"CaseId"]objectAtIndex:indexPath.row];
+    
+    caseHistoryCell.caseStatusCH.text = [[caseHistoryDict valueForKey:@"CaseStatus"]objectAtIndex:indexPath.row];
+    
     
     return caseHistoryCell;
 }
@@ -217,6 +247,7 @@
 {
     return 270.00;
 }
+
 
 
 
@@ -235,18 +266,5 @@
     // Pass the selected object to the new view controller.
 }
 */
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 @end

@@ -18,6 +18,8 @@
     NSMutableData * webData;
     NSString * currentDescription;
     NSString *filteredDoctorID;
+    UIActivityIndicatorView * spinner;
+
     
 }
 

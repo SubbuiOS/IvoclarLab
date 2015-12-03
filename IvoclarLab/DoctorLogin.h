@@ -17,7 +17,8 @@
     NSURLConnection *theConnection;
     NSMutableData * webData;
     NSString * currentDescription;
-    UILabel * tagLabel;
+    UIActivityIndicatorView *spinner;
+
     
 }
 

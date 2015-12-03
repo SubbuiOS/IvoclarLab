@@ -9,6 +9,13 @@
 #import "SideMenuListViewController.h"
 #import "UpdateMobileScreen.h"
 #import "ComplaintsScreen.h"
+#import "ViewController.h"
+#import "LabCaseStatus.h"
+#import "ProfileScreen.h"
+#import "PagingControl.h"
+#import "CaseHistory.h"
+#import "FeedbackViewController.h"
+#import "LabCaseHistory.h"
 
 
 @interface SideMenuListViewController ()
@@ -24,15 +31,22 @@
     self.view.backgroundColor = [UIColor colorWithRed:115.0f/225.0f green:153.0f/255.0f blue:203.0f/255.0f alpha:1.0f];
     // This View Controller is for displaying the contents in sidemenu
     
+    [_sidebarMenuTV reloadData];
+    
     [[CommonAppManager sharedAppManager]viewController:self];
     
+    _sidebarMenuTV.backgroundColor = [UIColor colorWithRed:115.0f/225.0f green:153.0f/255.0f blue:203.0f/255.0f alpha:1.0f];
+
+        
     
     
   //  menuArray = [[NSMutableArray alloc]initWithObjects:@"CaseEntry",@"Profile",@"CaseHistory",@"Feedback",@"Update Mobile",@"Complaints",@"CaseDelivery",@"Home", nil];
+   
+    
+    
     _sidebarMenuTV.delegate = self;
     _sidebarMenuTV.dataSource = self;
-    _sidebarMenuTV.backgroundColor = [UIColor colorWithRed:115.0f/225.0f green:153.0f/255.0f blue:203.0f/255.0f alpha:1.0f];
-    
+
     //self.view.backgroundColor = [UIColor blueColor];
     
     
@@ -70,19 +84,139 @@
     if (cell == nil) {
         
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+
+        if (tableView.tag==2) {
+            
+            cell.backgroundColor = [UIColor colorWithRed:115.0f/225.0f green:153.0f/255.0f blue:203.0f/255.0f alpha:1.0f];
+        }
         //cell.backgroundColor = [UIColor blueColor];
 
     }
     
 
+    cell.textLabel.text = [menuArray objectAtIndex:indexPath.row];
+    cell.textLabel.textColor = [UIColor whiteColor];
     
     return cell;
     
     
-    
 }
 
-
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    if (tableView.tag == 1) {
+        
+        
+        if ([[menuArray objectAtIndex:indexPath.row ] isEqual:@"CaseEntry"]) {
+            
+            PagingControl * pageControl = [self.storyboard instantiateViewControllerWithIdentifier:@"pageControl"];
+            
+            [self.revealViewController pushFrontViewController:pageControl animated:YES];
+            
+            
+        }
+        else if ([[menuArray objectAtIndex:indexPath.row ] isEqual:@"Profile"]) {
+            
+            ProfileScreen * profilePage = [self.storyboard instantiateViewControllerWithIdentifier:@"profilePage"];
+            
+            [self.revealViewController pushFrontViewController:profilePage animated:YES];
+            
+        }
+        else if ([[menuArray objectAtIndex:indexPath.row ] isEqual:@"CaseHistory"]) {
+            
+            CaseHistory * caseHistory = [self.storyboard instantiateViewControllerWithIdentifier:@"caseHistory"];
+            
+            [self.revealViewController pushFrontViewController:caseHistory animated:YES];
+            
+        }
+        else if ([[menuArray objectAtIndex:indexPath.row ] isEqual:@"Feedback"]) {
+           
+           FeedbackViewController * caseHistory = [self.storyboard instantiateViewControllerWithIdentifier:@"feedback"];
+           
+           [self.revealViewController pushFrontViewController:caseHistory animated:YES];
+           
+       }
+       else if ([[menuArray objectAtIndex:indexPath.row ] isEqual:@"Update Mobile"]) {
+           
+           UpdateMobileScreen * updateMobile = [self.storyboard instantiateViewControllerWithIdentifier:@"updateMobile"];
+           
+           [self.revealViewController pushFrontViewController:updateMobile animated:YES];
+           
+       }
+       else if ([[menuArray objectAtIndex:indexPath.row ] isEqual:@"Complaints"]) {
+           
+           ComplaintsScreen * complaints = [self.storyboard instantiateViewControllerWithIdentifier:@"complaints"];
+           
+           [self.revealViewController pushFrontViewController:complaints animated:YES];
+           
+       }
+       else if ([[menuArray objectAtIndex:indexPath.row ] isEqual:@"CaseDelivery"]) {
+           
+           CaseDelivery * caseDelivery = [self.storyboard instantiateViewControllerWithIdentifier:@"caseDelivery"];
+           
+           [self.revealViewController pushFrontViewController:caseDelivery animated:YES];
+           
+       }
+       else if ([[menuArray objectAtIndex:indexPath.row ] isEqual:@"Home"]) {
+           
+           ViewController * homePage = [self.storyboard instantiateViewControllerWithIdentifier:@"homePage"];
+           
+           
+           homePage.modalTransitionStyle = UIModalTransitionStylePartialCurl;
+           
+          [self presentViewController:homePage animated:YES completion:nil];
+           
+           
+       }
+        
+        
+    }
+    
+    
+    if (tableView.tag == 2) {
+       
+        if ([[menuArray objectAtIndex:indexPath.row ] isEqual:@"CaseStatus"])
+        {
+            LabCaseStatus * caseStatus = [self.storyboard instantiateViewControllerWithIdentifier:@"labCaseStatus"];
+            [self.revealViewController pushFrontViewController:caseStatus animated:YES];
+            
+        }
+        
+       else if ([[menuArray objectAtIndex:indexPath.row ] isEqual:@"CaseHistory"]) {
+           
+            LabCaseHistory * caseHistoryLab = [self.storyboard instantiateViewControllerWithIdentifier:@"labCaseHistory"];
+            [self.revealViewController pushFrontViewController:caseHistoryLab animated:YES];
+           
+           
+        }
+//        else if ([[menuArray objectAtIndex:indexPath.row ] isEqual:@"View Complaints"]) {
+//            
+//            LabCaseStatus * viewComplaints = [self.storyboard instantiateViewControllerWithIdentifier:@"viewComplaints"];
+//            [self.revealViewController pushFrontViewController:viewComplaints animated:YES];
+//            
+//
+//        }
+        else if ([[menuArray objectAtIndex:indexPath.row ] isEqual:@"Home"]) {
+            
+            ViewController * homePage = [self.storyboard instantiateViewControllerWithIdentifier:@"homePage"];
+            
+            
+            homePage.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+            
+            [self presentViewController:homePage animated:YES completion:nil];
+            
+            
+            
+        }
+        
+        
+        
+        
+        
+    }
+    
+}
 
 #pragma mark - Navigation
 
@@ -91,18 +225,18 @@
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
     
-    if ([[segue identifier] isEqualToString:@"updateMobile"]) {
+  // if ([[segue identifier] isEqualToString:@"updateMobile"]) {
         
-        UpdateMobileScreen * mobileUpdate = [segue destinationViewController];
+    //    UpdateMobileScreen * mobileUpdate = [segue destinationViewController];
         
-        [self.revealViewController pushFrontViewController:mobileUpdate animated:YES];
+      //  [self.revealViewController pushFrontViewController:mobileUpdate animated:YES];
         
-    }
-    else if ([[segue identifier] isEqualToString:@"complaintSegue"])
-    {
+    //}
+    //else if ([[segue identifier] isEqualToString:@"complaintSegue"])
+    //{
         
         
-    }
+    //}
     
     
     

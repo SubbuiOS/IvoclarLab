@@ -13,7 +13,6 @@
 
 @end
 
-UIActivityIndicatorView * spinner;
 
 @implementation NewUserOTPScreen
 

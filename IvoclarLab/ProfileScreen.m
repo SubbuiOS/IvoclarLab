@@ -14,7 +14,6 @@
 
 @end
 
-UIActivityIndicatorView * spinner;
 
 @implementation ProfileScreen
 
@@ -38,15 +37,39 @@ UIActivityIndicatorView * spinner;
     [self.navigationController.navigationBar
      setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
     
+    
+//    CGRect frame = CGRectMake(0, 0, 200, 44);
+//    
+//    UIView * navigationTitleView = [[UIView alloc]initWithFrame:frame];
+//    navigationTitleView.backgroundColor = [UIColor clearColor];
+//    
+//    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(35, 3, 200, 40)];
+//    label.backgroundColor = [UIColor clearColor];
+//    label.font = [UIFont boldSystemFontOfSize:25.0];
+//    
+//    //label.textAlignment = NSTextAlignmentCenter;
+//    label.textColor = [UIColor whiteColor];
+//    label.text = @"Ivoclar Lab";
+//    
+//    [navigationTitleView addSubview:label];
+//    self.navigationItem.titleView = navigationTitleView;
+    
+    CATransition *fadeTextAnimation = [CATransition animation];
+    fadeTextAnimation.duration = 1;
+    fadeTextAnimation.type = kCATransitionPush;
+    
+    [self.navigationController.navigationBar.layer addAnimation: fadeTextAnimation forKey: @"fadeText"];
+    self.navigationItem.title = @"Ivoclar Lab";
+    
     //statesTableView = [[UITableView alloc]initWithFrame:CGRectMake(20, 300, 340, 150) style:UITableViewStylePlain];
     
     //cityTableView = [[UITableView alloc]initWithFrame:CGRectMake(20, 350, 340, 150) style:UITableViewStylePlain];
     
-    _statePicker.layer.borderColor = [UIColor clearColor].CGColor;
+    _statePicker.layer.borderColor = [UIColor whiteColor].CGColor;
     _statePicker.layer.borderWidth = 1;
     _statePicker.hidden = YES;
     
-    _statePicker.layer.borderColor = [UIColor clearColor].CGColor;
+    _statePicker.layer.borderColor = [UIColor whiteColor].CGColor;
     _statePicker.layer.borderWidth = 1;
     _statePicker.hidden = YES;
     

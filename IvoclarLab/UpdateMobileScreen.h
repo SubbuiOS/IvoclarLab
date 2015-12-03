@@ -10,6 +10,16 @@
 #import "CommonAppManager.h"
 
 @interface UpdateMobileScreen : UIViewController<NSXMLParserDelegate>
+
+
+{
+    
+    NSString * filteredDoctorID;
+    NSString * filteredDoctorMobile;
+    NSString * currentDescription;
+
+}
+
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *updateMobileSideMenu;
 
 @property (weak, nonatomic) IBOutlet UITextField *mobileNumberTF;

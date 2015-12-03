@@ -18,12 +18,14 @@
 #import "UpdateMobileScreen.h"
 #import "ComplaintsScreen.h"
 #import "CaseDelivery.h"
+#import "LabCaseStatus.h"
+#import "LabCaseHistory.h"
 
 #define MainURL  @"http://www.kurnoolcity.com/wsdemo"
 @interface CommonAppManager : NSObject{
     
     
-    NSURLConnection *theConnection;
+    NSURLConnection *urlConnection;
     NSMutableData *webData;
     
     NSMutableArray * menuArray;

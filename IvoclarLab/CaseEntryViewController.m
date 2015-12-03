@@ -9,7 +9,7 @@
 #import "CaseEntryViewController.h"
 #import "SWRevealViewController.h"
 #import "PartnersCustomCell.h"
-#import "MainViewController.h"
+#import "ViewController.h"
 #import "CaseHistory.h"
 
 @interface CaseEntryViewController ()
@@ -30,6 +30,22 @@
         [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
     }
 
+//    CGRect frame = CGRectMake(0, 0, 200, 44);
+//    
+//    UIView * navigationTitleView = [[UIView alloc]initWithFrame:frame];
+//    navigationTitleView.backgroundColor = [UIColor clearColor];
+//    
+//    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(35, 3, 200, 40)];
+//    label.backgroundColor = [UIColor clearColor];
+//    label.font = [UIFont boldSystemFontOfSize:25.0];
+//    
+//    //label.textAlignment = NSTextAlignmentCenter;
+//    label.textColor = [UIColor whiteColor];
+//    label.text = @"Ivoclar Lab";
+//    
+//    [navigationTitleView addSubview:label];
+//    self.navigationItem.titleView = navigationTitleView;
+    
     
     self.navigationController.navigationBar.barTintColor = [UIColor blueColor];
     // self.navigationController.navigationBar.translucent = NO;
@@ -38,6 +54,13 @@
     
     [self.navigationController.navigationBar
      setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+    
+    CATransition *fadeTextAnimation = [CATransition animation];
+    fadeTextAnimation.duration = 1;
+    fadeTextAnimation.type = kCATransitionPush;
+    
+    [self.navigationController.navigationBar.layer addAnimation: fadeTextAnimation forKey: @"fadeText"];
+    self.navigationItem.title = @"Ivoclar Lab";
     
     
     _partnerNameLabel.hidden = YES;
@@ -60,10 +83,11 @@
     
     partnerLbutton = [UIButton buttonWithType:UIButtonTypeSystem];
     
-    [partnerLbutton setTitle:@"Ok" forState:UIControlStateNormal];
-    partnerLbutton.frame = CGRectMake(130, 528, 100, 20);
+    [partnerLbutton setTitle:@"Cancel" forState:UIControlStateNormal];
+    partnerLbutton.frame = CGRectMake(30, 528, 300, 20);
     [partnerLbutton addTarget:self action:@selector(partnerLbuttonIsClicked) forControlEvents:UIControlEventTouchUpInside];
-    [partnerLbutton setBackgroundColor:[UIColor cyanColor]];
+    [partnerLbutton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [partnerLbutton setBackgroundColor:[UIColor whiteColor]];
     
     //partnerMTV = [[UITableView alloc]initWithFrame:CGRectMake(0, 5, 200, 150) style:UITableViewStylePlain];
     
@@ -71,11 +95,11 @@
     
     
     
-    _natureOfWorkPicker.layer.borderColor = [UIColor clearColor].CGColor;
+    _natureOfWorkPicker.layer.borderColor = [UIColor whiteColor].CGColor;
     _natureOfWorkPicker.layer.borderWidth = 1;
     _natureOfWorkPicker.hidden = YES;
     
-    _crownBrandPicker.layer.borderColor = [UIColor clearColor].CGColor;
+    _crownBrandPicker.layer.borderColor = [UIColor whiteColor].CGColor;
     _crownBrandPicker.layer.borderWidth = 1;
     _crownBrandPicker.hidden = YES;
     
@@ -425,7 +449,7 @@
         [partnerLView addSubview:partnerLTV];
         partnerLTV.delegate = self;
         partnerLTV.dataSource = self;
-
+        
         [self.view addSubview:partnerLView];
         
          //self.view.alpha=0.2;
@@ -445,9 +469,11 @@
 -(void)partnerLbuttonIsClicked
 {
     [partnerLView removeFromSuperview];
-    self.view.alpha = 1;
+    //self.view.alpha = 1;
     [partnerMTV removeFromSuperview];
     [partnerLTV removeFromSuperview];
+    
+    
     
 }
 
@@ -508,7 +534,7 @@
             
             // 1 represents Goto HomePage button is selected
             
-            MainViewController * homePage = [self.storyboard instantiateViewControllerWithIdentifier:@"homePage"];
+            ViewController * homePage = [self.storyboard instantiateViewControllerWithIdentifier:@"homePage"];
             
             [self presentViewController:homePage animated:YES completion:nil];
             

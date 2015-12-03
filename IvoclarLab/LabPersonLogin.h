@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "CommonAppManager.h"
+#import "SWRevealViewController.h"
 
 @interface LabPersonLogin : UIViewController<NSXMLParserDelegate>
 
@@ -15,6 +16,7 @@
 {
     NSMutableData * webData;
     NSString * currentDescription;
+    UIActivityIndicatorView * spinner;
 }
 
 @property (weak, nonatomic) IBOutlet UITextField *labPersonUserName;
@@ -23,7 +25,7 @@
 
 - (IBAction)labLoginSubmit:(id)sender;
 
-
+-(void) saveDataInPlist:(id) labPersonId;
 
 -(void)connectionData:(NSData*)data status:(BOOL)status;
 

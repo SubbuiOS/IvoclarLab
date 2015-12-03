@@ -38,6 +38,12 @@
     self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName :[UIColor whiteColor]}];
     
+    CATransition *fadeTextAnimation = [CATransition animation];
+    fadeTextAnimation.duration = 1;
+    fadeTextAnimation.type = kCATransitionPush;
+    
+    [self.navigationController.navigationBar.layer addAnimation: fadeTextAnimation forKey: @"fadeText"];
+    self.navigationItem.title = @"Ivoclar Lab";
     
     complaintTypeArray = [[NSMutableArray alloc]initWithObjects:@"Select Complaint Type",@"Case Related Complaint",@"Others", nil];
     

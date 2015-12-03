@@ -16,6 +16,8 @@
     NSURLConnection * urlConnection;
     NSMutableData * webData;
     NSString * currentDescription;
+    UIActivityIndicatorView * spinner;
+
 
 }
 

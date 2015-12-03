@@ -49,10 +49,8 @@ static CommonAppManager *_sharedAppManager;
 -(void) soapService: (NSString * )message url:appendingString withDelegate:(id)viewController
 {
     
-    
-    
-    
     delegate = viewController;
+    
     
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/zenoservice.asmx",MainURL]];
     NSMutableURLRequest *theRequest = [NSMutableURLRequest requestWithURL:url];
@@ -74,14 +72,14 @@ static CommonAppManager *_sharedAppManager;
     
     webData = [NSMutableData data];
 
-    theConnection = [[NSURLConnection alloc] initWithRequest:theRequest delegate:self];
+    urlConnection = [[NSURLConnection alloc] initWithRequest:theRequest delegate:self];
     
-    if( theConnection )
+    if( urlConnection )
     {
     }
     else
     {
-        NSLog(@"theConnection is NULL");
+        NSLog(@"urlConnection is NULL");
     }
     
     
@@ -139,7 +137,14 @@ static CommonAppManager *_sharedAppManager;
         {
             [(CaseDelivery*)delegate connectionData:nil status:NO];
         }
-
+        else if ([delegate isKindOfClass:[LabCaseStatus class]])
+        {
+            [(LabCaseStatus*)delegate connectionData:nil status:NO];
+        }
+        else if ([delegate isKindOfClass:[LabCaseHistory class]])
+        {
+            [(LabCaseHistory*)delegate connectionData:nil status:NO];
+        }
     
     
    
@@ -164,11 +169,17 @@ static CommonAppManager *_sharedAppManager;
     
     else if([delegate isKindOfClass:[LabPersonLogin class]])
     {
-        menuArray = [[NSMutableArray alloc]initWithObjects:@"CaseStatus",@"CaseHistory",@"Home", nil];
+        menuArray = [[NSMutableArray alloc]initWithObjects:@"CaseStatus",@"CaseHistory",@"View Complaints",@"Home", nil];
         
         [(LabPersonLogin *)delegate connectionData:encodedData status:YES];
         
     }
+    
+    else if ([delegate isKindOfClass:[DoctorAlreadyRegistered class]])
+    {
+        [(DoctorAlreadyRegistered *)delegate connectionData:encodedData status:YES];
+    }
+    
     else if([delegate isKindOfClass:[NewUserOTPScreen class]])
     {
         [(NewUserOTPScreen*)delegate connectionData:encodedData status:YES];
@@ -197,7 +208,16 @@ static CommonAppManager *_sharedAppManager;
     {
         [(CaseDelivery*)delegate connectionData:encodedData status:YES];
     }
-    
+    else if ([delegate isKindOfClass:[LabCaseStatus class]])
+    {
+        [(LabCaseStatus*)delegate connectionData:encodedData status:YES];
+    }
+    else if ([delegate isKindOfClass:[LabCaseHistory class]])
+    {
+        [(LabCaseHistory*)delegate connectionData:encodedData status:YES];
+    }
+
+
     
     
     

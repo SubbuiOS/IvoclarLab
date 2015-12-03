@@ -14,13 +14,13 @@
 
 @end
 
-UIActivityIndicatorView * spinner;
 
 @implementation DoctorAlreadyRegistered
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
     
     
 }
@@ -51,17 +51,26 @@ UIActivityIndicatorView * spinner;
 - (IBAction)registeredSubmit:(id)sender {
     
     
-    // Goes to CaseEntry Screen after submitting
     
-    SWRevealViewController * sideMenu = [self.storyboard instantiateViewControllerWithIdentifier:@"DoctorSWRevealViewController"];
+    NSString *checkLoginDoctor = [NSString stringWithFormat:
+                               @"<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
+                               "<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n"
+                               "<soap:Body>\n"
+                               "<CheckLogin xmlns=\"http://www.kurnoolcity.com/wsdemo\">"
+                               "<Mobile>%@</Mobile>\n"
+                               "<Password>%@</Password>\n"
+                               "<RegId>-</RegId>\n"
+                               "</CheckLogin>\n"
+                               "</soap:Body>\n"
+                               "</soap:Envelope>\n",_registeredMobileNoTF.text,_registeredPasswordTF.text];
     
-    //[self.revealViewController pushFrontViewController:sideMenu animated:YES];
+    [[CommonAppManager sharedAppManager]soapService:checkLoginDoctor url:@"CheckLogin" withDelegate:self];
+
     
-    [self presentViewController:sideMenu animated:YES completion:nil];
+
 }
 
 - (IBAction)forgotPassword:(id)sender {
-    
     
     
     spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
@@ -136,6 +145,19 @@ UIActivityIndicatorView * spinner;
     if ([elementName isEqual:@"ForgotPasswordResult"]) {
         
         NSLog(@"Password :%@",currentDescription);
+    }
+    
+    if ([elementName isEqual:@"CheckLoginResult"]) {
+        
+        
+        NSLog(@"doctor registere login success : %@",currentDescription);
+        // Goes to CaseEntry Screen after submitting
+        
+        SWRevealViewController * sideMenu = [self.storyboard instantiateViewControllerWithIdentifier:@"DoctorSWRevealViewController"];
+        
+        //[self.revealViewController pushFrontViewController:sideMenu animated:YES];
+        
+        [self presentViewController:sideMenu animated:YES completion:nil];
     }
     
 }

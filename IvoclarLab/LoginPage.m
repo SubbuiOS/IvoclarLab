@@ -23,10 +23,27 @@
   //  self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:99.0f/255.0f green:99.0f/255.0f blue:240.0f/255.0f alpha:1.0f];
     self.view.backgroundColor = [UIColor colorWithRed:255.0f/255.0f green:255.0f/255.0f blue:255.0f/255.0f alpha:1.0f];
     
+    CGRect frame = CGRectMake(0, 0, 200, 44);
+    
+    UIView * navigationTitleView = [[UIView alloc]initWithFrame:frame];
+    navigationTitleView.backgroundColor = [UIColor clearColor];
+    
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(35, 3, 200, 40)];
+    label.backgroundColor = [UIColor clearColor];
+    label.font = [UIFont boldSystemFontOfSize:25.0];
+    
+    //label.textAlignment = NSTextAlignmentCenter;
+    label.textColor = [UIColor whiteColor];
+    label.text = @"Ivoclar Lab";
+    
+    [navigationTitleView addSubview:label];
+    self.navigationItem.titleView = navigationTitleView;
+    
+    
     
     self.navigationController.navigationBar.barTintColor = [UIColor blueColor];
 
-    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];    
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
 

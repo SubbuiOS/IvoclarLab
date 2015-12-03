@@ -22,6 +22,8 @@
     UITableViewCell * cell;
     UITableView * statesTableView;
     UITableView * cityTableView;
+    UIActivityIndicatorView * spinner;
+
 }
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *sidebarButton;

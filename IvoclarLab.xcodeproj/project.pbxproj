@@ -15,13 +15,16 @@
 		04041C5A1BEC7678009C49E6 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04041C581BEC7678009C49E6 /* LaunchScreen.xib */; };
 		04041C661BEC7678009C49E6 /* IvoclarLabTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 04041C651BEC7678009C49E6 /* IvoclarLabTests.m */; };
 		04041C711BEC791A009C49E6 /* SideMenuListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04041C701BEC791A009C49E6 /* SideMenuListViewController.m */; };
-		04041C741BEC7958009C49E6 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04041C731BEC7958009C49E6 /* MainViewController.m */; };
 		04041C771BEC7A02009C49E6 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04041C761BEC7A02009C49E6 /* SWRevealViewController.m */; };
 		04041C7A1BEC8A53009C49E6 /* CaseEntryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04041C791BEC8A53009C49E6 /* CaseEntryViewController.m */; };
 		04041C7F1BECB873009C49E6 /* FeedbackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04041C7E1BECB873009C49E6 /* FeedbackViewController.m */; };
 		04372DE81C01215800AD71FE /* CaseDelivery.m in Sources */ = {isa = PBXBuildFile; fileRef = 04372DE71C01215800AD71FE /* CaseDelivery.m */; };
+		0455FC7A1C0FE12800727D23 /* MetalFree1.png in Resources */ = {isa = PBXBuildFile; fileRef = 0455FC791C0FE12800727D23 /* MetalFree1.png */; };
 		04723EE51BEDE8B00054D36F /* DoctorLogin.m in Sources */ = {isa = PBXBuildFile; fileRef = 04723EE41BEDE8B00054D36F /* DoctorLogin.m */; };
 		04B31C4D1C026C0D001967D4 /* CommonAppManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B31C4C1C026C0D001967D4 /* CommonAppManager.m */; };
+		04B939C61C0FB4C6002C6110 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04B939C51C0FB4C6002C6110 /* UIKit.framework */; };
+		04B939CB1C0FB78C002C6110 /* CommonAppManager.m in Headers */ = {isa = PBXBuildFile; fileRef = 04B31C4C1C026C0D001967D4 /* CommonAppManager.m */; settings = {ATTRIBUTES = (Private, ); }; };
+		04B939CD1C0FC1DE002C6110 /* IvoclarLaunchScreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B939CC1C0FC1DE002C6110 /* IvoclarLaunchScreen.png */; };
 		04C929481BFECA3700C8ADE4 /* PagingControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C929471BFECA3700C8ADE4 /* PagingControl.m */; };
 		04D47EBC1BF07A7B0018B5C3 /* DoctorAlreadyRegistered.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D47EBB1BF07A7B0018B5C3 /* DoctorAlreadyRegistered.m */; };
 		04D47EBF1BF0C7140018B5C3 /* NewUserOTPScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D47EBE1BF0C7130018B5C3 /* NewUserOTPScreen.m */; };
@@ -30,7 +33,6 @@
 		04D5E43D1C03A67A0048BD18 /* LoginPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D5E43C1C03A67A0048BD18 /* LoginPage.m */; };
 		04D5E4401C03A68D0048BD18 /* LabPersonLogin.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D5E43F1C03A68D0048BD18 /* LabPersonLogin.m */; };
 		04D5E4461C03C40E0048BD18 /* sideMenu.png in Resources */ = {isa = PBXBuildFile; fileRef = 04D5E4451C03C40E0048BD18 /* sideMenu.png */; };
-		04D5E4471C03DC5A0048BD18 /* DoctorLogin.m in Sources */ = {isa = PBXBuildFile; fileRef = 04723EE41BEDE8B00054D36F /* DoctorLogin.m */; };
 		04D5E4491C03EC880048BD18 /* dropdown.png in Resources */ = {isa = PBXBuildFile; fileRef = 04D5E4481C03EC880048BD18 /* dropdown.png */; };
 		04D8A5AF1BFFB3EB0025CA52 /* GUITabPagerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D8A5AE1BFFB3EB0025CA52 /* GUITabPagerViewController.m */; };
 		04D8A5B21BFFB40D0025CA52 /* GUITabScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D8A5B11BFFB40D0025CA52 /* GUITabScrollView.m */; };
@@ -39,6 +41,10 @@
 		04DF4CD31BFA73AF0041D185 /* PartnersCustomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DF4CD11BFA73AF0041D185 /* PartnersCustomCell.m */; };
 		04DF4CD41BFA73AF0041D185 /* PartnersCustomCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04DF4CD21BFA73AF0041D185 /* PartnersCustomCell.xib */; };
 		04DF4CD71BFAD6330041D185 /* CaseHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DF4CD61BFAD6330041D185 /* CaseHistory.m */; };
+		04EB58661C07B20E0049E049 /* LabCaseHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EB58651C07B20E0049E049 /* LabCaseHistory.m */; };
+		04EB58A31C07F7A90049E049 /* background1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 04EB58A11C07F7A90049E049 /* background1.jpg */; };
+		04EB58A41C07F7A90049E049 /* background2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 04EB58A21C07F7A90049E049 /* background2.jpg */; };
+		04EB58A61C07F9490049E049 /* button.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 04EB58A51C07F9490049E049 /* button.jpeg */; };
 		04ECDD3E1C055DB20055FF54 /* LabCaseStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 04ECDD3D1C055DB20055FF54 /* LabCaseStatus.m */; };
 		04ED20761BEDD6F10039A139 /* emax_logo.gif in Resources */ = {isa = PBXBuildFile; fileRef = 04ED20751BEDD6F10039A139 /* emax_logo.gif */; };
 		04F977F91BFFF08F009B038F /* UpdateMobileScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F977F81BFFF08F009B038F /* UpdateMobileScreen.m */; };
@@ -74,8 +80,6 @@
 		04041C651BEC7678009C49E6 /* IvoclarLabTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IvoclarLabTests.m; sourceTree = "<group>"; };
 		04041C6F1BEC7919009C49E6 /* SideMenuListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SideMenuListViewController.h; sourceTree = "<group>"; };
 		04041C701BEC791A009C49E6 /* SideMenuListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SideMenuListViewController.m; sourceTree = "<group>"; };
-		04041C721BEC7958009C49E6 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
-		04041C731BEC7958009C49E6 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		04041C751BEC7A02009C49E6 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
 		04041C761BEC7A02009C49E6 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
 		04041C781BEC8A53009C49E6 /* CaseEntryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CaseEntryViewController.h; sourceTree = "<group>"; };
@@ -84,10 +88,13 @@
 		04041C7E1BECB873009C49E6 /* FeedbackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedbackViewController.m; sourceTree = "<group>"; };
 		04372DE61C01215800AD71FE /* CaseDelivery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CaseDelivery.h; sourceTree = "<group>"; };
 		04372DE71C01215800AD71FE /* CaseDelivery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CaseDelivery.m; sourceTree = "<group>"; };
+		0455FC791C0FE12800727D23 /* MetalFree1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MetalFree1.png; sourceTree = "<group>"; };
 		04723EE31BEDE8B00054D36F /* DoctorLogin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DoctorLogin.h; sourceTree = "<group>"; };
 		04723EE41BEDE8B00054D36F /* DoctorLogin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DoctorLogin.m; sourceTree = "<group>"; };
 		04B31C4B1C026BFE001967D4 /* CommonAppManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommonAppManager.h; sourceTree = "<group>"; };
 		04B31C4C1C026C0D001967D4 /* CommonAppManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommonAppManager.m; sourceTree = "<group>"; };
+		04B939C51C0FB4C6002C6110 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		04B939CC1C0FC1DE002C6110 /* IvoclarLaunchScreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = IvoclarLaunchScreen.png; path = ../IvoclarLaunchScreen.png; sourceTree = "<group>"; };
 		04C929461BFECA3700C8ADE4 /* PagingControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PagingControl.h; sourceTree = "<group>"; };
 		04C929471BFECA3700C8ADE4 /* PagingControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PagingControl.m; sourceTree = "<group>"; };
 		04D47EBA1BF07A7B0018B5C3 /* DoctorAlreadyRegistered.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DoctorAlreadyRegistered.h; sourceTree = "<group>"; };
@@ -116,6 +123,11 @@
 		04DF4CD21BFA73AF0041D185 /* PartnersCustomCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PartnersCustomCell.xib; sourceTree = "<group>"; };
 		04DF4CD51BFAD6330041D185 /* CaseHistory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CaseHistory.h; sourceTree = "<group>"; };
 		04DF4CD61BFAD6330041D185 /* CaseHistory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CaseHistory.m; sourceTree = "<group>"; };
+		04EB58641C07B20E0049E049 /* LabCaseHistory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LabCaseHistory.h; sourceTree = "<group>"; };
+		04EB58651C07B20E0049E049 /* LabCaseHistory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LabCaseHistory.m; sourceTree = "<group>"; };
+		04EB58A11C07F7A90049E049 /* background1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = background1.jpg; sourceTree = "<group>"; };
+		04EB58A21C07F7A90049E049 /* background2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = background2.jpg; sourceTree = "<group>"; };
+		04EB58A51C07F9490049E049 /* button.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = button.jpeg; sourceTree = "<group>"; };
 		04ECDD3C1C055DB20055FF54 /* LabCaseStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LabCaseStatus.h; sourceTree = "<group>"; };
 		04ECDD3D1C055DB20055FF54 /* LabCaseStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LabCaseStatus.m; sourceTree = "<group>"; };
 		04ED20751BEDD6F10039A139 /* emax_logo.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = emax_logo.gif; sourceTree = "<group>"; };
@@ -133,6 +145,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04B939C61C0FB4C6002C6110 /* UIKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -149,6 +162,7 @@
 		04041C3D1BEC7677009C49E6 = {
 			isa = PBXGroup;
 			children = (
+				04B939C51C0FB4C6002C6110 /* UIKit.framework */,
 				04041C481BEC7678009C49E6 /* IvoclarLab */,
 				04041C621BEC7678009C49E6 /* IvoclarLabTests */,
 				04041C471BEC7678009C49E6 /* Products */,
@@ -167,12 +181,9 @@
 		04041C481BEC7678009C49E6 /* IvoclarLab */ = {
 			isa = PBXGroup;
 			children = (
-				04D5E4481C03EC880048BD18 /* dropdown.png */,
-				04F977FD1C000519009B038F /* checked_checkbox.png */,
-				04D5E4451C03C40E0048BD18 /* sideMenu.png */,
-				04F977FE1C000519009B038F /* tickMarkCheckBox.png */,
-				04F978011C0005DF009B038F /* unchecked_checkbox.png */,
-				04ED20751BEDD6F10039A139 /* emax_logo.gif */,
+				04EB58A11C07F7A90049E049 /* background1.jpg */,
+				04EB58A51C07F9490049E049 /* button.jpeg */,
+				04EB58A21C07F7A90049E049 /* background2.jpg */,
 				04B31C4B1C026BFE001967D4 /* CommonAppManager.h */,
 				04B31C4C1C026C0D001967D4 /* CommonAppManager.m */,
 				04041C4D1BEC7678009C49E6 /* AppDelegate.h */,
@@ -181,52 +192,13 @@
 				04041C511BEC7678009C49E6 /* ViewController.m */,
 				04D5E43B1C03A67A0048BD18 /* LoginPage.h */,
 				04D5E43C1C03A67A0048BD18 /* LoginPage.m */,
-				04D5E43E1C03A68D0048BD18 /* LabPersonLogin.h */,
-				04D5E43F1C03A68D0048BD18 /* LabPersonLogin.m */,
-				04ECDD3C1C055DB20055FF54 /* LabCaseStatus.h */,
-				04ECDD3D1C055DB20055FF54 /* LabCaseStatus.m */,
-				04723EE31BEDE8B00054D36F /* DoctorLogin.h */,
-				04723EE41BEDE8B00054D36F /* DoctorLogin.m */,
-				04D47EBA1BF07A7B0018B5C3 /* DoctorAlreadyRegistered.h */,
-				04D47EBB1BF07A7B0018B5C3 /* DoctorAlreadyRegistered.m */,
-				04D47EBD1BF0C7130018B5C3 /* NewUserOTPScreen.h */,
-				04D47EBE1BF0C7130018B5C3 /* NewUserOTPScreen.m */,
-				04D47EC01BF0DB280018B5C3 /* PasswordGenarationScreen.h */,
-				04D47EC11BF0DB280018B5C3 /* PasswordGenarationScreen.m */,
-				04D47EC31BF0E42F0018B5C3 /* ProfileScreen.h */,
-				04D47EC41BF0E42F0018B5C3 /* ProfileScreen.m */,
-				04041C6F1BEC7919009C49E6 /* SideMenuListViewController.h */,
-				04041C701BEC791A009C49E6 /* SideMenuListViewController.m */,
-				04041C721BEC7958009C49E6 /* MainViewController.h */,
-				04041C731BEC7958009C49E6 /* MainViewController.m */,
-				04041C751BEC7A02009C49E6 /* SWRevealViewController.h */,
-				04041C761BEC7A02009C49E6 /* SWRevealViewController.m */,
-				04041C781BEC8A53009C49E6 /* CaseEntryViewController.h */,
-				04041C791BEC8A53009C49E6 /* CaseEntryViewController.m */,
-				04D8A5AD1BFFB3EB0025CA52 /* GUITabPagerViewController.h */,
-				04D8A5AE1BFFB3EB0025CA52 /* GUITabPagerViewController.m */,
-				04D8A5B01BFFB40D0025CA52 /* GUITabScrollView.h */,
-				04D8A5B11BFFB40D0025CA52 /* GUITabScrollView.m */,
-				04C929461BFECA3700C8ADE4 /* PagingControl.h */,
-				04C929471BFECA3700C8ADE4 /* PagingControl.m */,
-				04DF4CD51BFAD6330041D185 /* CaseHistory.h */,
-				04DF4CD61BFAD6330041D185 /* CaseHistory.m */,
-				04DCFF581BFBBABA00BD03E9 /* CaseHistoryCustomCell.h */,
-				04DCFF591BFBBABA00BD03E9 /* CaseHistoryCustomCell.m */,
-				04DCFF5A1BFBBABA00BD03E9 /* CaseHistoryCustomCell.xib */,
-				04DF4CD01BFA73AF0041D185 /* PartnersCustomCell.h */,
-				04DF4CD11BFA73AF0041D185 /* PartnersCustomCell.m */,
-				04DF4CD21BFA73AF0041D185 /* PartnersCustomCell.xib */,
-				04041C7D1BECB873009C49E6 /* FeedbackViewController.h */,
-				04041C7E1BECB873009C49E6 /* FeedbackViewController.m */,
-				04F977F71BFFF08F009B038F /* UpdateMobileScreen.h */,
-				04F977F81BFFF08F009B038F /* UpdateMobileScreen.m */,
-				04F977FA1C0001BB009B038F /* ComplaintsScreen.h */,
-				04F977FB1C0001BB009B038F /* ComplaintsScreen.m */,
-				04372DE61C01215800AD71FE /* CaseDelivery.h */,
-				04372DE71C01215800AD71FE /* CaseDelivery.m */,
-				04041C531BEC7678009C49E6 /* Main.storyboard */,
+				04EB58601C07AEF10049E049 /* Doctor */,
+				04EB58621C07AF320049E049 /* LabPerson */,
+				04EB58611C07AF100049E049 /* SideMenu */,
+				04EB58631C07AF5C0049E049 /* Images */,
 				04041C561BEC7678009C49E6 /* Images.xcassets */,
+				0455FC791C0FE12800727D23 /* MetalFree1.png */,
+				04041C531BEC7678009C49E6 /* Main.storyboard */,
 				04041C581BEC7678009C49E6 /* LaunchScreen.xib */,
 				04041C491BEC7678009C49E6 /* Supporting Files */,
 			);
@@ -259,7 +231,97 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		04EB58601C07AEF10049E049 /* Doctor */ = {
+			isa = PBXGroup;
+			children = (
+				04723EE31BEDE8B00054D36F /* DoctorLogin.h */,
+				04723EE41BEDE8B00054D36F /* DoctorLogin.m */,
+				04D47EBA1BF07A7B0018B5C3 /* DoctorAlreadyRegistered.h */,
+				04D47EBB1BF07A7B0018B5C3 /* DoctorAlreadyRegistered.m */,
+				04D47EBD1BF0C7130018B5C3 /* NewUserOTPScreen.h */,
+				04D47EBE1BF0C7130018B5C3 /* NewUserOTPScreen.m */,
+				04D47EC01BF0DB280018B5C3 /* PasswordGenarationScreen.h */,
+				04D47EC11BF0DB280018B5C3 /* PasswordGenarationScreen.m */,
+				04D47EC31BF0E42F0018B5C3 /* ProfileScreen.h */,
+				04D47EC41BF0E42F0018B5C3 /* ProfileScreen.m */,
+				04041C781BEC8A53009C49E6 /* CaseEntryViewController.h */,
+				04041C791BEC8A53009C49E6 /* CaseEntryViewController.m */,
+				04D8A5AD1BFFB3EB0025CA52 /* GUITabPagerViewController.h */,
+				04D8A5AE1BFFB3EB0025CA52 /* GUITabPagerViewController.m */,
+				04D8A5B01BFFB40D0025CA52 /* GUITabScrollView.h */,
+				04D8A5B11BFFB40D0025CA52 /* GUITabScrollView.m */,
+				04C929461BFECA3700C8ADE4 /* PagingControl.h */,
+				04C929471BFECA3700C8ADE4 /* PagingControl.m */,
+				04DF4CD51BFAD6330041D185 /* CaseHistory.h */,
+				04DF4CD61BFAD6330041D185 /* CaseHistory.m */,
+				04DCFF581BFBBABA00BD03E9 /* CaseHistoryCustomCell.h */,
+				04DCFF591BFBBABA00BD03E9 /* CaseHistoryCustomCell.m */,
+				04DCFF5A1BFBBABA00BD03E9 /* CaseHistoryCustomCell.xib */,
+				04DF4CD01BFA73AF0041D185 /* PartnersCustomCell.h */,
+				04DF4CD11BFA73AF0041D185 /* PartnersCustomCell.m */,
+				04DF4CD21BFA73AF0041D185 /* PartnersCustomCell.xib */,
+				04041C7D1BECB873009C49E6 /* FeedbackViewController.h */,
+				04041C7E1BECB873009C49E6 /* FeedbackViewController.m */,
+				04F977F71BFFF08F009B038F /* UpdateMobileScreen.h */,
+				04F977F81BFFF08F009B038F /* UpdateMobileScreen.m */,
+				04F977FA1C0001BB009B038F /* ComplaintsScreen.h */,
+				04F977FB1C0001BB009B038F /* ComplaintsScreen.m */,
+				04372DE61C01215800AD71FE /* CaseDelivery.h */,
+				04372DE71C01215800AD71FE /* CaseDelivery.m */,
+			);
+			name = Doctor;
+			sourceTree = "<group>";
+		};
+		04EB58611C07AF100049E049 /* SideMenu */ = {
+			isa = PBXGroup;
+			children = (
+				04041C6F1BEC7919009C49E6 /* SideMenuListViewController.h */,
+				04041C701BEC791A009C49E6 /* SideMenuListViewController.m */,
+				04041C751BEC7A02009C49E6 /* SWRevealViewController.h */,
+				04041C761BEC7A02009C49E6 /* SWRevealViewController.m */,
+			);
+			name = SideMenu;
+			sourceTree = "<group>";
+		};
+		04EB58621C07AF320049E049 /* LabPerson */ = {
+			isa = PBXGroup;
+			children = (
+				04D5E43E1C03A68D0048BD18 /* LabPersonLogin.h */,
+				04D5E43F1C03A68D0048BD18 /* LabPersonLogin.m */,
+				04ECDD3C1C055DB20055FF54 /* LabCaseStatus.h */,
+				04ECDD3D1C055DB20055FF54 /* LabCaseStatus.m */,
+				04EB58641C07B20E0049E049 /* LabCaseHistory.h */,
+				04EB58651C07B20E0049E049 /* LabCaseHistory.m */,
+			);
+			name = LabPerson;
+			sourceTree = "<group>";
+		};
+		04EB58631C07AF5C0049E049 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				04B939CC1C0FC1DE002C6110 /* IvoclarLaunchScreen.png */,
+				04D5E4481C03EC880048BD18 /* dropdown.png */,
+				04F977FD1C000519009B038F /* checked_checkbox.png */,
+				04D5E4451C03C40E0048BD18 /* sideMenu.png */,
+				04F977FE1C000519009B038F /* tickMarkCheckBox.png */,
+				04F978011C0005DF009B038F /* unchecked_checkbox.png */,
+				04ED20751BEDD6F10039A139 /* emax_logo.gif */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		04B939C91C0FB752002C6110 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				04B939CB1C0FB78C002C6110 /* CommonAppManager.m in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
 		04041C451BEC7678009C49E6 /* IvoclarLab */ = {
@@ -269,6 +331,7 @@
 				04041C421BEC7678009C49E6 /* Sources */,
 				04041C431BEC7678009C49E6 /* Frameworks */,
 				04041C441BEC7678009C49E6 /* Resources */,
+				04B939C91C0FB752002C6110 /* Headers */,
 			);
 			buildRules = (
 			);
@@ -340,16 +403,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				04F977FF1C000519009B038F /* checked_checkbox.png in Resources */,
+				04EB58A61C07F9490049E049 /* button.jpeg in Resources */,
 				04041C551BEC7678009C49E6 /* Main.storyboard in Resources */,
 				04F978021C0005DF009B038F /* unchecked_checkbox.png in Resources */,
 				04ED20761BEDD6F10039A139 /* emax_logo.gif in Resources */,
 				04DCFF5C1BFBBABA00BD03E9 /* CaseHistoryCustomCell.xib in Resources */,
+				04EB58A41C07F7A90049E049 /* background2.jpg in Resources */,
+				0455FC7A1C0FE12800727D23 /* MetalFree1.png in Resources */,
 				04D5E4461C03C40E0048BD18 /* sideMenu.png in Resources */,
 				04041C5A1BEC7678009C49E6 /* LaunchScreen.xib in Resources */,
+				04EB58A31C07F7A90049E049 /* background1.jpg in Resources */,
 				04D5E4491C03EC880048BD18 /* dropdown.png in Resources */,
 				04041C571BEC7678009C49E6 /* Images.xcassets in Resources */,
 				04F978001C000519009B038F /* tickMarkCheckBox.png in Resources */,
 				04DF4CD41BFA73AF0041D185 /* PartnersCustomCell.xib in Resources */,
+				04B939CD1C0FC1DE002C6110 /* IvoclarLaunchScreen.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -375,6 +443,7 @@
 				04041C7A1BEC8A53009C49E6 /* CaseEntryViewController.m in Sources */,
 				04F977FC1C0001BB009B038F /* ComplaintsScreen.m in Sources */,
 				04ECDD3E1C055DB20055FF54 /* LabCaseStatus.m in Sources */,
+				04EB58661C07B20E0049E049 /* LabCaseHistory.m in Sources */,
 				04C929481BFECA3700C8ADE4 /* PagingControl.m in Sources */,
 				04D8A5AF1BFFB3EB0025CA52 /* GUITabPagerViewController.m in Sources */,
 				04D47EBC1BF07A7B0018B5C3 /* DoctorAlreadyRegistered.m in Sources */,
@@ -386,7 +455,6 @@
 				04041C521BEC7678009C49E6 /* ViewController.m in Sources */,
 				04D47EBF1BF0C7140018B5C3 /* NewUserOTPScreen.m in Sources */,
 				04041C4F1BEC7678009C49E6 /* AppDelegate.m in Sources */,
-				04041C741BEC7958009C49E6 /* MainViewController.m in Sources */,
 				04DCFF5B1BFBBABA00BD03E9 /* CaseHistoryCustomCell.m in Sources */,
 				04D47EC21BF0DB280018B5C3 /* PasswordGenarationScreen.m in Sources */,
 				04041C4C1BEC7678009C49E6 /* main.m in Sources */,
@@ -400,7 +468,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				04D5E4471C03DC5A0048BD18 /* DoctorLogin.m in Sources */,
 				04041C661BEC7678009C49E6 /* IvoclarLabTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -520,6 +587,7 @@
 				INFOPLIST_FILE = IvoclarLab/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -530,6 +598,7 @@
 				INFOPLIST_FILE = IvoclarLab/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

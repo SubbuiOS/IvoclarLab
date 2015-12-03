@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LoginPage : UIViewController
+@interface LoginPage : UIViewController<UIViewControllerTransitioningDelegate>
 
 
 
@@ -17,6 +17,8 @@
 
 
 - (IBAction)labPersonLogin:(id)sender;
+
+
 
 
 @end

@@ -17,7 +17,6 @@
 
 @end
 
-UIActivityIndicatorView *spinner;
 
 @implementation DoctorLogin
 
@@ -25,11 +24,33 @@ UIActivityIndicatorView *spinner;
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.navigationItem.title = @"Ivoclar Lab";
+   // self.navigationItem.title = @"Ivoclar Lab";
+    
+    CGRect frame = CGRectMake(0, 0, 400, 44);
+    
+    UIView * navigationTitleView = [[UIView alloc]initWithFrame:frame];
+    navigationTitleView.backgroundColor = [UIColor clearColor];
+    
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(20, 3, 200, 40)];
+    label.backgroundColor = [UIColor clearColor];
+    label.font = [UIFont boldSystemFontOfSize:25.0];
+    
+    //label.textAlignment = NSTextAlignmentCenter;
+    label.textColor = [UIColor whiteColor];
+    label.text = @"Ivoclar Lab";
+    
+    [navigationTitleView addSubview:label];
+    self.navigationItem.titleView = navigationTitleView;
+    
     [self.navigationController.navigationBar
      setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
 
-
+//    CATransition *fadeTextAnimation = [CATransition animation];
+//    fadeTextAnimation.duration = 1;
+//    fadeTextAnimation.type = kCATransitionPush;
+//    
+//    [self.navigationController.navigationBar.layer addAnimation: fadeTextAnimation forKey: @"fadeText"];
+//    self.navigationItem.title = @"Ivoclar Lab";
     
     _doctorEmailTF.delegate = self;
 
@@ -85,11 +106,10 @@ UIActivityIndicatorView *spinner;
     
     
     // first check the mobile is already registered or not
-    // tag 0 represents check mobile
-    //tag 1 represents OTP
     
     [self saveDoctorMobileInPlist:_doctorMobileNoTF.text];
     
+    // Until data is parsed a spinner is displayed
     
     spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     spinner.center = CGPointMake(170, 400);
@@ -97,10 +117,14 @@ UIActivityIndicatorView *spinner;
     [self.view addSubview:spinner];
     [spinner startAnimating];
     
-        [[CommonAppManager sharedAppManager] soapService:checkMobile url:@"CheckMobile" withDelegate:self];
     
-   
-   
+    // Getting data from the server using the given url is required every time... So we have taken a class(CommonAppManager) and we are using it everywhere
+    
+    // Here @"CheckMobile" is the appending String for the respective SOAPAction
+    
+    [[CommonAppManager sharedAppManager] soapService:checkMobile url:@"CheckMobile" withDelegate:self];
+    
+    
     
     
 }

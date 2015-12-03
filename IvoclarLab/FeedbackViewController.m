@@ -34,6 +34,13 @@
     
     [self.navigationController.navigationBar
      setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+
+    CATransition *fadeTextAnimation = [CATransition animation];
+    fadeTextAnimation.duration = 1;
+    fadeTextAnimation.type = kCATransitionPush;
+    
+    [self.navigationController.navigationBar.layer addAnimation: fadeTextAnimation forKey: @"fadeText"];
+    self.navigationItem.title = @"Ivoclar Lab";
     
 }
 
