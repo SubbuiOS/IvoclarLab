@@ -2,7 +2,7 @@
 //  ComplaintsScreen.m
 //  IvoclarLab
 //
-//  Created by Mac on 20/11/15.
+//  Created by Subramanyam on 20/11/15.
 //  Copyright (c) 2015 Subramanyam. All rights reserved.
 //
 
@@ -21,7 +21,14 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    [self complaintScreenDidLoad];
+  
 
+    
+}
+
+-(void) complaintScreenDidLoad
+{
     
     SWRevealViewController * revealViewController = self.revealViewController;
     if (revealViewController) {
@@ -34,16 +41,32 @@
         
     }
     
+    // Customising the navigation Title
+    // Taken a view and added a label to it with our required font
+    CGRect frame = CGRectMake(0, 0, 200, 44);
+    UIView * navigationTitleView = [[UIView alloc]initWithFrame:frame];
+    navigationTitleView.backgroundColor = [UIColor clearColor];
+    
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(35, -2, 200, 40)];
+    label.backgroundColor = [UIColor clearColor];
+    label.font = [UIFont boldSystemFontOfSize:25.0];
+    label.textColor = [UIColor whiteColor];
+    label.text = @"Ivoclar Lab";
+    
+    [navigationTitleView addSubview:label];
+    self.navigationItem.titleView = navigationTitleView;
+    
     self.navigationController.navigationBar.barTintColor = [UIColor blueColor];
     self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
-    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName :[UIColor whiteColor]}];
+    //    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName :[UIColor whiteColor]}];
     
+    //Animating the navigation Bar
     CATransition *fadeTextAnimation = [CATransition animation];
     fadeTextAnimation.duration = 1;
     fadeTextAnimation.type = kCATransitionPush;
     
     [self.navigationController.navigationBar.layer addAnimation: fadeTextAnimation forKey: @"fadeText"];
-    self.navigationItem.title = @"Ivoclar Lab";
+    // self.navigationItem.title = @"Ivoclar Lab";
     
     complaintTypeArray = [[NSMutableArray alloc]initWithObjects:@"Select Complaint Type",@"Case Related Complaint",@"Others", nil];
     
@@ -67,16 +90,16 @@
     otherComplaints.hidden = YES;
     
     
-    _complaintTypePicker.layer.borderColor = [UIColor clearColor].CGColor;
+    _complaintTypePicker.layer.borderColor = [UIColor whiteColor].CGColor;
+    _complaintTypePicker.backgroundColor = [UIColor lightGrayColor];
     _complaintTypePicker.layer.borderWidth = 1;
     _complaintTypePicker.hidden = YES;
     
-    _caseIdPicker.layer.borderColor = [UIColor clearColor].CGColor;
+    _caseIdPicker.layer.borderColor = [UIColor whiteColor].CGColor;
+    _caseIdPicker.backgroundColor = [UIColor lightGrayColor];
     _caseIdPicker.layer.borderWidth = 1;
     _caseIdPicker.hidden = YES;
     
-    
-
     
 }
 
@@ -207,7 +230,7 @@
                           "</soap:Envelope>\n",filteredDoctorID];
     
     
-    [[CommonAppManager sharedAppManager]soapService:caseIdList url:@"GetCaseIds" withDelegate:self];
+    [[CommonAppManager sharedAppManager]soapServiceMessage:caseIdList soapActionString:@"GetCaseIds" withDelegate:self];
     
     
    }
@@ -442,7 +465,7 @@
         pickerViewLabel= [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, [pickerView rowSizeForComponent:component].width - 10.0f, [pickerView rowSizeForComponent:component].height)];
     }
     
-    pickerViewLabel.backgroundColor = [UIColor clearColor];
+    pickerViewLabel.backgroundColor = [UIColor whiteColor];
     
     if (pickerView == _complaintTypePicker)
     {
@@ -453,10 +476,10 @@
     else
     {
            pickerViewLabel.text =[[caseIdDictionary valueForKey:@"CaseId"]objectAtIndex:row];
-        pickerViewLabel.font = [UIFont fontWithName:@"ChalkboardSE-Regular" size:20];
+        pickerViewLabel.font = [UIFont fontWithName:@"ChalkboardSE-Regular" size:17];
 
     }
- 
+    pickerViewLabel.textAlignment = NSTextAlignmentCenter;
     
     return pickerViewLabel;
 }
@@ -551,6 +574,31 @@
     
 }
 
+//-(CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component
+//{
+//    if (pickerView == _complaintTypePicker) {
+//        return 40.0f;
+//    }
+//    else if (pickerView == _caseIdPicker)
+//    {
+//        return 30.0f;
+//    }
+//    
+//    else
+//    {
+//        return 25.0f;
+//        
+//    }
+//    
+//    
+//}
+
+- (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component
+{
+    return (40.0);
+}
+
+
 
 - (IBAction)complaintSubmit:(id)sender
 {
@@ -574,7 +622,7 @@
                                   "</soap:Envelope>\n",filteredDoctorID,_complaintTypeLabel.text,_caseIdLabel.text,otherComplaints.text,materialQuality,labService,_commentsTF.text,callBackFromCompany,callBackFromLab];
     
     
-    [[CommonAppManager sharedAppManager]soapService:insertComplaint url:@"InsertComplaints" withDelegate:self];
+    [[CommonAppManager sharedAppManager]soapServiceMessage:insertComplaint soapActionString:@"InsertComplaints" withDelegate:self];
     
     
     
@@ -588,6 +636,7 @@
         qualityCheckboxSelected = YES;
     } else {
         [_qualityButtonOutlet setSelected:NO];
+
         materialQuality = @"N";
         qualityCheckboxSelected = NO;
     }
@@ -598,10 +647,12 @@
     
     if (notSatisfiedServiceCheckboxSelected == NO){
         [_notSatisfiedServiceButtonOutlet setSelected:YES];
+
         labService = @"Y";
         notSatisfiedServiceCheckboxSelected = YES;
     } else {
         [_notSatisfiedServiceButtonOutlet setSelected:NO];
+
         labService = @"N";
         notSatisfiedServiceCheckboxSelected = NO;
     }

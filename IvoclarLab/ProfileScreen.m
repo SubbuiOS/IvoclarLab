@@ -2,7 +2,7 @@
 //  ProfileScreen.m
 //  IvoclarLab
 //
-//  Created by Mac on 09/11/15.
+//  Created by Subramanyam on 09/11/15.
 //  Copyright (c) 2015 Subramanyam. All rights reserved.
 //
 
@@ -20,7 +20,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    [self profileScrenDidLoad];
     
+}
+
+-(void) profileScrenDidLoad
+{
     SWRevealViewController *revealViewController = self.revealViewController;
     if ( revealViewController )
     {
@@ -34,46 +39,50 @@
     
     self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
     
-    [self.navigationController.navigationBar
-     setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+    // [self.navigationController.navigationBar
+    // setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+    
+    // Customising the navigation Title
+    // Taken a view and added a label to it with our required font
+    CGRect frame = CGRectMake(0, 0, 200, 44);
+    UIView * navigationTitleView = [[UIView alloc]initWithFrame:frame];
+    navigationTitleView.backgroundColor = [UIColor clearColor];
+    
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(35, -2, 200, 40)];
+    label.backgroundColor = [UIColor clearColor];
+    label.font = [UIFont boldSystemFontOfSize:25.0];
+    label.textColor = [UIColor whiteColor];
+    label.text = @"Ivoclar Lab";
+    
+    [navigationTitleView addSubview:label];
+    self.navigationItem.titleView = navigationTitleView;
     
     
-//    CGRect frame = CGRectMake(0, 0, 200, 44);
-//    
-//    UIView * navigationTitleView = [[UIView alloc]initWithFrame:frame];
-//    navigationTitleView.backgroundColor = [UIColor clearColor];
-//    
-//    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(35, 3, 200, 40)];
-//    label.backgroundColor = [UIColor clearColor];
-//    label.font = [UIFont boldSystemFontOfSize:25.0];
-//    
-//    //label.textAlignment = NSTextAlignmentCenter;
-//    label.textColor = [UIColor whiteColor];
-//    label.text = @"Ivoclar Lab";
-//    
-//    [navigationTitleView addSubview:label];
-//    self.navigationItem.titleView = navigationTitleView;
-    
+    // Animating the navigation Bar
     CATransition *fadeTextAnimation = [CATransition animation];
     fadeTextAnimation.duration = 1;
     fadeTextAnimation.type = kCATransitionPush;
     
     [self.navigationController.navigationBar.layer addAnimation: fadeTextAnimation forKey: @"fadeText"];
-    self.navigationItem.title = @"Ivoclar Lab";
+    // self.navigationItem.title = @"Ivoclar Lab";
     
     //statesTableView = [[UITableView alloc]initWithFrame:CGRectMake(20, 300, 340, 150) style:UITableViewStylePlain];
     
     //cityTableView = [[UITableView alloc]initWithFrame:CGRectMake(20, 350, 340, 150) style:UITableViewStylePlain];
     
     _statePicker.layer.borderColor = [UIColor whiteColor].CGColor;
+    _statePicker.backgroundColor = [UIColor lightGrayColor];
     _statePicker.layer.borderWidth = 1;
+
     _statePicker.hidden = YES;
     
-    _statePicker.layer.borderColor = [UIColor whiteColor].CGColor;
-    _statePicker.layer.borderWidth = 1;
-    _statePicker.hidden = YES;
+    _cityPicker.layer.borderColor = [UIColor whiteColor].CGColor;
+    _cityPicker.backgroundColor = [UIColor lightGrayColor];
+    _cityPicker.layer.borderWidth = 1;
+
+    _cityPicker.hidden = YES;
     
-    
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -221,7 +230,11 @@
                           "</soap:Body>\n"
                           "</soap:Envelope>\n",filteredDoctorID,_doctorNameTF.text,_emailTF.text,_selectYourCityLabel.text,_areaNameTF.text,_pincodeTF.text,_selectYourStateLabel.text];
     
-    [[CommonAppManager sharedAppManager]soapService:profile url:@"UpdateProfile" withDelegate:self];
+    NSLog(@"profile :%@",profile);
+
+    
+    [[CommonAppManager sharedAppManager]soapServiceMessage:profile soapActionString:@"UpdateProfile" withDelegate:self];
+    
     
 
     
@@ -311,10 +324,10 @@
         _statePicker.delegate = self;
         _statePicker.dataSource = self;
         
-        _selectYourCityLabel.alpha = 0.05;
-        _cityDDOutlet.alpha = 0.05;
-        _areaNameTF.alpha = 0.05;
-        _pincodeTF.alpha = 0.05;
+        _selectYourCityLabel.hidden = YES;
+        _cityDDOutlet.hidden = YES;
+        _areaNameTF.hidden = YES;
+        _pincodeTF.hidden = YES;
         
         
     
@@ -347,8 +360,9 @@
         
         //_selectYourCityLabel.alpha = 0.05;
         //_cityDDOutlet.alpha = 0.05;
-        _areaNameTF.alpha = 0.05;
-        _pincodeTF.alpha = 0.05;
+        _areaNameTF.hidden = YES;
+        _pincodeTF.hidden = YES;
+        _profileSubmitOutlet.hidden = YES;
         
         
     }
@@ -407,7 +421,7 @@
         [_stateDDOutlet setTitle:[[jsonStatesData valueForKey:@"StateName"]objectAtIndex:indexPath.row] forState:UIControlStateNormal];
         
         statesTableView.hidden = YES;
-
+        
     }
     if (tableView == cityTableView) {
         
@@ -449,7 +463,7 @@
                          "</soap:Envelope>\n"];
     
     
-    [[CommonAppManager sharedAppManager]soapService:states url:@"GetStates" withDelegate:self];
+    [[CommonAppManager sharedAppManager]soapServiceMessage:states soapActionString:@"GetStates" withDelegate:self];
     
     
     
@@ -480,7 +494,7 @@
                          "</soap:Envelope>\n",_selectYourStateLabel.text];
    
 
-    [[CommonAppManager sharedAppManager]soapService:city url:@"GetCity" withDelegate:self];
+    [[CommonAppManager sharedAppManager]soapServiceMessage:city soapActionString:@"GetCity" withDelegate:self];
     
     
 }
@@ -530,7 +544,7 @@
         pickerViewLabel= [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, [pickerView rowSizeForComponent:component].width - 10.0f, [pickerView rowSizeForComponent:component].height)];
     }
     
-    pickerViewLabel.backgroundColor = [UIColor clearColor];
+    pickerViewLabel.backgroundColor = [UIColor whiteColor];
     
     if (pickerView == _statePicker)
     {
@@ -544,6 +558,9 @@
 
     }
     pickerViewLabel.font = [UIFont fontWithName:@"ChalkboardSE-Regular" size:20];
+    pickerViewLabel.textAlignment = NSTextAlignmentCenter;
+
+    
     
     return pickerViewLabel;
 }
@@ -558,11 +575,10 @@
         
         _statePicker.hidden = YES;
         
-        _selectYourCityLabel.alpha = 1;
-        _cityDDOutlet.alpha = 1;
-        _areaNameTF.alpha = 1;
-        _pincodeTF.alpha = 1;
-        
+        _selectYourCityLabel.hidden = NO;
+        _cityDDOutlet.hidden = NO;
+        _areaNameTF.hidden = NO;
+        _pincodeTF.hidden = NO;
         
         
     }
@@ -575,19 +591,20 @@
         
         //_selectYourCityLabel.alpha = 1;
         //_cityDDOutlet.alpha = 1;
-        _areaNameTF.alpha = 1;
-        _pincodeTF.alpha = 1;
+        _areaNameTF.hidden = NO;
+        _pincodeTF.hidden = NO;
+        _profileSubmitOutlet.hidden = NO;
         
         
     }
     
-
-    
-    
     
 }
 
-
+-(CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component
+{
+    return 40.0f;
+}
 
 
 

@@ -2,11 +2,13 @@
 //  AppDelegate.m
 //  IvoclarLab
 //
-//  Created by Mac on 05/11/15.
+//  Created by Subramanyam on 05/11/15.
 //  Copyright (c) 2015 Subramanyam. All rights reserved.
 //
 
 #import "AppDelegate.h"
+#import "PagingControl.h"
+#import "LabCaseStatus.h"
 
 @interface AppDelegate ()
 
@@ -17,6 +19,51 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    
+    
+    
+    
+    NSString *loginStatusString = [[NSUserDefaults standardUserDefaults]stringForKey:@"loginStatus"];
+    if (loginStatusString.length != 0)
+    {
+        NSLog(@"login Status %@",loginStatusString);
+        self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+        UIStoryboard * storyboard = [UIStoryboard storyboardWithName:@"Main.storyboard" bundle:[NSBundle mainBundle]];
+        
+        if ([loginStatusString isEqual:@"DocLoginSuccess"])
+        {
+             SWRevealViewController * pageController = [storyboard instantiateViewControllerWithIdentifier:@"DoctorSWRevealViewController"];
+            self.window.rootViewController = pageController;
+        }
+        else if ([loginStatusString isEqual:@"LabLoginSuccess"])
+        {
+            SWRevealViewController * labCaseStatus = [storyboard instantiateViewControllerWithIdentifier:@"LabSWRevealViewController"];
+            self.window.rootViewController = labCaseStatus;
+
+
+        }
+       
+        self.window.backgroundColor = [UIColor grayColor];
+        [self.window makeKeyAndVisible];
+    }
+    
+    else if (loginStatusString.length == 0)
+    {
+        
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main.storyboard" bundle:[NSBundle mainBundle]];
+        UIViewController *vc =[storyboard instantiateInitialViewController];
+        
+        // Set root view controller and make windows visible
+        self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+        self.window.rootViewController = vc;
+        [self.window makeKeyAndVisible];
+        
+    }
+    
+    
+    
+    
     
     
     if ([application respondsToSelector:@selector(registerUserNotificationSettings:)]) {
@@ -30,6 +77,10 @@
         UIRemoteNotificationType notificationTypes = UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound;
         [application registerForRemoteNotificationTypes:notificationTypes];
     }
+    
+    
+    
+    
     
     return YES;
 }

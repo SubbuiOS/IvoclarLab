@@ -2,7 +2,7 @@
 //  LabPersonLogin.m
 //  IvoclarLab
 //
-//  Created by Mac on 23/11/15.
+//  Created by Subramanyam on 23/11/15.
 //  Copyright (c) 2015 Subramanyam. All rights reserved.
 //
 
@@ -19,21 +19,19 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.navigationItem.title = @"Ivoclar Lab";
-    [self.navigationController.navigationBar
-     setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+   // self.navigationItem.title = @"Ivoclar Lab";
+//    [self.navigationController.navigationBar
+//     setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
     
-    
+    // Customising the navigation Title
+    // Taken a view and added a label to it with our required font
     CGRect frame = CGRectMake(0, 0, 200, 44);
-    
     UIView * navigationTitleView = [[UIView alloc]initWithFrame:frame];
     navigationTitleView.backgroundColor = [UIColor clearColor];
     
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(35, 3, 200, 40)];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(20, 0, 200, 40)];
     label.backgroundColor = [UIColor clearColor];
     label.font = [UIFont boldSystemFontOfSize:25.0];
-    
-    //label.textAlignment = NSTextAlignmentCenter;
     label.textColor = [UIColor whiteColor];
     label.text = @"Ivoclar Lab";
     
@@ -77,12 +75,11 @@
     
     spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     spinner.center = CGPointMake(170, 400);
-    //spinner.tag = 12;
     [self.view addSubview:spinner];
     [spinner startAnimating];
     
     
-    [[CommonAppManager sharedAppManager]soapService:labLoginCheck url:@"CheckLoginLab" withDelegate:self];
+    [[CommonAppManager sharedAppManager]soapServiceMessage:labLoginCheck soapActionString:@"CheckLoginLab" withDelegate:self];
     
 
 
@@ -137,12 +134,17 @@
     if ([elementName isEqual:@"CheckLoginLabResult"]) {
         
         NSLog(@"lab login :%@",currentDescription);
+        
         [self saveDataInPlist:currentDescription];
         
+        [defaults setValue:@"LabLoginSuccess" forKey:@"loginStatus"];
+        [defaults synchronize];
         
         SWRevealViewController * labCaseStatus = [self.storyboard instantiateViewControllerWithIdentifier:@"LabSWRevealViewController"];
         
         [self presentViewController:labCaseStatus animated:YES completion:nil];
+        
+        
         
         
     }

@@ -2,7 +2,7 @@
 //  LabCaseHistory.m
 //  IvoclarLab
 //
-//  Created by Mac on 26/11/15.
+//  Created by Subramanyam on 26/11/15.
 //  Copyright (c) 2015 Subramanyam. All rights reserved.
 //
 
@@ -12,6 +12,7 @@
 
 @end
 
+NSUserDefaults * defaults;
 
 @implementation LabCaseHistory
 
@@ -29,27 +30,47 @@
     }
     
     
-    self.navigationItem.title = @"Ivoclar lab";
+    //self.navigationItem.title = @"Ivoclar lab";
     self.navigationController.navigationBar.barTintColor = [UIColor blueColor];
     // self.navigationController.navigationBar.translucent = NO;
     
     self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
     
-    [self.navigationController.navigationBar
-     setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+//    [self.navigationController.navigationBar
+//     setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
     
+    
+    // Customising the navigation Title
+    // Taken a view and added a label to it with our required font
+    CGRect frame = CGRectMake(0, 0, 200, 44);
+    UIView * navigationTitleView = [[UIView alloc]initWithFrame:frame];
+    navigationTitleView.backgroundColor = [UIColor clearColor];
+    
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(35, -2, 200, 40)];
+    label.backgroundColor = [UIColor clearColor];
+    label.font = [UIFont boldSystemFontOfSize:25.0];
+    label.textColor = [UIColor whiteColor];
+    label.text = @"Ivoclar Lab";
+    
+    [navigationTitleView addSubview:label];
+    self.navigationItem.titleView = navigationTitleView;
+    
+    
+    //Animating the navigation Bar
     CATransition *fadeTextAnimation = [CATransition animation];
     fadeTextAnimation.duration = 1;
     fadeTextAnimation.type = kCATransitionPush;
     
     [self.navigationController.navigationBar.layer addAnimation: fadeTextAnimation forKey: @"fadeText"];
-    self.navigationItem.title = @"Ivoclar Lab";
+    //self.navigationItem.title = @"Ivoclar Lab";
     
     
     labCaseHistoryTV= [[UITableView alloc]initWithFrame:CGRectMake(0, 105, 372, 520) style:UITableViewStylePlain];
     
+    defaults = [NSUserDefaults standardUserDefaults];
     
-
+    reqReceivedArray = [[NSMutableArray alloc]init];
+    caseHistoryDict = [[NSMutableDictionary alloc]init];
     
     
 }
@@ -128,7 +149,7 @@
                               "</soap:Envelope>\n",filteredLabCaseId];
     
     
-    [[CommonAppManager sharedAppManager]soapService:caseHistory url:@"LabCaseHistory" withDelegate:self];
+    [[CommonAppManager sharedAppManager]soapServiceMessage:caseHistory soapActionString:@"LabCaseHistory" withDelegate:self];
     
 
 }
@@ -153,8 +174,44 @@
     else{
         
         
-        UIAlertView * connectionError = [[UIAlertView alloc]initWithTitle:@"Warning" message:@"Error in Connection....Please try again later" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+        UIAlertView * connectionError = [[UIAlertView alloc]initWithTitle:@"Network Error" message:@"Error in Connection....Please check your Network Connection" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
         [connectionError show];
+        
+        [spinner stopAnimating];
+
+        // Display the previous contents when there is no network.
+        
+        //Filtering the Request Received case status and storing in an array
+        for (int i=0; i<[[defaults objectForKey:@"CaseHistoryLab"]count]; i++) {
+            
+            if ([[[[defaults objectForKey:@"CaseHistoryLab"]valueForKey:@"CaseStatus"]objectAtIndex:i] isEqual:@"REQUEST RECEIVED"])
+            {
+                
+                NSLog(@"request received default :%@",[[defaults objectForKey:@"CaseHistoryLab"]objectAtIndex:i]);
+                
+                [reqReceivedArray addObject:[[defaults objectForKey:@"CaseHistoryLab"]objectAtIndex:i]];
+                
+                NSLog(@"reqRecieved : %@",reqReceivedArray);
+            
+            }
+            
+            else
+            {
+                
+                
+            }
+            
+        }
+
+        // Assigning the filtered contents (Only Case Status that are having REQUEST RECEIVED) to caseHistoryDict
+        caseHistoryDict =(NSMutableDictionary *) reqReceivedArray;
+        
+        NSLog(@"no network caseHistory:%@",caseHistoryDict);
+        
+        labCaseHistoryTV.delegate = self;
+        labCaseHistoryTV.dataSource = self;
+        
+        [self.view addSubview:labCaseHistoryTV];
     }
     
     
@@ -182,12 +239,24 @@
         
         NSLog(@"lab login :%@",currentDescription);
 
+        // Clearing the NSUserDefaults
+        NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
+        [defaults removePersistentDomainForName:appDomain];
+       // NSLog(@"cleared default :%@",[defaults objectForKey:@"CaseHistoryLab"]);
+
+        [reqReceivedArray removeAllObjects];
+        
         NSData *objectData = [currentDescription dataUsingEncoding:NSUTF8StringEncoding];
         
         caseHistoryDict = [NSJSONSerialization JSONObjectWithData:objectData options:NSJSONReadingMutableContainers error:nil];
         NSLog(@"partner dictionary :%@",caseHistoryDict);
         
         
+        // Storing in NSUserDefaults and is used when there is no network
+        [defaults setObject:caseHistoryDict forKey:@"CaseHistoryLab"];
+        [defaults synchronize];
+        NSLog(@"defaults: %@",[defaults objectForKey:@"CaseHistoryLab"]);
+
         labCaseHistoryTV.delegate = self;
         labCaseHistoryTV.dataSource = self;
         
@@ -212,6 +281,7 @@
 {
     
     //Displaying the Custom Cells
+    
     
     CaseHistoryCustomCell * caseHistoryCell = [tableView dequeueReusableCellWithIdentifier:@"caseHistoryCell"];
     if (caseHistoryCell == nil) {

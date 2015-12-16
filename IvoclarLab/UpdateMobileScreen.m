@@ -2,7 +2,7 @@
 //  UpdateMobileScreen.m
 //  IvoclarLab
 //
-//  Created by Mac on 20/11/15.
+//  Created by Subramanyam on 20/11/15.
 //  Copyright (c) 2015 Subramanyam. All rights reserved.
 //
 
@@ -21,7 +21,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    [self updateMobileDidLoad];
+
     
+}
+
+-(void) updateMobileDidLoad
+{
     SWRevealViewController *revealViewController = self.revealViewController;
     if ( revealViewController )
     {
@@ -30,27 +36,54 @@
         //[self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
     }
     
+    // Customising the navigation Title
+    // Taken a view and added a label to it with our required font
+    CGRect frame = CGRectMake(0, 0, 200, 44);
+    UIView * navigationTitleView = [[UIView alloc]initWithFrame:frame];
+    navigationTitleView.backgroundColor = [UIColor clearColor];
+    
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(35, -2, 200, 40)];
+    label.backgroundColor = [UIColor clearColor];
+    label.font = [UIFont boldSystemFontOfSize:25.0];
+    label.textColor = [UIColor whiteColor];
+    label.text = @"Ivoclar Lab";
+    
+    [navigationTitleView addSubview:label];
+    self.navigationItem.titleView = navigationTitleView;
+    
     self.navigationController.navigationBar.barTintColor = [UIColor blueColor];
     // self.navigationController.navigationBar.translucent = NO;
     
     self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
     
-    [self.navigationController.navigationBar
-     setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+    //    [self.navigationController.navigationBar
+    //     setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
     
+    //Animating the navigation Bar
     CATransition *fadeTextAnimation = [CATransition animation];
     fadeTextAnimation.duration = 1;
     fadeTextAnimation.type = kCATransitionPush;
     
     [self.navigationController.navigationBar.layer addAnimation: fadeTextAnimation forKey: @"fadeText"];
-    self.navigationItem.title = @"Ivoclar Lab";
-    
+    // self.navigationItem.title = @"Ivoclar Lab";
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
     
     [self getDataFromPlist];
+    
+    NSString * getMobileDetails = [NSString stringWithFormat:
+                               @"<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
+                               "<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n"
+                               "<soap:Body>\n"
+                               "<GetMobileDetails xmlns=\"http://www.kurnoolcity.com/wsdemo\">"
+                               "<DoctorId>%@</DoctorId>\n"
+                               "</GetMobileDetails>\n"
+                               "</soap:Body>\n"
+                               "</soap:Envelope>\n",filteredDoctorID];
+    
+    [[CommonAppManager sharedAppManager]soapServiceMessage:getMobileDetails soapActionString:@"GetMobileDetails" withDelegate:self];
     
     //NSLog(@"doctor mobile :%@",_mobileNumberTF.text);
     
@@ -109,7 +142,7 @@
             drMobile = [data objectForKey:@"DoctorMobile"];
             
         }
-        _mobileNumberTF.text = drMobile;
+        //_mobileNumberTF.text = drMobile;
 
         
         if ([data objectForKey:@"DoctorID"]) {
@@ -150,7 +183,7 @@
                           "</soap:Body>\n"
                           "</soap:Envelope>\n",filteredDoctorID,_mobileNumberTF.text];
 
-    [[CommonAppManager sharedAppManager]soapService:updateMobile url:@"UpdateMobile" withDelegate:self];
+    [[CommonAppManager sharedAppManager]soapServiceMessage:updateMobile soapActionString:@"UpdateMobile" withDelegate:self];
     
     
        
@@ -193,6 +226,17 @@
 - (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName
   namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
 {
+    
+    if ([elementName isEqual:@"GetMobileDetailsResult"]) {
+        
+        NSLog(@"Mobile Number :%@",currentDescription);
+        
+        NSCharacterSet *invalidCharSet = [[NSCharacterSet characterSetWithCharactersInString:@"0123456789"]invertedSet];
+        filteredDoctorMobile = [[currentDescription componentsSeparatedByCharactersInSet:invalidCharSet]componentsJoinedByString:@""];
+        
+        _mobileNumberTF.text = filteredDoctorMobile;
+
+    }
     
     
     if ([elementName isEqual:@"UpdateMobileResult"]) {

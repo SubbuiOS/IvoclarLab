@@ -2,7 +2,7 @@
 //  ProfileScreen.h
 //  IvoclarLab
 //
-//  Created by Mac on 09/11/15.
+//  Created by Subramanyam on 09/11/15.
 //  Copyright (c) 2015 Subramanyam. All rights reserved.
 //
 
@@ -30,6 +30,7 @@
 
 
 - (IBAction)profileSubmit:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *profileSubmitOutlet;
 
 //@property (weak, nonatomic) IBOutlet UITextField *doctorIDTF;
 

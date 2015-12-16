@@ -2,18 +2,18 @@
 //  CaseHistory.m
 //  IvoclarLab
 //
-//  Created by Mac on 16/11/15.
+//  Created by Subramanyam on 16/11/15.
 //  Copyright (c) 2015 Subramanyam. All rights reserved.
 //
 
 #import "CaseHistory.h"
 #import "SWRevealViewController.h"
-#import "CaseHistoryCustomCell.h"
 #import "CaseEntryViewController.h"
 
 @interface CaseHistory ()
 
 @end
+
 
 @implementation CaseHistory
 
@@ -22,6 +22,14 @@
     // Do any additional setup after loading the view.
     
 
+    [self caseHistoryDidLoad];
+    
+    
+}
+
+-(void) caseHistoryDidLoad
+{
+    
     
     SWRevealViewController *revealViewController = self.revealViewController;
     if ( revealViewController )
@@ -31,14 +39,30 @@
         //[self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
     }
     
+    // Customising the navigation Title
+    // Taken a view and added a label to it with our required font
+    CGRect frame = CGRectMake(0, 0, 200, 44);
+    UIView * navigationTitleView = [[UIView alloc]initWithFrame:frame];
+    navigationTitleView.backgroundColor = [UIColor clearColor];
+    
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(35, -2, 200, 40)];
+    label.backgroundColor = [UIColor clearColor];
+    label.font = [UIFont boldSystemFontOfSize:25.0];
+    label.textColor = [UIColor whiteColor];
+    label.text = @"Ivoclar Lab";
+    
+    [navigationTitleView addSubview:label];
+    self.navigationItem.titleView = navigationTitleView;
+    
     self.navigationController.navigationBar.barTintColor = [UIColor blueColor];
     // self.navigationController.navigationBar.translucent = NO;
     
     self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
     
-    [self.navigationController.navigationBar
-     setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+    //    [self.navigationController.navigationBar
+    //     setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
     
+    //Animating the navigation Bar
     CATransition *fadeTextAnimation = [CATransition animation];
     fadeTextAnimation.duration = 1;
     fadeTextAnimation.type = kCATransitionPush;
@@ -47,16 +71,15 @@
     self.navigationItem.title = @"Ivoclar Lab";
     
     caseHistoryTV = [[UITableView alloc]initWithFrame:CGRectMake(0, 88, 374, 520) style:UITableViewStylePlain];
-   
     
+    spinner = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    spinner.frame = CGRectMake(150, 300, 30, 30);
+    [self.view addSubview:spinner];
     
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    
-    
-    
     
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
@@ -111,8 +134,7 @@
                           "</soap:Envelope>\n",filteredDoctorID];
     
     
-    
-    [[CommonAppManager sharedAppManager]soapService:caseHistory url:@"CaseHistory" withDelegate:self];
+    [[CommonAppManager sharedAppManager]soapServiceMessage:caseHistory soapActionString:@"CaseHistory" withDelegate:self];
     
     }
 
@@ -136,6 +158,10 @@
         
         UIAlertView * connectionError = [[UIAlertView alloc]initWithTitle:@"Warning" message:@"Error in Connection....Please try again later" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
         [connectionError show];
+        
+       
+       
+        
     }
     
 }
@@ -157,11 +183,11 @@
     
     if ([elementName isEqual:@"CaseHistoryResult"]) {
         
-        NSLog(@"case history %@",currentDescription);
+       // NSLog(@"case history %@",currentDescription);
         
         NSData *objectData = [currentDescription dataUsingEncoding:NSUTF8StringEncoding];
         CHDict = [NSJSONSerialization JSONObjectWithData:objectData options:NSJSONReadingMutableContainers error:nil];
-        NSLog(@"partner dictionary :%@",CHDict);
+        NSLog(@"caseHistory dictionary :%@",CHDict);
         
         
         caseHistoryTV.delegate = self;
@@ -184,9 +210,10 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
+    
     //Displaying the Custom Cells
     
-    CaseHistoryCustomCell * caseHistoryCell = [tableView dequeueReusableCellWithIdentifier:@"caseHistoryCell"];
+    caseHistoryCell = [tableView dequeueReusableCellWithIdentifier:@"caseHistoryCell"];
     if (caseHistoryCell == nil) {
         
         [tableView registerNib:[UINib nibWithNibName:@"CaseHistoryCustomCell" bundle:nil] forCellReuseIdentifier:@"caseHistoryCell"];
@@ -206,18 +233,20 @@
     caseHistoryCell.caseIdCH.text = [[CHDict valueForKey:@"CaseId"]objectAtIndex:indexPath.row];
 
     caseHistoryCell.caseStatusCH.text = [[CHDict valueForKey:@"CaseStatus"]objectAtIndex:indexPath.row];
-
+    
+//    caseHistoryCell.doctorNameCH.hidden = YES;
+//    caseHistoryCell.docAddressCH.hidden = YES;
+//    caseHistoryCell.doctorNameTitle.hidden = YES;
+//    caseHistoryCell.addressTitle.hidden = YES;
     
     return caseHistoryCell;
 }
-
 
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 270.00;
 }
-
 
 
 
@@ -235,18 +264,6 @@
     // Pass the selected object to the new view controller.
 }
 */
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 @end

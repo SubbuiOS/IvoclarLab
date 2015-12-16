@@ -2,7 +2,7 @@
 //  LabCaseStatus.m
 //  IvoclarLab
 //
-//  Created by Mac on 24/11/15.
+//  Created by Subramanyam on 24/11/15.
 //  Copyright (c) 2015 Subramanyam. All rights reserved.
 //
 
@@ -30,25 +30,48 @@
     }
     
     
-    self.navigationItem.title = @"Ivoclar lab";
+    //self.navigationItem.title = @"Ivoclar lab";
     self.navigationController.navigationBar.barTintColor = [UIColor blueColor];
     // self.navigationController.navigationBar.translucent = NO;
     
     self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
     
-    [self.navigationController.navigationBar
-     setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+//    [self.navigationController.navigationBar
+//     setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
     
+    // Customising the navigation Title
+    // Taken a view and added a label to it with our required font
+    CGRect frame = CGRectMake(0, 0, 200, 44);
+    UIView * navigationTitleView = [[UIView alloc]initWithFrame:frame];
+    navigationTitleView.backgroundColor = [UIColor clearColor];
+    
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(35, -2, 200, 40)];
+    label.backgroundColor = [UIColor clearColor];
+    label.font = [UIFont boldSystemFontOfSize:25.0];
+    label.textColor = [UIColor whiteColor];
+    label.text = @"Ivoclar Lab";
+    
+    [navigationTitleView addSubview:label];
+    self.navigationItem.titleView = navigationTitleView;
+    
+    //Animating the navigation Bar
     CATransition *fadeTextAnimation = [CATransition animation];
     fadeTextAnimation.duration = 1;
     fadeTextAnimation.type = kCATransitionPush;
     
     [self.navigationController.navigationBar.layer addAnimation: fadeTextAnimation forKey: @"fadeText"];
-    self.navigationItem.title = @"Ivoclar Lab";
+    //self.navigationItem.title = @"Ivoclar Lab";
     
         statusArray = [[NSMutableArray alloc]initWithObjects:@"In-Process",@"Out for Dispatch",@"Delivered", nil];
         _statusPicker.hidden = YES;
         _caseIdPicker.hidden = YES;
+    
+    
+   
+    _caseIdPicker.layer.borderColor = [UIColor whiteColor].CGColor;
+    _caseIdPicker.layer.borderWidth = 1;
+    _caseIdPicker.backgroundColor = [UIColor lightGrayColor];
+    
 }
 
 
@@ -119,9 +142,12 @@
     _statusPicker.hidden = NO;
     _statusPicker.delegate = self;
     _statusPicker.dataSource = self;
-    _submitCaseIdButtonOutlet.alpha = 0.03;
-
-
+    _submitCaseIdButtonOutlet.hidden = YES;
+    
+    _statusPicker.layer.borderColor = [UIColor whiteColor].CGColor;
+    _statusPicker.layer.borderWidth = 1;
+    _statusPicker.backgroundColor = [UIColor lightGrayColor];
+    
     
     
     
@@ -133,7 +159,6 @@
     
     [_caseIdPicker reloadAllComponents];
     [_caseIdPicker selectRow:0 inComponent:0 animated:YES];
-    
     
     [self getDataFromPlist];
     
@@ -148,7 +173,7 @@
                                  "</soap:Envelope>\n",filteredlabCaseId];
     
     
-    [[CommonAppManager sharedAppManager]soapService:labLoginCheck url:@"GetLabCaseIds" withDelegate:self];
+    [[CommonAppManager sharedAppManager]soapServiceMessage:labLoginCheck soapActionString:@"GetLabCaseIds" withDelegate:self];
     
 
     
@@ -211,9 +236,10 @@
         _caseIdPicker.delegate = self;
         _caseIdPicker.dataSource = self;
         
-        _statusLabel.alpha = 0.03;
-        _statusButtonOutlet.alpha=0.03;
-        _submitCaseIdButtonOutlet.alpha = 0.03;
+        _submitCaseIdButtonOutlet.hidden = YES;
+        _statusButtonOutlet.hidden = YES;
+        _statusLabel.hidden = YES;
+        
         
         
         
@@ -277,7 +303,8 @@
         pickerViewLabel= [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, [pickerView rowSizeForComponent:component].width - 10.0f, [pickerView rowSizeForComponent:component].height)];
     }
     
-    pickerViewLabel.backgroundColor = [UIColor clearColor];
+    pickerViewLabel.backgroundColor = [UIColor whiteColor];
+    pickerViewLabel.textAlignment = NSTextAlignmentCenter;
     
     if (pickerView == _caseIdPicker)
     {
@@ -289,7 +316,7 @@
         
     {
         pickerViewLabel.text =[statusArray objectAtIndex:row];
-        pickerViewLabel.font = [UIFont fontWithName:@"ChalkboardSE-Regular" size:17];
+        pickerViewLabel.font = [UIFont fontWithName:@"ChalkboardSE-Regular" size:16];
         
     }
     
@@ -303,9 +330,10 @@
         
         [_caseIdLabel setText:[[labCaseIdDict valueForKey:@"CaseId"]objectAtIndex:row]];
         _caseIdPicker.hidden = YES;
-        _statusLabel.alpha = 1;
-        _statusButtonOutlet.alpha=1;
-        _submitCaseIdButtonOutlet.alpha = 1;
+        _statusLabel.hidden = NO;
+        _statusButtonOutlet.hidden = NO;
+        _submitCaseIdButtonOutlet.hidden = NO;
+        
         
     }
     
@@ -315,7 +343,7 @@
         [_statusLabel setText:[statusArray objectAtIndex:row]];
         
         _statusPicker.hidden = YES;
-                _submitCaseIdButtonOutlet.alpha = 1;
+        _submitCaseIdButtonOutlet.hidden = NO;
         
     }
     

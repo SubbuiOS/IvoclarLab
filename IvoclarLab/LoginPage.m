@@ -2,7 +2,7 @@
 //  LoginPage.m
 //  IvoclarLab
 //
-//  Created by Mac on 23/11/15.
+//  Created by Subramanyam on 23/11/15.
 //  Copyright (c) 2015 Subramanyam. All rights reserved.
 //
 
@@ -20,19 +20,22 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-  //  self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:99.0f/255.0f green:99.0f/255.0f blue:240.0f/255.0f alpha:1.0f];
     self.view.backgroundColor = [UIColor colorWithRed:255.0f/255.0f green:255.0f/255.0f blue:255.0f/255.0f alpha:1.0f];
     
-    CGRect frame = CGRectMake(0, 0, 200, 44);
     
+    //self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:99.0f/255.0f green:99.0f/255.0f blue:240.0f/255.0f alpha:1.0f];
+
+    
+    // Customising the navigation Title
+    // Taken a view and added a label to it with our required font
+    
+    CGRect frame = CGRectMake(0, 0, 200, 44);
     UIView * navigationTitleView = [[UIView alloc]initWithFrame:frame];
     navigationTitleView.backgroundColor = [UIColor clearColor];
     
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(35, 3, 200, 40)];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(35, 0, 200, 40)];
     label.backgroundColor = [UIColor clearColor];
     label.font = [UIFont boldSystemFontOfSize:25.0];
-    
-    //label.textAlignment = NSTextAlignmentCenter;
     label.textColor = [UIColor whiteColor];
     label.text = @"Ivoclar Lab";
     
@@ -40,13 +43,22 @@
     self.navigationItem.titleView = navigationTitleView;
     
     
-    
+    // For Changing the color of navigation bar
     self.navigationController.navigationBar.barTintColor = [UIColor blueColor];
 
+    // The below line is for changing the back button of navigation bar color
+    
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     
-    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+    //[self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
 
+    
+    
+    //self.doctorLoginIcon.layer.cornerRadius = 20.0f;
+    //self.doctorLoginIcon.layer.borderWidth = 2.0f;
+    //self.doctorLoginIcon.layer.borderColor = [UIColor blueColor].CGColor;
+    
+    
     
 }
 
@@ -88,8 +100,8 @@
     
     //[self presentViewController:labPersonLoginPage animated:YES completion:nil];
     
-
-    
     
 }
+
+
 @end

@@ -46,7 +46,7 @@ static CommonAppManager *_sharedAppManager;
 
 
 
--(void) soapService: (NSString * )message url:appendingString withDelegate:(id)viewController
+-(void) soapServiceMessage:(NSString *)message soapActionString:(id)appendingString withDelegate:(id)viewController
 {
     
     delegate = viewController;

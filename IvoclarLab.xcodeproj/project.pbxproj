@@ -18,6 +18,13 @@
 		04041C771BEC7A02009C49E6 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04041C761BEC7A02009C49E6 /* SWRevealViewController.m */; };
 		04041C7A1BEC8A53009C49E6 /* CaseEntryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04041C791BEC8A53009C49E6 /* CaseEntryViewController.m */; };
 		04041C7F1BECB873009C49E6 /* FeedbackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04041C7E1BECB873009C49E6 /* FeedbackViewController.m */; };
+		0425BED71C11152600063E7E /* zenostar.png in Resources */ = {isa = PBXBuildFile; fileRef = 0425BED61C11152600063E7E /* zenostar.png */; };
+		0425BED91C11166E00063E7E /* IPS emax.png in Resources */ = {isa = PBXBuildFile; fileRef = 0425BED81C11166E00063E7E /* IPS emax.png */; };
+		0425BEDB1C11198500063E7E /* BackButton.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0425BEDA1C11198500063E7E /* BackButton.jpg */; };
+		0425BEDD1C11198F00063E7E /* ClickHereToOrder.png in Resources */ = {isa = PBXBuildFile; fileRef = 0425BEDC1C11198F00063E7E /* ClickHereToOrder.png */; };
+		0425BEDF1C1127BE00063E7E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0425BEDE1C1127BE00063E7E /* QuartzCore.framework */; };
+		0425BEE11C112A4B00063E7E /* DoctorLoginScreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 0425BEE01C112A4B00063E7E /* DoctorLoginScreen.png */; };
+		0425BEE31C11300500063E7E /* button1.png in Resources */ = {isa = PBXBuildFile; fileRef = 0425BEE21C11300500063E7E /* button1.png */; };
 		04372DE81C01215800AD71FE /* CaseDelivery.m in Sources */ = {isa = PBXBuildFile; fileRef = 04372DE71C01215800AD71FE /* CaseDelivery.m */; };
 		0455FC7A1C0FE12800727D23 /* MetalFree1.png in Resources */ = {isa = PBXBuildFile; fileRef = 0455FC791C0FE12800727D23 /* MetalFree1.png */; };
 		04723EE51BEDE8B00054D36F /* DoctorLogin.m in Sources */ = {isa = PBXBuildFile; fileRef = 04723EE41BEDE8B00054D36F /* DoctorLogin.m */; };
@@ -43,10 +50,8 @@
 		04DF4CD71BFAD6330041D185 /* CaseHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DF4CD61BFAD6330041D185 /* CaseHistory.m */; };
 		04EB58661C07B20E0049E049 /* LabCaseHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EB58651C07B20E0049E049 /* LabCaseHistory.m */; };
 		04EB58A31C07F7A90049E049 /* background1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 04EB58A11C07F7A90049E049 /* background1.jpg */; };
-		04EB58A41C07F7A90049E049 /* background2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 04EB58A21C07F7A90049E049 /* background2.jpg */; };
-		04EB58A61C07F9490049E049 /* button.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 04EB58A51C07F9490049E049 /* button.jpeg */; };
 		04ECDD3E1C055DB20055FF54 /* LabCaseStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 04ECDD3D1C055DB20055FF54 /* LabCaseStatus.m */; };
-		04ED20761BEDD6F10039A139 /* emax_logo.gif in Resources */ = {isa = PBXBuildFile; fileRef = 04ED20751BEDD6F10039A139 /* emax_logo.gif */; };
+		04F8FB9D1C136FCC00FB5845 /* LaunchScreen.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 04F8FB9C1C136FCC00FB5845 /* LaunchScreen.jpg */; };
 		04F977F91BFFF08F009B038F /* UpdateMobileScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F977F81BFFF08F009B038F /* UpdateMobileScreen.m */; };
 		04F977FC1C0001BB009B038F /* ComplaintsScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F977FB1C0001BB009B038F /* ComplaintsScreen.m */; };
 		04F977FF1C000519009B038F /* checked_checkbox.png in Resources */ = {isa = PBXBuildFile; fileRef = 04F977FD1C000519009B038F /* checked_checkbox.png */; };
@@ -86,6 +91,13 @@
 		04041C791BEC8A53009C49E6 /* CaseEntryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CaseEntryViewController.m; sourceTree = "<group>"; };
 		04041C7D1BECB873009C49E6 /* FeedbackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedbackViewController.h; sourceTree = "<group>"; };
 		04041C7E1BECB873009C49E6 /* FeedbackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedbackViewController.m; sourceTree = "<group>"; };
+		0425BED61C11152600063E7E /* zenostar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zenostar.png; sourceTree = "<group>"; };
+		0425BED81C11166E00063E7E /* IPS emax.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IPS emax.png"; sourceTree = "<group>"; };
+		0425BEDA1C11198500063E7E /* BackButton.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = BackButton.jpg; sourceTree = "<group>"; };
+		0425BEDC1C11198F00063E7E /* ClickHereToOrder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ClickHereToOrder.png; sourceTree = "<group>"; };
+		0425BEDE1C1127BE00063E7E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		0425BEE01C112A4B00063E7E /* DoctorLoginScreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DoctorLoginScreen.png; sourceTree = "<group>"; };
+		0425BEE21C11300500063E7E /* button1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button1.png; sourceTree = "<group>"; };
 		04372DE61C01215800AD71FE /* CaseDelivery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CaseDelivery.h; sourceTree = "<group>"; };
 		04372DE71C01215800AD71FE /* CaseDelivery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CaseDelivery.m; sourceTree = "<group>"; };
 		0455FC791C0FE12800727D23 /* MetalFree1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MetalFree1.png; sourceTree = "<group>"; };
@@ -126,11 +138,9 @@
 		04EB58641C07B20E0049E049 /* LabCaseHistory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LabCaseHistory.h; sourceTree = "<group>"; };
 		04EB58651C07B20E0049E049 /* LabCaseHistory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LabCaseHistory.m; sourceTree = "<group>"; };
 		04EB58A11C07F7A90049E049 /* background1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = background1.jpg; sourceTree = "<group>"; };
-		04EB58A21C07F7A90049E049 /* background2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = background2.jpg; sourceTree = "<group>"; };
-		04EB58A51C07F9490049E049 /* button.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = button.jpeg; sourceTree = "<group>"; };
 		04ECDD3C1C055DB20055FF54 /* LabCaseStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LabCaseStatus.h; sourceTree = "<group>"; };
 		04ECDD3D1C055DB20055FF54 /* LabCaseStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LabCaseStatus.m; sourceTree = "<group>"; };
-		04ED20751BEDD6F10039A139 /* emax_logo.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = emax_logo.gif; sourceTree = "<group>"; };
+		04F8FB9C1C136FCC00FB5845 /* LaunchScreen.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = LaunchScreen.jpg; sourceTree = "<group>"; };
 		04F977F71BFFF08F009B038F /* UpdateMobileScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpdateMobileScreen.h; sourceTree = "<group>"; };
 		04F977F81BFFF08F009B038F /* UpdateMobileScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpdateMobileScreen.m; sourceTree = "<group>"; };
 		04F977FA1C0001BB009B038F /* ComplaintsScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComplaintsScreen.h; sourceTree = "<group>"; };
@@ -145,6 +155,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0425BEDF1C1127BE00063E7E /* QuartzCore.framework in Frameworks */,
 				04B939C61C0FB4C6002C6110 /* UIKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -162,6 +173,7 @@
 		04041C3D1BEC7677009C49E6 = {
 			isa = PBXGroup;
 			children = (
+				0425BEDE1C1127BE00063E7E /* QuartzCore.framework */,
 				04B939C51C0FB4C6002C6110 /* UIKit.framework */,
 				04041C481BEC7678009C49E6 /* IvoclarLab */,
 				04041C621BEC7678009C49E6 /* IvoclarLabTests */,
@@ -182,8 +194,6 @@
 			isa = PBXGroup;
 			children = (
 				04EB58A11C07F7A90049E049 /* background1.jpg */,
-				04EB58A51C07F9490049E049 /* button.jpeg */,
-				04EB58A21C07F7A90049E049 /* background2.jpg */,
 				04B31C4B1C026BFE001967D4 /* CommonAppManager.h */,
 				04B31C4C1C026C0D001967D4 /* CommonAppManager.m */,
 				04041C4D1BEC7678009C49E6 /* AppDelegate.h */,
@@ -197,7 +207,6 @@
 				04EB58611C07AF100049E049 /* SideMenu */,
 				04EB58631C07AF5C0049E049 /* Images */,
 				04041C561BEC7678009C49E6 /* Images.xcassets */,
-				0455FC791C0FE12800727D23 /* MetalFree1.png */,
 				04041C531BEC7678009C49E6 /* Main.storyboard */,
 				04041C581BEC7678009C49E6 /* LaunchScreen.xib */,
 				04041C491BEC7678009C49E6 /* Supporting Files */,
@@ -299,13 +308,20 @@
 		04EB58631C07AF5C0049E049 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				04F8FB9C1C136FCC00FB5845 /* LaunchScreen.jpg */,
+				0455FC791C0FE12800727D23 /* MetalFree1.png */,
+				0425BEE21C11300500063E7E /* button1.png */,
+				0425BEDA1C11198500063E7E /* BackButton.jpg */,
+				0425BEDC1C11198F00063E7E /* ClickHereToOrder.png */,
+				0425BED61C11152600063E7E /* zenostar.png */,
 				04B939CC1C0FC1DE002C6110 /* IvoclarLaunchScreen.png */,
+				0425BED81C11166E00063E7E /* IPS emax.png */,
+				0425BEE01C112A4B00063E7E /* DoctorLoginScreen.png */,
 				04D5E4481C03EC880048BD18 /* dropdown.png */,
 				04F977FD1C000519009B038F /* checked_checkbox.png */,
 				04D5E4451C03C40E0048BD18 /* sideMenu.png */,
 				04F977FE1C000519009B038F /* tickMarkCheckBox.png */,
 				04F978011C0005DF009B038F /* unchecked_checkbox.png */,
-				04ED20751BEDD6F10039A139 /* emax_logo.gif */,
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -403,21 +419,25 @@
 			buildActionMask = 2147483647;
 			files = (
 				04F977FF1C000519009B038F /* checked_checkbox.png in Resources */,
-				04EB58A61C07F9490049E049 /* button.jpeg in Resources */,
 				04041C551BEC7678009C49E6 /* Main.storyboard in Resources */,
 				04F978021C0005DF009B038F /* unchecked_checkbox.png in Resources */,
-				04ED20761BEDD6F10039A139 /* emax_logo.gif in Resources */,
+				0425BEE31C11300500063E7E /* button1.png in Resources */,
 				04DCFF5C1BFBBABA00BD03E9 /* CaseHistoryCustomCell.xib in Resources */,
-				04EB58A41C07F7A90049E049 /* background2.jpg in Resources */,
+				0425BEDD1C11198F00063E7E /* ClickHereToOrder.png in Resources */,
 				0455FC7A1C0FE12800727D23 /* MetalFree1.png in Resources */,
 				04D5E4461C03C40E0048BD18 /* sideMenu.png in Resources */,
 				04041C5A1BEC7678009C49E6 /* LaunchScreen.xib in Resources */,
 				04EB58A31C07F7A90049E049 /* background1.jpg in Resources */,
+				04F8FB9D1C136FCC00FB5845 /* LaunchScreen.jpg in Resources */,
 				04D5E4491C03EC880048BD18 /* dropdown.png in Resources */,
 				04041C571BEC7678009C49E6 /* Images.xcassets in Resources */,
 				04F978001C000519009B038F /* tickMarkCheckBox.png in Resources */,
 				04DF4CD41BFA73AF0041D185 /* PartnersCustomCell.xib in Resources */,
+				0425BED71C11152600063E7E /* zenostar.png in Resources */,
+				0425BEE11C112A4B00063E7E /* DoctorLoginScreen.png in Resources */,
 				04B939CD1C0FC1DE002C6110 /* IvoclarLaunchScreen.png in Resources */,
+				0425BEDB1C11198500063E7E /* BackButton.jpg in Resources */,
+				0425BED91C11166E00063E7E /* IPS emax.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

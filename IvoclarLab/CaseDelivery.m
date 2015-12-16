@@ -2,7 +2,7 @@
 //  CaseDelivery.m
 //  IvoclarLab
 //
-//  Created by Mac on 21/11/15.
+//  Created by Subramanyam on 21/11/15.
 //  Copyright (c) 2015 Subramanyam. All rights reserved.
 //
 
@@ -19,6 +19,12 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    [self caseDeliveryDidLoad];
+
+    
+}
+-(void) caseDeliveryDidLoad
+{
     SWRevealViewController * revealViewController = self.revealViewController;
     if (revealViewController) {
         
@@ -27,30 +33,48 @@
         [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
     }
     
+    // Customising the navigation Title
+    // Taken a view and added a label to it with our required font
+    CGRect frame = CGRectMake(0, 0, 200, 44);
+    UIView * navigationTitleView = [[UIView alloc]initWithFrame:frame];
+    navigationTitleView.backgroundColor = [UIColor clearColor];
+    
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(35, -2, 200, 40)];
+    label.backgroundColor = [UIColor clearColor];
+    label.font = [UIFont boldSystemFontOfSize:25.0];
+    label.textColor = [UIColor whiteColor];
+    label.text = @"Ivoclar Lab";
+    
+    [navigationTitleView addSubview:label];
+    self.navigationItem.titleView = navigationTitleView;
+    
     self.navigationController.navigationBar.barTintColor = [UIColor blueColor];
     self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
-    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    //    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
     
+    //Animating the navigation Bar
     CATransition *fadeTextAnimation = [CATransition animation];
     fadeTextAnimation.duration = 1;
     fadeTextAnimation.type = kCATransitionPush;
     
     [self.navigationController.navigationBar.layer addAnimation: fadeTextAnimation forKey: @"fadeText"];
-    self.navigationItem.title = @"Ivoclar Lab";
+    // self.navigationItem.title = @"Ivoclar Lab";
     
     _caseIdPicker.layer.borderColor = [UIColor whiteColor].CGColor;
     _caseIdPicker.layer.borderWidth = 1;
+    _caseIdPicker.backgroundColor = [UIColor lightGrayColor];
     _caseIdPicker.hidden = YES;
     _caseReceivedButtonOulet.hidden = NO;
     _caseReceivedLabel.hidden = NO;
     _confirmButtonOutlet.hidden = NO;
     
-  //  caseIdTV = [[UITableView alloc]initWithFrame:CGRectMake(16, 230, 350, 300) style:UITableViewStylePlain];
+    //  caseIdTV = [[UITableView alloc]initWithFrame:CGRectMake(16, 230, 350, 300) style:UITableViewStylePlain];
     caseRecievedCheckBoxSelected = NO;
     
 
-    
 }
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -139,7 +163,7 @@
                          "</soap:Envelope>\n",filteredDoctorID];
     
     
-    [[CommonAppManager sharedAppManager]soapService:caseId url:@"GetCaseIds" withDelegate:self];
+    [[CommonAppManager sharedAppManager]soapServiceMessage:caseId soapActionString:@"GetCaseIds" withDelegate:self];
     
        
     
@@ -277,9 +301,10 @@
         pickerViewLabel= [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, [pickerView rowSizeForComponent:component].width - 10.0f, [pickerView rowSizeForComponent:component].height)];
     }
     
-    pickerViewLabel.backgroundColor = [UIColor clearColor];
+    pickerViewLabel.backgroundColor = [UIColor whiteColor];
     pickerViewLabel.text =[[caseIdDictionary valueForKey:@"CaseId"]objectAtIndex:row];
     pickerViewLabel.font = [UIFont fontWithName:@"ChalkboardSE-Regular" size:20];
+    pickerViewLabel.textAlignment = NSTextAlignmentCenter;
     
     return pickerViewLabel;
 }

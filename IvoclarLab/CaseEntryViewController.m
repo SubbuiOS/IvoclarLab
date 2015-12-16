@@ -2,7 +2,7 @@
 //  CaseEntryViewController.m
 //  IvoclarLab
 //
-//  Created by Mac on 05/11/15.
+//  Created by Subramanyam on 05/11/15.
 //  Copyright (c) 2015 Subramanyam. All rights reserved.
 //
 
@@ -21,6 +21,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+   
+    [self caseEntryDidLoad];
+    
+    
+}
+
+-(void) caseEntryDidLoad
+{
     
     SWRevealViewController * revealViewController = self.revealViewController;
     if ( revealViewController )
@@ -29,49 +37,17 @@
         [self.CESidebarButton setAction: @selector( revealToggle: )];
         [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
     }
-
-//    CGRect frame = CGRectMake(0, 0, 200, 44);
-//    
-//    UIView * navigationTitleView = [[UIView alloc]initWithFrame:frame];
-//    navigationTitleView.backgroundColor = [UIColor clearColor];
-//    
-//    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(35, 3, 200, 40)];
-//    label.backgroundColor = [UIColor clearColor];
-//    label.font = [UIFont boldSystemFontOfSize:25.0];
-//    
-//    //label.textAlignment = NSTextAlignmentCenter;
-//    label.textColor = [UIColor whiteColor];
-//    label.text = @"Ivoclar Lab";
-//    
-//    [navigationTitleView addSubview:label];
-//    self.navigationItem.titleView = navigationTitleView;
-    
-    
-    self.navigationController.navigationBar.barTintColor = [UIColor blueColor];
-    // self.navigationController.navigationBar.translucent = NO;
-    
-    self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
-    
-    [self.navigationController.navigationBar
-     setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
-    
-    CATransition *fadeTextAnimation = [CATransition animation];
-    fadeTextAnimation.duration = 1;
-    fadeTextAnimation.type = kCATransitionPush;
-    
-    [self.navigationController.navigationBar.layer addAnimation: fadeTextAnimation forKey: @"fadeText"];
-    self.navigationItem.title = @"Ivoclar Lab";
     
     
     _partnerNameLabel.hidden = YES;
     _partnerNameTitle.hidden = YES;
     
     
-  //  natureOfWorkTV = [[UITableView alloc]initWithFrame:CGRectMake(33 ,150, 300, 150) style:UITableViewStylePlain];
+    //  natureOfWorkTV = [[UITableView alloc]initWithFrame:CGRectMake(33 ,150, 300, 150) style:UITableViewStylePlain];
     
     natureOfWorkArray = [[NSMutableArray alloc]initWithObjects:@"Select Nature Of Work",@"Ceramic",@"PFM",nil];
     
-   // crownBrandTV = [[UITableView alloc]initWithFrame:CGRectMake(43 ,190 , 180, 150) style:UITableViewStylePlain];
+    // crownBrandTV = [[UITableView alloc]initWithFrame:CGRectMake(43 ,190 , 180, 150) style:UITableViewStylePlain];
     
     crownBrandArray = [[NSMutableArray alloc]initWithObjects:@"Zenostar",@"e.max", nil];
     
@@ -93,29 +69,10 @@
     
     //partnerLTV = [[UITableView alloc]initWithFrame:CGRectMake(30, 70, 300, 550) style:UITableViewStylePlain];
     
-    
-    
-    _natureOfWorkPicker.layer.borderColor = [UIColor whiteColor].CGColor;
-    _natureOfWorkPicker.layer.borderWidth = 1;
     _natureOfWorkPicker.hidden = YES;
-    
-    _crownBrandPicker.layer.borderColor = [UIColor whiteColor].CGColor;
-    _crownBrandPicker.layer.borderWidth = 1;
     _crownBrandPicker.hidden = YES;
-    
-    _typeOfCasePicker.layer.borderColor = [UIColor clearColor].CGColor;
-    _typeOfCasePicker.layer.borderWidth = 1;
     _typeOfCasePicker.hidden = YES;
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -124,7 +81,6 @@
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
     NSString *plistFilePath = [documentsDirectory stringByAppendingPathComponent:@"OTPResult.plist"];
-    
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSMutableDictionary *data = [[NSMutableDictionary alloc]init];
     NSMutableArray *contentArray= [[NSMutableArray alloc]init];
@@ -132,7 +88,7 @@
     if (![fileManager fileExistsAtPath: plistFilePath])
     {
         NSLog(@"file does not exist");
-        
+
         // If the file doesn’t exist, create an empty plist file
         plistFilePath = [documentsDirectory stringByAppendingPathComponent:@"OTPResult.plist"];
         
@@ -193,7 +149,7 @@
                           "</soap:Envelope>\n",filteredDoctorID];
     
     
-    [[CommonAppManager sharedAppManager]soapService:caseId url:@"GetCaseId" withDelegate:self];
+    [[CommonAppManager sharedAppManager]soapServiceMessage:caseId soapActionString:@"GetCaseId" withDelegate:self];
     
     
 }
@@ -242,6 +198,10 @@
     _natureOfWorkPicker.delegate = self;
     _natureOfWorkPicker.dataSource = self;
 
+    _natureOfWorkPicker.layer.borderColor = [UIColor whiteColor].CGColor;
+    _natureOfWorkPicker.layer.borderWidth = 1;
+    _natureOfWorkPicker.backgroundColor = [UIColor lightGrayColor];
+    
     
     _crownBrandDDOutlet.alpha = 0.05;
     _crownBrandLabel.alpha = 0.05;
@@ -278,6 +238,10 @@
         _crownBrandPicker.dataSource = self;
         
         
+        _crownBrandPicker.layer.borderColor = [UIColor whiteColor].CGColor;
+        _crownBrandPicker.layer.borderWidth = 1;
+        _crownBrandPicker.backgroundColor = [UIColor lightGrayColor];
+        
        // _crownBrandDDOutlet.alpha = 0.05;
         //_crownBrandLabel.alpha = 0.05;
         _noOfUnitsTF.alpha = 0.05;
@@ -301,13 +265,14 @@
     [_typeOfCasePicker reloadAllComponents];
     [_typeOfCasePicker selectRow:0 inComponent:0 animated:YES];
     
-    
     _typeOfCasePicker.hidden = NO;
-    
     _typeOfCasePicker.delegate = self;
     _typeOfCasePicker.dataSource = self;
     
-   
+    
+    _typeOfCasePicker.layer.borderColor = [UIColor whiteColor].CGColor;
+    _typeOfCasePicker.layer.borderWidth = 1;
+    _typeOfCasePicker.backgroundColor = [UIColor lightGrayColor];
     
 
     
@@ -328,7 +293,7 @@
                           "</soap:Body>\n"
                           "</soap:Envelope>\n",filteredDoctorID];
     
-    [[CommonAppManager sharedAppManager]soapService:MPartner url:@"GetMPartners" withDelegate:self];
+    [[CommonAppManager sharedAppManager]soapServiceMessage:MPartner soapActionString:@"GetMPartners" withDelegate:self];
     
     
     
@@ -372,7 +337,7 @@
                           "</soap:Envelope>\n",filteredDoctorID,_crownBrandLabel.text,_noOfUnitsTF.text,_typeOfCaseLabel.text,_partnerNameLabel.text,_caseIdLabel.text];
     
 
-    [[CommonAppManager sharedAppManager]soapService:submitCE url:@"InsertCases" withDelegate:self];
+    [[CommonAppManager sharedAppManager]soapServiceMessage:submitCE soapActionString:@"InsertCases" withDelegate:self];
     
     
     
@@ -493,7 +458,7 @@
                           "</soap:Envelope>\n",filteredDoctorID];
 
         
-        [[CommonAppManager sharedAppManager]soapService:LPartner url:@"GetLPartners" withDelegate:self];
+        [[CommonAppManager sharedAppManager]soapServiceMessage:LPartner soapActionString:@"GetLPartners" withDelegate:self];
         
     
     }
@@ -778,31 +743,35 @@
     UILabel *pickerViewLabel = (id)view;
     
     if (!pickerViewLabel) {
-        pickerViewLabel= [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, [pickerView rowSizeForComponent:component].width - 10.0f, [pickerView rowSizeForComponent:component].height)];
+        pickerViewLabel= [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f,[pickerView rowSizeForComponent:component].width - 10.0f, [pickerView rowSizeForComponent:component].height)];
+        
+       // NSLog(@"picker view height and width :%f %f",[pickerView rowSizeForComponent:component].height,[pickerView rowSizeForComponent:component].width);
     }
     
-    pickerViewLabel.backgroundColor = [UIColor clearColor];
+    pickerViewLabel.backgroundColor = [UIColor whiteColor];
     
     if (pickerView == _natureOfWorkPicker)
     {
         pickerViewLabel.text =[natureOfWorkArray objectAtIndex:row];
-        pickerViewLabel.font = [UIFont fontWithName:@"ChalkboardSE-Regular" size:17];
+        pickerViewLabel.font = [UIFont fontWithName:@"ChalkboardSE-Regular" size:16];
         
     }
     else if (pickerView == _crownBrandPicker)
 
     {
         pickerViewLabel.text =[crownBrandArray objectAtIndex:row];
-        pickerViewLabel.font = [UIFont fontWithName:@"ChalkboardSE-Regular" size:16];
+        pickerViewLabel.font = [UIFont fontWithName:@"ChalkboardSE-Regular" size:20];
         
     }
     
     else
     {
         pickerViewLabel.text =[typeOfCaseArray objectAtIndex:row];
-        pickerViewLabel.font = [UIFont fontWithName:@"ChalkboardSE-Regular" size:17];
+        pickerViewLabel.font = [UIFont fontWithName:@"ChalkboardSE-Regular" size:18];
     }
     
+    pickerViewLabel.textAlignment = NSTextAlignmentCenter;
+
     return pickerViewLabel;
 }
 
@@ -890,10 +859,29 @@
     
 }
 
+//-(CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component
+//{
+//    if (pickerView == _natureOfWorkPicker) {
+//        return 25.0;
+//    }
+//    else if (pickerView == _crownBrandPicker)
+//    {
+//        return 30.0f;
+//    }
+//    
+//    else
+//    {
+//        return 25.0;
+//
+//    }
+//    
+//    
+//}
 
-
-
-
+-(CGFloat) pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component
+{
+    return 30.0f;
+}
 
 
 

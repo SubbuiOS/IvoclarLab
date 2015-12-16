@@ -1075,7 +1075,7 @@ const int FrontViewPositionNone = 0xff;
 
 #pragma mark - Deferred block execution queue
 
-// Define a convenience macro to enqueue single statements
+// Define a convenience Subramanyamro to enqueue single statements
 #define _enqueue(code) [self _enqueueBlock:^{code;}];
 
 // Defers the execution of the passed in block until a paired _dequeue call is received,

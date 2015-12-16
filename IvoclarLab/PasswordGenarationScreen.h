@@ -2,7 +2,7 @@
 //  PasswordGenarationScreen.h
 //  IvoclarLab
 //
-//  Created by Mac on 09/11/15.
+//  Created by Subramanyam on 09/11/15.
 //  Copyright (c) 2015 Subramanyam. All rights reserved.
 //
 

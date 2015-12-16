@@ -2,7 +2,7 @@
 //  DoctorAlreadyRegistered.m
 //  IvoclarLab
 //
-//  Created by Mac on 08/11/15.
+//  Created by Subramanyam on 08/11/15.
 //  Copyright (c) 2015 Subramanyam. All rights reserved.
 //
 
@@ -21,6 +21,20 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    // Customising the navigation Title
+    // Taken a view and added a label to it with our required font
+    CGRect frame = CGRectMake(0, 0, 200, 44);
+    UIView * navigationTitleView = [[UIView alloc]initWithFrame:frame];
+    navigationTitleView.backgroundColor = [UIColor clearColor];
+    
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(35, 3, 200, 40)];
+    label.backgroundColor = [UIColor clearColor];
+    label.font = [UIFont boldSystemFontOfSize:25.0];
+    label.textColor = [UIColor whiteColor];
+    label.text = @"Ivoclar Lab";
+    
+    [navigationTitleView addSubview:label];
+    self.navigationItem.titleView = navigationTitleView;
     
     
 }
@@ -64,7 +78,7 @@
                                "</soap:Body>\n"
                                "</soap:Envelope>\n",_registeredMobileNoTF.text,_registeredPasswordTF.text];
     
-    [[CommonAppManager sharedAppManager]soapService:checkLoginDoctor url:@"CheckLogin" withDelegate:self];
+    [[CommonAppManager sharedAppManager]soapServiceMessage:checkLoginDoctor soapActionString:@"CheckLogin"withDelegate:self];
 
     
 
@@ -91,7 +105,7 @@
     
     
     
-    [[CommonAppManager sharedAppManager] soapService:forgotPassword url:@"ForgotPassword" withDelegate:self];
+    [[CommonAppManager sharedAppManager] soapServiceMessage:forgotPassword soapActionString:@"ForgotPassword" withDelegate:self];
     
     
         
@@ -149,8 +163,16 @@
     
     if ([elementName isEqual:@"CheckLoginResult"]) {
         
+        // If the login is success then we will have DoctorId as the response
         
-        NSLog(@"doctor registere login success : %@",currentDescription);
+        
+        NSLog(@"doctor register login success : %@",currentDescription);
+        
+       // if (![currentDescription isEqual:@"\"N\""]) {
+            
+            //[self saveDataInPlist:currentDescription];
+        //}
+        
         // Goes to CaseEntry Screen after submitting
         
         SWRevealViewController * sideMenu = [self.storyboard instantiateViewControllerWithIdentifier:@"DoctorSWRevealViewController"];
@@ -161,6 +183,68 @@
     }
     
 }
+
+//
+//- (void)saveDataInPlist:(id)docID {
+//    
+//    //get the plist document path
+//    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+//    NSString *documentsDirectory = [paths objectAtIndex:0];
+//    NSString *plistFilePath = [documentsDirectory stringByAppendingPathComponent:@"OTPResult.plist"];
+//    
+//    NSFileManager *fileManager = [NSFileManager defaultManager];
+//    NSMutableDictionary *data = [[NSMutableDictionary alloc]init];
+//    NSMutableArray *contentArray= [[NSMutableArray alloc]init];
+//    
+//    if (![fileManager fileExistsAtPath: plistFilePath])
+//    {
+//        NSLog(@"File does not exist");
+//        
+//        // If the file doesn’t exist, create an empty plist file
+//        plistFilePath = [documentsDirectory stringByAppendingPathComponent:@"OTPResult.plist"];
+//        //NSLog(@"path is %@",plistFilePath);
+//        
+//    }
+//    else{
+//        NSLog(@"File exists, Get data if anything stored");
+//        
+//        contentArray = [[NSMutableArray alloc] initWithContentsOfFile:plistFilePath];
+//    }
+//    
+//    
+//    NSString *doctorID = docID;
+//    
+//    //check all the textfields have values
+//    if ([doctorID length] >1) {
+//        
+//        //add values to dictionary
+//        [data setValue:doctorID forKey:@"DoctorID"];
+//        
+//        //add dictionary to array
+//        [contentArray addObject:data];
+//        
+//        //write array to plist file
+//        if([contentArray writeToFile:plistFilePath atomically:YES]){
+//            
+//            //NSLog(@"saved");
+//            
+//            
+//            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Saved in plist" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+//            [alert show];
+//            
+//        }
+//        else {
+//            NSLog(@"Couldn't saved");
+//            
+//            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Couldn't Saved in plist" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+//            [alert show];
+//        }
+//    }
+//    
+//}
+
+
+
 
 
 - (IBAction)newUserRegistration:(id)sender {

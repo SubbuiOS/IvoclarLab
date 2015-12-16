@@ -2,7 +2,7 @@
 //  DoctorLogin.m
 //  IvoclarLab
 //
-//  Created by Mac on 07/11/15.
+//  Created by Subramanyam on 07/11/15.
 //  Copyright (c) 2015 Subramanyam. All rights reserved.
 //
 
@@ -24,33 +24,25 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-   // self.navigationItem.title = @"Ivoclar Lab";
     
+    // Customising the navigation Title
+    // Taken a view and added a label to it with our required font
     CGRect frame = CGRectMake(0, 0, 400, 44);
     
     UIView * navigationTitleView = [[UIView alloc]initWithFrame:frame];
     navigationTitleView.backgroundColor = [UIColor clearColor];
     
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(20, 3, 200, 40)];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(20, 0, 200, 40)];
     label.backgroundColor = [UIColor clearColor];
     label.font = [UIFont boldSystemFontOfSize:25.0];
-    
-    //label.textAlignment = NSTextAlignmentCenter;
     label.textColor = [UIColor whiteColor];
     label.text = @"Ivoclar Lab";
     
     [navigationTitleView addSubview:label];
     self.navigationItem.titleView = navigationTitleView;
     
-    [self.navigationController.navigationBar
-     setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
-
-//    CATransition *fadeTextAnimation = [CATransition animation];
-//    fadeTextAnimation.duration = 1;
-//    fadeTextAnimation.type = kCATransitionPush;
-//    
-//    [self.navigationController.navigationBar.layer addAnimation: fadeTextAnimation forKey: @"fadeText"];
-//    self.navigationItem.title = @"Ivoclar Lab";
+//    [self.navigationController.navigationBar
+//     setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
     
     _doctorEmailTF.delegate = self;
 
@@ -98,7 +90,7 @@
                              "<SendOTP xmlns=\"http://www.kurnoolcity.com/wsdemo\">"
                              "<Email>%@</Email>\n"
                              "<Mobile>%@</Mobile>\n"
-                             "<UserType>-</UserType>\n"
+                             "<UserType>Doctor</UserType>\n"
                              "<RegId>-</RegId>\n"
                              "</SendOTP>\n"
                              "</soap:Body>\n"
@@ -112,7 +104,7 @@
     // Until data is parsed a spinner is displayed
     
     spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    spinner.center = CGPointMake(170, 400);
+    spinner.center = CGPointMake(175, 400);
     //spinner.tag = 12;
     [self.view addSubview:spinner];
     [spinner startAnimating];
@@ -122,7 +114,7 @@
     
     // Here @"CheckMobile" is the appending String for the respective SOAPAction
     
-    [[CommonAppManager sharedAppManager] soapService:checkMobile url:@"CheckMobile" withDelegate:self];
+    [[CommonAppManager sharedAppManager] soapServiceMessage:checkMobile soapActionString:@"CheckMobile" withDelegate:self];
     
     
     
@@ -245,7 +237,15 @@
             
             [self presentViewController:registeredLogin animated:YES completion:nil];
             
+            // After successfull login we will get doctorID.
+            //[self saveDataInPlist:currentDescription];
+
+            
             registeredLogin.registeredMobileNoTF.text = _doctorMobileNoTF.text;
+            
+            [defaults setValue:@"DocLoginSuccess" forKey:@"loginStatus"];
+            [defaults synchronize];
+            
             
             
         }
@@ -256,10 +256,8 @@
             // so OTP should be sent
             
             
-            [[CommonAppManager sharedAppManager] soapService:checkMobile url:@"SendOTP" withDelegate:self];
+            [[CommonAppManager sharedAppManager] soapServiceMessage:OTPMessage soapActionString:@"SendOTP" withDelegate:self];
 
-            
-            //[self login:OTPMessage tag:1];
             
             
         }

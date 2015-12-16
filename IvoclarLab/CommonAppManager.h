@@ -35,7 +35,7 @@
 }
 
 +(id)sharedAppManager;
--(void) soapService: (NSString * )message url:appendingString withDelegate:(id)viewController;
+-(void) soapServiceMessage: (NSString * )message soapActionString:appendingString withDelegate:(id)viewController;
 
 -(void)viewController:viewControllerName;
 

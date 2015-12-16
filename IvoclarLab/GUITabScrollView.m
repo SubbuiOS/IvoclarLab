@@ -2,7 +2,7 @@
 //  GUITabScrollView.m
 //  IvoclarLab
 //
-//  Created by Mac on 20/11/15.
+//  Created by Subramanyam on 20/11/15.
 //  Copyright (c) 2015 Subramanyam. All rights reserved.
 //
 
