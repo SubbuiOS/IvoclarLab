@@ -13,13 +13,32 @@
 
 @end
 
-
+NSMutableDictionary * docIdDict;
 @implementation NewUserOTPScreen
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    // Keyboard will dismiss when user taps on the screen
+    [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self.view action:@selector(endEditing:)]];
+    _OTPTF.delegate = self;
+    
+    defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setValue:@"NewUser" forKey:@"User"];
+    [defaults synchronize];
+    
+    _OTPSubmitOutlet.layer.cornerRadius = 10; // this value vary as per your desire
+    _OTPSubmitOutlet.clipsToBounds = YES;
+    
+    
+    UIAlertView * OTPAlert = [[UIAlertView alloc]initWithTitle:@"Alert" message:@"Please enter the OTP sent to Your email" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+    
+    [OTPAlert show];
+    
+    
 }
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -39,11 +58,18 @@
 - (IBAction)OTPSubmit:(id)sender {
     
     
+    if ([_OTPTF.text isEqual:@""]) {
+        
+        UIAlertView * OTPAlert = [[UIAlertView alloc]initWithTitle:@"Warning" message:@"Please enter a valid One Time Password(OTP)" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+        
+        [OTPAlert show];
+    }
     
+    else
+    {
     
     spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    spinner.center = CGPointMake(170, 400);
-    //spinner.tag = 12;
+    spinner.center = CGPointMake(170, _OTPSubmitOutlet.frame.size.height+_OTPSubmitOutlet.frame.origin.y+50);
     [self.view addSubview:spinner];
     [spinner startAnimating];
     
@@ -82,8 +108,7 @@
         if ([data objectForKey:@"DoctorID"]) {
         
             NSString *drID = [data objectForKey:@"DoctorID"];
-        
-        
+
         
             NSCharacterSet *invalidCharSet = [[NSCharacterSet characterSetWithCharactersInString:@"0123456789"]invertedSet];
             filteredDoctorID = [[drID componentsSeparatedByCharactersInSet:invalidCharSet]componentsJoinedByString:@""];
@@ -106,11 +131,13 @@
      "</CheckOTP>\n"
      "</soap:Body>\n"
      "</soap:Envelope>\n",filteredDoctorID,_OTPTF.text];
+    
+    NSLog(@"otp validation:%@",OTPValidation);
 
     
     
     [[CommonAppManager sharedAppManager]soapServiceMessage:OTPValidation soapActionString:@"CheckOTP" withDelegate:self];
-    
+    }
        
 }
 -(void)connectionData:(NSData*)data status:(BOOL)status
@@ -142,12 +169,12 @@
 -(void) parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName
 namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict
 {
-        currentDescription = [NSString alloc];
+        response = [NSString alloc];
 }
 
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string
 {
-        currentDescription = string;
+        response = string;
 }
 - (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName
 namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
@@ -157,9 +184,9 @@ namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
     
     if ([elementName isEqual:@"CheckOTPResult"]) {
         
-        NSLog(@"valid :%@",currentDescription);
+        NSLog(@"valid :%@",response);
         
-        if ([currentDescription isEqual:@"\"Y\""]) {
+        if ([response isEqual:@"\"Y\""]) {
             
             
             // Y represents we entered the correct OTP
@@ -171,15 +198,24 @@ namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
             
         }
         
+        else
+        {
+            UIAlertView * wrongOTP = [[UIAlertView alloc]initWithTitle:@"Warning" message:@"Check yout OTP and try again" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+            [wrongOTP show];
+            _OTPTF.text = nil;
+        }
+        
         
     }
     
     
-    
-    
 }
 
-
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    return YES;
+}
 
 
 

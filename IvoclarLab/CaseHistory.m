@@ -39,6 +39,9 @@
         //[self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
     }
     
+    [[NSUserDefaults standardUserDefaults] setValue:@"RegisteredUser" forKey:@"User"];
+
+    
     // Customising the navigation Title
     // Taken a view and added a label to it with our required font
     CGRect frame = CGRectMake(0, 0, 200, 44);
@@ -54,7 +57,7 @@
     [navigationTitleView addSubview:label];
     self.navigationItem.titleView = navigationTitleView;
     
-    self.navigationController.navigationBar.barTintColor = [UIColor blueColor];
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.0f/255.0f green:128.0f/255.0f blue:255.0f/255.0f alpha:1];
     // self.navigationController.navigationBar.translucent = NO;
     
     self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
@@ -70,10 +73,12 @@
     [self.navigationController.navigationBar.layer addAnimation: fadeTextAnimation forKey: @"fadeText"];
     self.navigationItem.title = @"Ivoclar Lab";
     
-    caseHistoryTV = [[UITableView alloc]initWithFrame:CGRectMake(0, 88, 374, 520) style:UITableViewStylePlain];
+    
+    
+    caseHistoryTV = [[UITableView alloc]initWithFrame:CGRectMake(0, _caseHistoryLabel.frame.origin.y+_caseHistoryLabel.frame.size.height+5, _caseHistoryLabel.frame.size.width, self.view.frame.size.height-150) style:UITableViewStylePlain];
     
     spinner = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    spinner.frame = CGRectMake(150, 300, 30, 30);
+    spinner.center = self.view.center;
     [self.view addSubview:spinner];
     
 }
@@ -110,8 +115,6 @@
         
         data= [contentArray objectAtIndex:i];
         if ([data objectForKey:@"DoctorID"]) {
-            
-            
             
             NSString *drID = [data objectForKey:@"DoctorID"];
             
@@ -171,11 +174,11 @@
   namespaceURI:(NSString *)namespaceURI qualifiedName:
 (NSString *)qName attributes:(NSDictionary *)attributeDict
 {
-    currentDescription = [NSString alloc];
+    response = [NSString alloc];
 }
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string
 {
-    currentDescription = string;
+    response = string;
 }
 - (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName
   namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
@@ -183,9 +186,9 @@
     
     if ([elementName isEqual:@"CaseHistoryResult"]) {
         
-       // NSLog(@"case history %@",currentDescription);
+       // NSLog(@"case history %@",response);
         
-        NSData *objectData = [currentDescription dataUsingEncoding:NSUTF8StringEncoding];
+        NSData *objectData = [response dataUsingEncoding:NSUTF8StringEncoding];
         CHDict = [NSJSONSerialization JSONObjectWithData:objectData options:NSJSONReadingMutableContainers error:nil];
         NSLog(@"caseHistory dictionary :%@",CHDict);
         
@@ -238,6 +241,8 @@
 //    caseHistoryCell.docAddressCH.hidden = YES;
 //    caseHistoryCell.doctorNameTitle.hidden = YES;
 //    caseHistoryCell.addressTitle.hidden = YES;
+    
+    [caseHistoryCell.doctorNameTitle setText:@"LabName"];
     
     return caseHistoryCell;
 }

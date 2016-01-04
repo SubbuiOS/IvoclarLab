@@ -14,8 +14,9 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *partnerMobile;
 
-@property (weak, nonatomic) IBOutlet UILabel *partnerLocation;
+//@property (weak, nonatomic) IBOutlet UILabel *partnerLocation;
 
+@property (weak, nonatomic) IBOutlet UITextView *partnerLocation;
 
 
 

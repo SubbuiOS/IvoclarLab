@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "CommonAppManager.h"
 
-@interface ComplaintsScreen : UIViewController<UITableViewDataSource,UITableViewDelegate,NSXMLParserDelegate,UIPickerViewDataSource,UIPickerViewDelegate>
+@interface ComplaintsScreen : UIViewController<UITableViewDataSource,UITableViewDelegate,NSXMLParserDelegate/*,UIPickerViewDataSource,UIPickerViewDelegate*/,UITextFieldDelegate>
 
 {
     NSMutableArray * complaintTypeArray;
@@ -21,9 +21,7 @@
     BOOL callBackFromCompanyCheckboxSelected;
     BOOL callBackFromLabCheckboxSelected;
     
-    NSString *currentDescription;
-    NSMutableData * webData;
-    NSURLConnection * urlConnection;
+    NSString *response;
     NSString * filteredDoctorID;
     NSDictionary * caseIdDictionary;
     
@@ -33,6 +31,7 @@
     NSString * callBackFromLab;
     
     UITextField * otherComplaints;
+    UIView * commonView;
 
 
 
@@ -81,8 +80,11 @@
 @property (weak, nonatomic) IBOutlet UIPickerView *caseIdPicker;
 
 
+@property (weak, nonatomic) IBOutlet UIView *complaintTypeView;
+@property (weak, nonatomic) IBOutlet UIView *caseIdView;
 
 
+@property (weak, nonatomic) IBOutlet UIButton *complaintButtonOutlet;
 
 
 

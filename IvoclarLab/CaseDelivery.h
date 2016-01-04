@@ -9,18 +9,19 @@
 #import <UIKit/UIKit.h>
 #import "CommonAppManager.h"
 
-@interface CaseDelivery : UIViewController<NSXMLParserDelegate,UITableViewDataSource,UITableViewDelegate,UIPickerViewDataSource,UIPickerViewDelegate>
+@interface CaseDelivery : UIViewController<NSXMLParserDelegate,UITableViewDataSource,UITableViewDelegate/*,UIPickerViewDataSource,UIPickerViewDelegate*/>
 
 
 {
     BOOL caseRecievedCheckBoxSelected;
     UITableView * caseIdTV;
     UITableViewCell * cell;
-    NSMutableData * webData;
-    NSString * currentDescription;
+    NSString * response;
     NSString * filteredDoctorID;
     NSDictionary * caseIdDictionary;
     NSString * caseReceived;
+    
+    UIView * commonView;
 }
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *caseDeliverySideMenu;
@@ -40,6 +41,7 @@
 
 @property (weak, nonatomic) IBOutlet UIPickerView *caseIdPicker;
 
+@property (weak, nonatomic) IBOutlet UIView *caseIdView;
 
 
 -(void)connectionData:(NSData*)data status:(BOOL)status;

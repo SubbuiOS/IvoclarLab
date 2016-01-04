@@ -10,12 +10,11 @@
 #import "CommonAppManager.h"
 #import "SWRevealViewController.h"
 
-@interface LabPersonLogin : UIViewController<NSXMLParserDelegate>
+@interface LabPersonLogin : UIViewController<NSXMLParserDelegate,UITextFieldDelegate>
 
 
 {
-    NSMutableData * webData;
-    NSString * currentDescription;
+    NSString * response;
     UIActivityIndicatorView * spinner;
     NSUserDefaults * defaults;
 }
@@ -23,6 +22,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *labPersonUserName;
 
 @property (weak, nonatomic) IBOutlet UITextField *labPersonPassword;
+@property (weak, nonatomic) IBOutlet UIButton *labLoginSubmit;
 
 - (IBAction)labLoginSubmit:(id)sender;
 

@@ -1,9 +1,9 @@
 //
-//  ERGameManager.m
-//  GoodieLetters
+//  CommonAppManager.m
+//  IvoclarLab
 //
-//  Created by Coding Cursors on 05/05/11.
-//  Copyright 2011 What IS? Properties LLC. All rights reserved.
+//  Created by Subramanyam on 05/11/15.
+//  Copyright (c) 2015 Subramanyam. All rights reserved.
 //
 
 #import "CommonAppManager.h"
@@ -52,34 +52,34 @@ static CommonAppManager *_sharedAppManager;
     delegate = viewController;
     
     
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/zenoservice.asmx",MainURL]];
-    NSMutableURLRequest *theRequest = [NSMutableURLRequest requestWithURL:url];
+    NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/zenoservice.asmx",MainURL]];
+    NSMutableURLRequest *URLRequest = [NSMutableURLRequest requestWithURL:URL];
     
     NSString *msgLength = [NSString stringWithFormat:@"%lu", (unsigned long)[message length]];
     
-    [theRequest addValue: @"text/xml; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+    [URLRequest addValue: @"text/xml; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
     
-    [theRequest addValue: [NSString stringWithFormat:@"%@/%@",MainURL,appendingString] forHTTPHeaderField:@"SOAPAction"];
+    [URLRequest addValue: [NSString stringWithFormat:@"%@/%@",MainURL,appendingString] forHTTPHeaderField:@"SOAPAction"];
   
     
     
-    [theRequest addValue: @"www.kurnoolcity.com" forHTTPHeaderField:@"Host"];
+    [URLRequest addValue: @"www.kurnoolcity.com" forHTTPHeaderField:@"Host"];
     
-    [theRequest addValue: msgLength forHTTPHeaderField:@"Content-Length"];
-    [theRequest setHTTPMethod:@"POST"];
-    [theRequest setHTTPBody: [message dataUsingEncoding:NSUTF8StringEncoding]];
+    [URLRequest addValue: msgLength forHTTPHeaderField:@"Content-Length"];
+    [URLRequest setHTTPMethod:@"POST"];
+    [URLRequest setHTTPBody: [message dataUsingEncoding:NSUTF8StringEncoding]];
     
     
     webData = [NSMutableData data];
 
-    urlConnection = [[NSURLConnection alloc] initWithRequest:theRequest delegate:self];
+    URLConnection = [[NSURLConnection alloc] initWithRequest:URLRequest delegate:self];
     
-    if( urlConnection )
+    if( URLConnection )
     {
     }
     else
     {
-        NSLog(@"urlConnection is NULL");
+        NSLog(@"URLConnection is NULL");
     }
     
     
@@ -145,8 +145,10 @@ static CommonAppManager *_sharedAppManager;
         {
             [(LabCaseHistory*)delegate connectionData:nil status:NO];
         }
-    
-    
+        else if ([delegate isKindOfClass:[PasswordGenarationScreen class]])
+        {
+            [(PasswordGenarationScreen*)delegate connectionData:nil status:NO];
+        }
    
     
 }
@@ -155,22 +157,17 @@ static CommonAppManager *_sharedAppManager;
     // NSLog(@"DONE. Received Bytes: %lu", (unsigned long)[webData length]);
     NSString *data = [[NSString alloc] initWithBytes: [webData mutableBytes] length:[webData length] encoding:NSUTF8StringEncoding];
     
-    NSLog(@"%@",data);
+   // NSLog(@"%@",data);
     
     NSData *encodedData = [data dataUsingEncoding:NSUTF8StringEncoding];
     
     if ([delegate isKindOfClass:[DoctorLogin class]])
     {
-
-               menuArray = [[NSMutableArray alloc]initWithObjects:@"CaseEntry",@"Profile",@"CaseHistory",@"Feedback",@"Update Mobile",@"Complaints",@"CaseDelivery",@"Home", nil];
-               
-            [(DoctorLogin*)delegate connectionData:encodedData status:YES];
+        [(DoctorLogin*)delegate connectionData:encodedData status:YES];
     }
     
     else if([delegate isKindOfClass:[LabPersonLogin class]])
     {
-        menuArray = [[NSMutableArray alloc]initWithObjects:@"CaseStatus",@"CaseHistory",@"View Complaints",@"Home", nil];
-        
         [(LabPersonLogin *)delegate connectionData:encodedData status:YES];
         
     }
@@ -216,13 +213,12 @@ static CommonAppManager *_sharedAppManager;
     {
         [(LabCaseHistory*)delegate connectionData:encodedData status:YES];
     }
+    else if ([delegate isKindOfClass:[PasswordGenarationScreen class]])
+    {
+        [(PasswordGenarationScreen*)delegate connectionData:encodedData status:YES];
+    }
 
 
-    
-    
-    
-    
-    
     
     
 }
@@ -234,10 +230,23 @@ static CommonAppManager *_sharedAppManager;
     
     if ([delegate isKindOfClass:[SideMenuListViewController class]]) {
         
+    NSString * loginStatus = [[NSUserDefaults standardUserDefaults]stringForKey:@"loginStatus"];
         
+        if ([loginStatus isEqual:@"DocLoginSuccess"]) {
+            
+            menuArray = [[NSMutableArray alloc]initWithObjects:@"CaseEntry",@"Profile",@"CaseHistory",@"Update Mobile",@"Complaints",@"CaseDelivery",@"Home", nil];
+            
+        }
         
+        else if ([loginStatus isEqual:@"LabLoginSuccess"])
+        {
+            menuArray = [[NSMutableArray alloc]initWithObjects:@"CaseStatus",@"CaseHistory",@"Home", nil];
+            
+        }
+        
+        NSLog(@"menu array :%@",menuArray);
+
         [(SideMenuListViewController*)delegate sideMenuList:menuArray];
-        
     }
     
     

@@ -10,7 +10,7 @@
 #import "CommonAppManager.h"
 
 
-@interface CaseEntryViewController : ViewController<UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource,NSXMLParserDelegate,UIAlertViewDelegate,UIPickerViewDataSource,UIPickerViewDelegate>
+@interface CaseEntryViewController : ViewController<UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource,NSXMLParserDelegate,UIAlertViewDelegate/*,UIPickerViewDataSource,UIPickerViewDelegate*/>
 
 
 {
@@ -19,6 +19,7 @@
     UITableView * typeOfCaseTV;
     UITableView * partnerMTV;
     UITableView * partnerLTV;
+  //  UITableView * selectStateTV;
     UITableViewCell * cell;
     
     NSMutableArray * natureOfWorkArray;
@@ -26,13 +27,14 @@
     NSMutableArray * typeOfCaseArray;
     NSMutableDictionary * partnerMDict;
     NSMutableDictionary * partnerLDict;
+    NSMutableDictionary * profileDetailsDict;
     
-    
-    NSMutableData * webData;
-    NSURLConnection * urlConnection;
-    NSString * currentDescription;
+   // NSUserDefaults * defaults;
+   
+    NSString * response;
     NSString * filteredDoctorID;
     NSString * filteredDoctorName;
+    NSString * updateProfile;
     
     UIAlertView * partnerAlert;
     UIAlertView * submitCEAlert;
@@ -40,13 +42,16 @@
     UIAlertView * confirmationAlert;
     UIView * partnerLView;
     UIButton * partnerLbutton;
+   // UIButton * stateButton;
+    
+    UIView * commonView;
     
     
+    
+
 }
 
 @property NSUInteger index;
-
-
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *CESidebarButton;
 
 @property (weak, nonatomic) IBOutlet UILabel *partnerNameLabel;
@@ -67,6 +72,10 @@
 @property (weak, nonatomic) IBOutlet UIButton *typeOfCaseOutlet;
 - (IBAction)selectPartner:(id)sender;
 - (IBAction)submitCaseEntry:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *submitOutlet;
+
+
+@property (weak, nonatomic) IBOutlet UIButton *selectPartnerOutlet;
 
 @property (weak, nonatomic) IBOutlet UILabel *selectNatureOfWorkLabel;
 @property (weak, nonatomic) IBOutlet UILabel *crownBrandLabel;
@@ -78,6 +87,12 @@
 
 @property (weak, nonatomic) IBOutlet UIPickerView *natureOfWorkPicker;
 @property (weak, nonatomic) IBOutlet UIPickerView *typeOfCasePicker;
+@property (weak, nonatomic) IBOutlet UIView *natureOfWorkView;
+
+@property (weak, nonatomic) IBOutlet UIView *crownBrandView;
+@property (weak, nonatomic) IBOutlet UIView *typeOfCaseView;
+
+
 
 -(void)connectionData:(NSData*)data status:(BOOL)status;
 

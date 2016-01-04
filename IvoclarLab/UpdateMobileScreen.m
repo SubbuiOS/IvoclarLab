@@ -33,8 +33,10 @@
     {
         [self.updateMobileSideMenu setTarget: self.revealViewController];
         [self.updateMobileSideMenu setAction: @selector( revealToggle: )];
-        //[self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
+        [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
     }
+    [[NSUserDefaults standardUserDefaults] setValue:@"RegisteredUser" forKey:@"User"];
+
     
     // Customising the navigation Title
     // Taken a view and added a label to it with our required font
@@ -51,7 +53,7 @@
     [navigationTitleView addSubview:label];
     self.navigationItem.titleView = navigationTitleView;
     
-    self.navigationController.navigationBar.barTintColor = [UIColor blueColor];
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.0f/255.0f green:128.0f/255.0f blue:255.0f/255.0f alpha:1];
     // self.navigationController.navigationBar.translucent = NO;
     
     self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
@@ -66,10 +68,24 @@
     
     [self.navigationController.navigationBar.layer addAnimation: fadeTextAnimation forKey: @"fadeText"];
     // self.navigationItem.title = @"Ivoclar Lab";
+    
+    _mobileNumberTF.delegate = self;
+    _mobileNumberTF.keyboardType = UIKeyboardTypePhonePad;
+    
+    // Keyboard will dismiss when user taps on the screen
+    [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self.view action:@selector(endEditing:)]];
+    
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    _updateMobileButtonOutlet.layer.cornerRadius = 10; // this value vary as per your desire
+    _updateMobileButtonOutlet.clipsToBounds = YES;
+    
+    _mobileNumberTF.layer.borderColor=[[UIColor blueColor]CGColor];
+    _mobileNumberTF.layer.borderWidth=1.0;
+
+    
     
     [self getDataFromPlist];
     
@@ -166,9 +182,20 @@
 
 
 - (IBAction)updateMobile:(id)sender {
- 
+
     
     [self getDataFromPlist];
+    
+    if ([_mobileNumberTF.text isEqual:@""]) {
+        
+        UIAlertView * updateMobileAlert = [[UIAlertView alloc]initWithTitle:@"Warning" message:@"Please enter a valid mobile number to update" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [updateMobileAlert show];
+        
+        
+    }
+    
+    else
+    {
     
     //Update Profile
     
@@ -184,7 +211,7 @@
                           "</soap:Envelope>\n",filteredDoctorID,_mobileNumberTF.text];
 
     [[CommonAppManager sharedAppManager]soapServiceMessage:updateMobile soapActionString:@"UpdateMobile" withDelegate:self];
-    
+    }
     
        
 }
@@ -217,11 +244,11 @@
   namespaceURI:(NSString *)namespaceURI qualifiedName:
 (NSString *)qName attributes:(NSDictionary *)attributeDict
 {
-    currentDescription = [NSString alloc];
+    response = [NSString alloc];
 }
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string
 {
-    currentDescription = string;
+    response = string;
 }
 - (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName
   namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
@@ -229,10 +256,10 @@
     
     if ([elementName isEqual:@"GetMobileDetailsResult"]) {
         
-        NSLog(@"Mobile Number :%@",currentDescription);
+        NSLog(@"Mobile Number :%@",response);
         
         NSCharacterSet *invalidCharSet = [[NSCharacterSet characterSetWithCharactersInString:@"0123456789"]invertedSet];
-        filteredDoctorMobile = [[currentDescription componentsSeparatedByCharactersInSet:invalidCharSet]componentsJoinedByString:@""];
+        filteredDoctorMobile = [[response componentsSeparatedByCharactersInSet:invalidCharSet]componentsJoinedByString:@""];
         
         _mobileNumberTF.text = filteredDoctorMobile;
 
@@ -241,7 +268,16 @@
     
     if ([elementName isEqual:@"UpdateMobileResult"]) {
         
-        NSLog(@"Status :%@",currentDescription);
+        NSLog(@"Status :%@",response);
+        
+        if ([response isEqual: @"\"EX\""])
+        {
+            UIAlertView * updateMobileAlert = [[UIAlertView alloc]initWithTitle:@"Updated" message:@"Mobile number is successfully updated" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+            [updateMobileAlert show];
+            
+            UpdateMobileScreen * updateMobile = [self.storyboard instantiateViewControllerWithIdentifier:@"updateMobile"];
+            [self.revealViewController pushFrontViewController:updateMobile animated:YES];
+        }
 
     }
 }

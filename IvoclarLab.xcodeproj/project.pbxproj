@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		04040E711C31C45D00FE08F0 /* submitEntry.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 04040E6F1C31C45D00FE08F0 /* submitEntry.jpeg */; };
+		04040E731C31DF5600FE08F0 /* SelectPartners.png in Resources */ = {isa = PBXBuildFile; fileRef = 04040E721C31DF5600FE08F0 /* SelectPartners.png */; };
 		04041C4C1BEC7678009C49E6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 04041C4B1BEC7678009C49E6 /* main.m */; };
 		04041C4F1BEC7678009C49E6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 04041C4E1BEC7678009C49E6 /* AppDelegate.m */; };
 		04041C521BEC7678009C49E6 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04041C511BEC7678009C49E6 /* ViewController.m */; };
@@ -18,20 +20,22 @@
 		04041C771BEC7A02009C49E6 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04041C761BEC7A02009C49E6 /* SWRevealViewController.m */; };
 		04041C7A1BEC8A53009C49E6 /* CaseEntryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04041C791BEC8A53009C49E6 /* CaseEntryViewController.m */; };
 		04041C7F1BECB873009C49E6 /* FeedbackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04041C7E1BECB873009C49E6 /* FeedbackViewController.m */; };
+		0422990B1C33167E006EEB56 /* dropdown5.png in Resources */ = {isa = PBXBuildFile; fileRef = 0422990A1C33167E006EEB56 /* dropdown5.png */; };
 		0425BED71C11152600063E7E /* zenostar.png in Resources */ = {isa = PBXBuildFile; fileRef = 0425BED61C11152600063E7E /* zenostar.png */; };
 		0425BED91C11166E00063E7E /* IPS emax.png in Resources */ = {isa = PBXBuildFile; fileRef = 0425BED81C11166E00063E7E /* IPS emax.png */; };
 		0425BEDB1C11198500063E7E /* BackButton.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0425BEDA1C11198500063E7E /* BackButton.jpg */; };
-		0425BEDD1C11198F00063E7E /* ClickHereToOrder.png in Resources */ = {isa = PBXBuildFile; fileRef = 0425BEDC1C11198F00063E7E /* ClickHereToOrder.png */; };
 		0425BEDF1C1127BE00063E7E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0425BEDE1C1127BE00063E7E /* QuartzCore.framework */; };
-		0425BEE11C112A4B00063E7E /* DoctorLoginScreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 0425BEE01C112A4B00063E7E /* DoctorLoginScreen.png */; };
 		0425BEE31C11300500063E7E /* button1.png in Resources */ = {isa = PBXBuildFile; fileRef = 0425BEE21C11300500063E7E /* button1.png */; };
 		04372DE81C01215800AD71FE /* CaseDelivery.m in Sources */ = {isa = PBXBuildFile; fileRef = 04372DE71C01215800AD71FE /* CaseDelivery.m */; };
 		0455FC7A1C0FE12800727D23 /* MetalFree1.png in Resources */ = {isa = PBXBuildFile; fileRef = 0455FC791C0FE12800727D23 /* MetalFree1.png */; };
+		0470B7C01C2CA85C00BF142F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0470B7BF1C2CA85C00BF142F /* UIKit.framework */; };
+		0470B7C21C2CA86B00BF142F /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0470B7C11C2CA86B00BF142F /* CoreMotion.framework */; };
 		04723EE51BEDE8B00054D36F /* DoctorLogin.m in Sources */ = {isa = PBXBuildFile; fileRef = 04723EE41BEDE8B00054D36F /* DoctorLogin.m */; };
+		047FA2F41C2C8B0100DA6353 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 047FA2F31C2C8B0100DA6353 /* CoreGraphics.framework */; };
+		0481D27C1C2CC75D006ECA5C /* CommonAppManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 04B31C4B1C026BFE001967D4 /* CommonAppManager.h */; };
+		0481D27D1C2CC778006ECA5C /* CommonAppManager.m in Headers */ = {isa = PBXBuildFile; fileRef = 04B31C4C1C026C0D001967D4 /* CommonAppManager.m */; };
+		0481D27F1C2CFE64006ECA5C /* metalWork.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0481D27E1C2CFE64006ECA5C /* metalWork.jpg */; };
 		04B31C4D1C026C0D001967D4 /* CommonAppManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B31C4C1C026C0D001967D4 /* CommonAppManager.m */; };
-		04B939C61C0FB4C6002C6110 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04B939C51C0FB4C6002C6110 /* UIKit.framework */; };
-		04B939CB1C0FB78C002C6110 /* CommonAppManager.m in Headers */ = {isa = PBXBuildFile; fileRef = 04B31C4C1C026C0D001967D4 /* CommonAppManager.m */; settings = {ATTRIBUTES = (Private, ); }; };
-		04B939CD1C0FC1DE002C6110 /* IvoclarLaunchScreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 04B939CC1C0FC1DE002C6110 /* IvoclarLaunchScreen.png */; };
 		04C929481BFECA3700C8ADE4 /* PagingControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 04C929471BFECA3700C8ADE4 /* PagingControl.m */; };
 		04D47EBC1BF07A7B0018B5C3 /* DoctorAlreadyRegistered.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D47EBB1BF07A7B0018B5C3 /* DoctorAlreadyRegistered.m */; };
 		04D47EBF1BF0C7140018B5C3 /* NewUserOTPScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D47EBE1BF0C7130018B5C3 /* NewUserOTPScreen.m */; };
@@ -40,11 +44,11 @@
 		04D5E43D1C03A67A0048BD18 /* LoginPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D5E43C1C03A67A0048BD18 /* LoginPage.m */; };
 		04D5E4401C03A68D0048BD18 /* LabPersonLogin.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D5E43F1C03A68D0048BD18 /* LabPersonLogin.m */; };
 		04D5E4461C03C40E0048BD18 /* sideMenu.png in Resources */ = {isa = PBXBuildFile; fileRef = 04D5E4451C03C40E0048BD18 /* sideMenu.png */; };
-		04D5E4491C03EC880048BD18 /* dropdown.png in Resources */ = {isa = PBXBuildFile; fileRef = 04D5E4481C03EC880048BD18 /* dropdown.png */; };
 		04D8A5AF1BFFB3EB0025CA52 /* GUITabPagerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D8A5AE1BFFB3EB0025CA52 /* GUITabPagerViewController.m */; };
 		04D8A5B21BFFB40D0025CA52 /* GUITabScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D8A5B11BFFB40D0025CA52 /* GUITabScrollView.m */; };
 		04DCFF5B1BFBBABA00BD03E9 /* CaseHistoryCustomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DCFF591BFBBABA00BD03E9 /* CaseHistoryCustomCell.m */; };
 		04DCFF5C1BFBBABA00BD03E9 /* CaseHistoryCustomCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04DCFF5A1BFBBABA00BD03E9 /* CaseHistoryCustomCell.xib */; };
+		04DD38971C332E6900D381E8 /* DD2 (1).png in Resources */ = {isa = PBXBuildFile; fileRef = 04DD38961C332E6900D381E8 /* DD2 (1).png */; };
 		04DF4CD31BFA73AF0041D185 /* PartnersCustomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DF4CD11BFA73AF0041D185 /* PartnersCustomCell.m */; };
 		04DF4CD41BFA73AF0041D185 /* PartnersCustomCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04DF4CD21BFA73AF0041D185 /* PartnersCustomCell.xib */; };
 		04DF4CD71BFAD6330041D185 /* CaseHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DF4CD61BFAD6330041D185 /* CaseHistory.m */; };
@@ -55,8 +59,8 @@
 		04F977F91BFFF08F009B038F /* UpdateMobileScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F977F81BFFF08F009B038F /* UpdateMobileScreen.m */; };
 		04F977FC1C0001BB009B038F /* ComplaintsScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F977FB1C0001BB009B038F /* ComplaintsScreen.m */; };
 		04F977FF1C000519009B038F /* checked_checkbox.png in Resources */ = {isa = PBXBuildFile; fileRef = 04F977FD1C000519009B038F /* checked_checkbox.png */; };
-		04F978001C000519009B038F /* tickMarkCheckBox.png in Resources */ = {isa = PBXBuildFile; fileRef = 04F977FE1C000519009B038F /* tickMarkCheckBox.png */; };
 		04F978021C0005DF009B038F /* unchecked_checkbox.png in Resources */ = {isa = PBXBuildFile; fileRef = 04F978011C0005DF009B038F /* unchecked_checkbox.png */; };
+		04FE4FF71C2A310D0097150E /* LaunchScreen~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04FE4FF61C2A310D0097150E /* LaunchScreen~ipad.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +74,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		04040E6F1C31C45D00FE08F0 /* submitEntry.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = submitEntry.jpeg; sourceTree = "<group>"; };
+		04040E721C31DF5600FE08F0 /* SelectPartners.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SelectPartners.png; sourceTree = "<group>"; };
 		04041C461BEC7678009C49E6 /* IvoclarLab.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IvoclarLab.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04041C4A1BEC7678009C49E6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		04041C4B1BEC7678009C49E6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -91,22 +97,23 @@
 		04041C791BEC8A53009C49E6 /* CaseEntryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CaseEntryViewController.m; sourceTree = "<group>"; };
 		04041C7D1BECB873009C49E6 /* FeedbackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedbackViewController.h; sourceTree = "<group>"; };
 		04041C7E1BECB873009C49E6 /* FeedbackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedbackViewController.m; sourceTree = "<group>"; };
+		0422990A1C33167E006EEB56 /* dropdown5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dropdown5.png; sourceTree = "<group>"; };
 		0425BED61C11152600063E7E /* zenostar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = zenostar.png; sourceTree = "<group>"; };
 		0425BED81C11166E00063E7E /* IPS emax.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IPS emax.png"; sourceTree = "<group>"; };
 		0425BEDA1C11198500063E7E /* BackButton.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = BackButton.jpg; sourceTree = "<group>"; };
-		0425BEDC1C11198F00063E7E /* ClickHereToOrder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ClickHereToOrder.png; sourceTree = "<group>"; };
 		0425BEDE1C1127BE00063E7E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		0425BEE01C112A4B00063E7E /* DoctorLoginScreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DoctorLoginScreen.png; sourceTree = "<group>"; };
 		0425BEE21C11300500063E7E /* button1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button1.png; sourceTree = "<group>"; };
 		04372DE61C01215800AD71FE /* CaseDelivery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CaseDelivery.h; sourceTree = "<group>"; };
 		04372DE71C01215800AD71FE /* CaseDelivery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CaseDelivery.m; sourceTree = "<group>"; };
 		0455FC791C0FE12800727D23 /* MetalFree1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MetalFree1.png; sourceTree = "<group>"; };
+		0470B7BF1C2CA85C00BF142F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.1.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		0470B7C11C2CA86B00BF142F /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.1.sdk/System/Library/Frameworks/CoreMotion.framework; sourceTree = DEVELOPER_DIR; };
 		04723EE31BEDE8B00054D36F /* DoctorLogin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DoctorLogin.h; sourceTree = "<group>"; };
 		04723EE41BEDE8B00054D36F /* DoctorLogin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DoctorLogin.m; sourceTree = "<group>"; };
+		047FA2F31C2C8B0100DA6353 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		0481D27E1C2CFE64006ECA5C /* metalWork.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = metalWork.jpg; sourceTree = "<group>"; };
 		04B31C4B1C026BFE001967D4 /* CommonAppManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommonAppManager.h; sourceTree = "<group>"; };
 		04B31C4C1C026C0D001967D4 /* CommonAppManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommonAppManager.m; sourceTree = "<group>"; };
-		04B939C51C0FB4C6002C6110 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		04B939CC1C0FC1DE002C6110 /* IvoclarLaunchScreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = IvoclarLaunchScreen.png; path = ../IvoclarLaunchScreen.png; sourceTree = "<group>"; };
 		04C929461BFECA3700C8ADE4 /* PagingControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PagingControl.h; sourceTree = "<group>"; };
 		04C929471BFECA3700C8ADE4 /* PagingControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PagingControl.m; sourceTree = "<group>"; };
 		04D47EBA1BF07A7B0018B5C3 /* DoctorAlreadyRegistered.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DoctorAlreadyRegistered.h; sourceTree = "<group>"; };
@@ -122,7 +129,6 @@
 		04D5E43E1C03A68D0048BD18 /* LabPersonLogin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LabPersonLogin.h; sourceTree = "<group>"; };
 		04D5E43F1C03A68D0048BD18 /* LabPersonLogin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LabPersonLogin.m; sourceTree = "<group>"; };
 		04D5E4451C03C40E0048BD18 /* sideMenu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sideMenu.png; sourceTree = "<group>"; };
-		04D5E4481C03EC880048BD18 /* dropdown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dropdown.png; sourceTree = "<group>"; };
 		04D8A5AD1BFFB3EB0025CA52 /* GUITabPagerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GUITabPagerViewController.h; sourceTree = "<group>"; };
 		04D8A5AE1BFFB3EB0025CA52 /* GUITabPagerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GUITabPagerViewController.m; sourceTree = "<group>"; };
 		04D8A5B01BFFB40D0025CA52 /* GUITabScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GUITabScrollView.h; sourceTree = "<group>"; };
@@ -130,6 +136,7 @@
 		04DCFF581BFBBABA00BD03E9 /* CaseHistoryCustomCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CaseHistoryCustomCell.h; sourceTree = "<group>"; };
 		04DCFF591BFBBABA00BD03E9 /* CaseHistoryCustomCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CaseHistoryCustomCell.m; sourceTree = "<group>"; };
 		04DCFF5A1BFBBABA00BD03E9 /* CaseHistoryCustomCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CaseHistoryCustomCell.xib; sourceTree = "<group>"; };
+		04DD38961C332E6900D381E8 /* DD2 (1).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "DD2 (1).png"; sourceTree = "<group>"; };
 		04DF4CD01BFA73AF0041D185 /* PartnersCustomCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PartnersCustomCell.h; sourceTree = "<group>"; };
 		04DF4CD11BFA73AF0041D185 /* PartnersCustomCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PartnersCustomCell.m; sourceTree = "<group>"; };
 		04DF4CD21BFA73AF0041D185 /* PartnersCustomCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PartnersCustomCell.xib; sourceTree = "<group>"; };
@@ -146,8 +153,8 @@
 		04F977FA1C0001BB009B038F /* ComplaintsScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComplaintsScreen.h; sourceTree = "<group>"; };
 		04F977FB1C0001BB009B038F /* ComplaintsScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ComplaintsScreen.m; sourceTree = "<group>"; };
 		04F977FD1C000519009B038F /* checked_checkbox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checked_checkbox.png; sourceTree = "<group>"; };
-		04F977FE1C000519009B038F /* tickMarkCheckBox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tickMarkCheckBox.png; sourceTree = "<group>"; };
 		04F978011C0005DF009B038F /* unchecked_checkbox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unchecked_checkbox.png; sourceTree = "<group>"; };
+		04FE4FF61C2A310D0097150E /* LaunchScreen~ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "LaunchScreen~ipad.xib"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -155,8 +162,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0470B7C01C2CA85C00BF142F /* UIKit.framework in Frameworks */,
+				0470B7C21C2CA86B00BF142F /* CoreMotion.framework in Frameworks */,
+				047FA2F41C2C8B0100DA6353 /* CoreGraphics.framework in Frameworks */,
 				0425BEDF1C1127BE00063E7E /* QuartzCore.framework in Frameworks */,
-				04B939C61C0FB4C6002C6110 /* UIKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -173,8 +182,10 @@
 		04041C3D1BEC7677009C49E6 = {
 			isa = PBXGroup;
 			children = (
+				0470B7C11C2CA86B00BF142F /* CoreMotion.framework */,
+				0470B7BF1C2CA85C00BF142F /* UIKit.framework */,
+				047FA2F31C2C8B0100DA6353 /* CoreGraphics.framework */,
 				0425BEDE1C1127BE00063E7E /* QuartzCore.framework */,
-				04B939C51C0FB4C6002C6110 /* UIKit.framework */,
 				04041C481BEC7678009C49E6 /* IvoclarLab */,
 				04041C621BEC7678009C49E6 /* IvoclarLabTests */,
 				04041C471BEC7678009C49E6 /* Products */,
@@ -209,6 +220,7 @@
 				04041C561BEC7678009C49E6 /* Images.xcassets */,
 				04041C531BEC7678009C49E6 /* Main.storyboard */,
 				04041C581BEC7678009C49E6 /* LaunchScreen.xib */,
+				04FE4FF61C2A310D0097150E /* LaunchScreen~ipad.xib */,
 				04041C491BEC7678009C49E6 /* Supporting Files */,
 			);
 			path = IvoclarLab;
@@ -308,19 +320,19 @@
 		04EB58631C07AF5C0049E049 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				04040E6F1C31C45D00FE08F0 /* submitEntry.jpeg */,
+				04040E721C31DF5600FE08F0 /* SelectPartners.png */,
+				0422990A1C33167E006EEB56 /* dropdown5.png */,
 				04F8FB9C1C136FCC00FB5845 /* LaunchScreen.jpg */,
 				0455FC791C0FE12800727D23 /* MetalFree1.png */,
 				0425BEE21C11300500063E7E /* button1.png */,
 				0425BEDA1C11198500063E7E /* BackButton.jpg */,
-				0425BEDC1C11198F00063E7E /* ClickHereToOrder.png */,
+				04DD38961C332E6900D381E8 /* DD2 (1).png */,
 				0425BED61C11152600063E7E /* zenostar.png */,
-				04B939CC1C0FC1DE002C6110 /* IvoclarLaunchScreen.png */,
+				0481D27E1C2CFE64006ECA5C /* metalWork.jpg */,
 				0425BED81C11166E00063E7E /* IPS emax.png */,
-				0425BEE01C112A4B00063E7E /* DoctorLoginScreen.png */,
-				04D5E4481C03EC880048BD18 /* dropdown.png */,
 				04F977FD1C000519009B038F /* checked_checkbox.png */,
 				04D5E4451C03C40E0048BD18 /* sideMenu.png */,
-				04F977FE1C000519009B038F /* tickMarkCheckBox.png */,
 				04F978011C0005DF009B038F /* unchecked_checkbox.png */,
 			);
 			name = Images;
@@ -333,7 +345,8 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				04B939CB1C0FB78C002C6110 /* CommonAppManager.m in Headers */,
+				0481D27D1C2CC778006ECA5C /* CommonAppManager.m in Headers */,
+				0481D27C1C2CC75D006ECA5C /* CommonAppManager.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -387,9 +400,11 @@
 				TargetAttributes = {
 					04041C451BEC7678009C49E6 = {
 						CreatedOnToolsVersion = 6.1;
+						DevelopmentTeam = T99DT2K8JC;
 					};
 					04041C5E1BEC7678009C49E6 = {
 						CreatedOnToolsVersion = 6.1;
+						DevelopmentTeam = T99DT2K8JC;
 						TestTargetID = 04041C451BEC7678009C49E6;
 					};
 				};
@@ -418,26 +433,27 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04040E731C31DF5600FE08F0 /* SelectPartners.png in Resources */,
 				04F977FF1C000519009B038F /* checked_checkbox.png in Resources */,
 				04041C551BEC7678009C49E6 /* Main.storyboard in Resources */,
+				04DD38971C332E6900D381E8 /* DD2 (1).png in Resources */,
 				04F978021C0005DF009B038F /* unchecked_checkbox.png in Resources */,
 				0425BEE31C11300500063E7E /* button1.png in Resources */,
 				04DCFF5C1BFBBABA00BD03E9 /* CaseHistoryCustomCell.xib in Resources */,
-				0425BEDD1C11198F00063E7E /* ClickHereToOrder.png in Resources */,
+				0481D27F1C2CFE64006ECA5C /* metalWork.jpg in Resources */,
 				0455FC7A1C0FE12800727D23 /* MetalFree1.png in Resources */,
 				04D5E4461C03C40E0048BD18 /* sideMenu.png in Resources */,
 				04041C5A1BEC7678009C49E6 /* LaunchScreen.xib in Resources */,
+				04FE4FF71C2A310D0097150E /* LaunchScreen~ipad.xib in Resources */,
 				04EB58A31C07F7A90049E049 /* background1.jpg in Resources */,
 				04F8FB9D1C136FCC00FB5845 /* LaunchScreen.jpg in Resources */,
-				04D5E4491C03EC880048BD18 /* dropdown.png in Resources */,
 				04041C571BEC7678009C49E6 /* Images.xcassets in Resources */,
-				04F978001C000519009B038F /* tickMarkCheckBox.png in Resources */,
 				04DF4CD41BFA73AF0041D185 /* PartnersCustomCell.xib in Resources */,
 				0425BED71C11152600063E7E /* zenostar.png in Resources */,
-				0425BEE11C112A4B00063E7E /* DoctorLoginScreen.png in Resources */,
-				04B939CD1C0FC1DE002C6110 /* IvoclarLaunchScreen.png in Resources */,
 				0425BEDB1C11198500063E7E /* BackButton.jpg in Resources */,
+				04040E711C31C45D00FE08F0 /* submitEntry.jpeg in Resources */,
 				0425BED91C11166E00063E7E /* IPS emax.png in Resources */,
+				0422990B1C33167E006EEB56 /* dropdown5.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -525,7 +541,7 @@
 		04041C671BEC7678009C49E6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -539,8 +555,10 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Zameer Sheikh (T99DT2K8JC)";
+				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Distribution: Zameer Sheikh (T99DT2K8JC)";
 				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -558,8 +576,12 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
+				PROVISIONING_PROFILE = "d0ca0269-4b24-45a6-9dd2-fc2f4e40ada2";
+				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
 				SDKROOT = iphoneos;
+				SKIP_INSTALL = NO;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -567,7 +589,7 @@
 		04041C681BEC7678009C49E6 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -581,8 +603,10 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Zameer Sheikh (T99DT2K8JC)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Zameer Sheikh (T99DT2K8JC)";
 				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -594,7 +618,12 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				ONLY_ACTIVE_ARCH = NO;
+				PROVISIONING_PROFILE = "d0ca0269-4b24-45a6-9dd2-fc2f4e40ada2";
+				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
 				SDKROOT = iphoneos;
+				SKIP_INSTALL = NO;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -603,10 +632,23 @@
 		04041C6A1BEC7678009C49E6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = NO;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Zameer Sheikh (T99DT2K8JC)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Zameer Sheikh (T99DT2K8JC)";
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				INFOPLIST_FILE = IvoclarLab/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "d0ca0269-4b24-45a6-9dd2-fc2f4e40ada2";
+				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = NO;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -614,10 +656,23 @@
 		04041C6B1BEC7678009C49E6 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = NO;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Zameer Sheikh (T99DT2K8JC)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Zameer Sheikh (T99DT2K8JC)";
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				INFOPLIST_FILE = IvoclarLab/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "d0ca0269-4b24-45a6-9dd2-fc2f4e40ada2";
+				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = NO;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -625,10 +680,13 @@
 		04041C6D1BEC7678009C49E6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Zameer Sheikh (T99DT2K8JC)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Zameer Sheikh (T99DT2K8JC)";
 				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
+					"$(SDKROOT)/Developer/Library/Frameworks",
 				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -637,6 +695,11 @@
 				INFOPLIST_FILE = IvoclarLabTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "d0ca0269-4b24-45a6-9dd2-fc2f4e40ada2";
+				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/IvoclarLab.app/IvoclarLab";
 			};
 			name = Debug;
@@ -644,14 +707,22 @@
 		04041C6E1BEC7678009C49E6 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Zameer Sheikh (T99DT2K8JC)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Zameer Sheikh (T99DT2K8JC)";
 				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
+					"$(SDKROOT)/Developer/Library/Frameworks",
 				);
 				INFOPLIST_FILE = IvoclarLabTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "d0ca0269-4b24-45a6-9dd2-fc2f4e40ada2";
+				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/IvoclarLab.app/IvoclarLab";
 			};
 			name = Release;

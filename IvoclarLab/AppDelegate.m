@@ -9,6 +9,15 @@
 #import "AppDelegate.h"
 #import "PagingControl.h"
 #import "LabCaseStatus.h"
+#import "DoctorLogin.h"
+#import "DoctorAlreadyRegistered.h"
+#import "LoginPage.h"
+
+#define SYSTEM_VERSION_EQUAL_TO(v)                  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedSame)
+#define SYSTEM_VERSION_GREATER_THAN(v)              ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedDescending)
+#define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
+#define SYSTEM_VERSION_LESS_THAN(v)                 ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedAscending)
+#define SYSTEM_VERSION_LESS_THAN_OR_EQUAL_TO(v)     ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedDescending)
 
 @interface AppDelegate ()
 
@@ -21,24 +30,60 @@
     // Override point for customization after application launch.
     
     
+//    
+//    if (SYSTEM_VERSION_GREATER_THAN(@"8.1")) {
+//        // code here
+//        
+//        UIAlertView * notSupportedAlert = [[UIAlertView alloc]initWithTitle:@"Warning" message:@"Supports iOS below 8.1 version" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+//        
+//        [notSupportedAlert show];
+//        
+//        return NO;
+//
+//        
+//    }
     
+   // else {
     
+   // NSSetUncaughtExceptionHandler(&myExceptionHandler);
+
+    
+        //LoginScreen should only come once.
     
     NSString *loginStatusString = [[NSUserDefaults standardUserDefaults]stringForKey:@"loginStatus"];
+   // NSString * presentScreen = [[NSUserDefaults standardUserDefaults] valueForKey:@"PresentScreen"];
+
     if (loginStatusString.length != 0)
     {
         NSLog(@"login Status %@",loginStatusString);
         self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-        UIStoryboard * storyboard = [UIStoryboard storyboardWithName:@"Main.storyboard" bundle:[NSBundle mainBundle]];
+        UIStoryboard * storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
+
+      
         
         if ([loginStatusString isEqual:@"DocLoginSuccess"])
         {
-             SWRevealViewController * pageController = [storyboard instantiateViewControllerWithIdentifier:@"DoctorSWRevealViewController"];
-            self.window.rootViewController = pageController;
+            
+//            if ([presentScreen isEqual:@"1"]) {
+//                DoctorLogin * doctorLogin = [storyboard instantiateViewControllerWithIdentifier:@"doctorLogin"];
+//                
+//                self.window.rootViewController = doctorLogin;
+//                
+//            }
+//            
+//            if ([presentScreen isEqual:@"3"]) {
+            
+                SWRevealViewController * pageController = [storyboard instantiateViewControllerWithIdentifier:@"DoctorSWRevealViewController"];
+                
+                self.window.rootViewController = pageController;
+                
+           // }
+            
         }
         else if ([loginStatusString isEqual:@"LabLoginSuccess"])
         {
             SWRevealViewController * labCaseStatus = [storyboard instantiateViewControllerWithIdentifier:@"LabSWRevealViewController"];
+            
             self.window.rootViewController = labCaseStatus;
 
 
@@ -51,7 +96,7 @@
     else if (loginStatusString.length == 0)
     {
         
-        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main.storyboard" bundle:[NSBundle mainBundle]];
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
         UIViewController *vc =[storyboard instantiateInitialViewController];
         
         // Set root view controller and make windows visible
@@ -62,29 +107,54 @@
     }
     
     
+        NSLog(@"device version :%@",[[UIDevice currentDevice]systemVersion]);
+
+
+        if([[UIDevice currentDevice]systemVersion]>=[NSString stringWithFormat:@"8.0"])
+        {
+            
+            
+            if ([application respondsToSelector:@selector(registerUserNotificationSettings:)])
+            {
+                UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeAlert
+                                                                                                     | UIUserNotificationTypeBadge
+                                                                                                     | UIUserNotificationTypeSound) categories:nil];
+                [application registerUserNotificationSettings:settings];
+
+            
+            }
+        }
     
-    
-    
-    
-    if ([application respondsToSelector:@selector(registerUserNotificationSettings:)]) {
-#ifdef __IPHONE_8_0
-        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeAlert
-                                                                                             | UIUserNotificationTypeBadge
-                                                                                             | UIUserNotificationTypeSound) categories:nil];
-        [application registerUserNotificationSettings:settings];
-#endif
-    } else {
-        UIRemoteNotificationType notificationTypes = UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound;
-        [application registerForRemoteNotificationTypes:notificationTypes];
-    }
+        
+        
+//    if ([application respondsToSelector:@selector(registerUserNotificationSettings:)]) {
+//#ifdef __IPHONE_8_0
+//        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeAlert
+//                                                                                             | UIUserNotificationTypeBadge
+//                                                                                             | UIUserNotificationTypeSound) categories:nil];
+//        [application registerUserNotificationSettings:settings];
+//#endif
+  // }
+ //   else if ([[UIDevice currentDevice]systemVersion]<[NSString stringWithFormat:@"8.0"]) {
+   //     UIRemoteNotificationType notificationTypes = UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound;
+     //   [application registerForRemoteNotificationTypes:notificationTypes];
+   // }
     
     
     
     
     
     return YES;
+    
+    //}
+
 }
 
+//void myExceptionHandler (NSException *exception)
+//{
+//    NSArray *stack = [exception callStackReturnAddresses];
+//    NSLog(@"Stack trace: %@", stack);
+//}
 
 - (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings
 {
@@ -104,11 +174,40 @@
 - (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
 {
     NSLog(@"Device token is: %@", deviceToken);
+    
+    defaults = [NSUserDefaults standardUserDefaults];
+    NSString * newToken = [deviceToken description];
+    newToken = [newToken stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
+    newToken = [newToken stringByReplacingOccurrencesOfString:@" " withString:@""];
+    NSLog(@"token:%@",newToken);
+    [defaults setValue:newToken forKey:@"DeviceToken"];
+    [defaults synchronize];
+    
 }
 
 - (void)application:(UIApplication*)application didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
 {
     NSLog(@"Failed to get token, error: %@", error);
+}
+
+-(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+{
+    NSLog(@"user info in notifications : %@",userInfo);
+    
+    
+    if (application.applicationState == UIApplicationStateActive)
+    {
+        // Nothing to do if applicationState is Inactive, the iOS already displayed an alert view.
+        NSString *cancelTitle = @"Close";
+        NSString *showTitle = @"Show";
+        NSString *message = [[userInfo valueForKey:@"aps"] valueForKey:@"alert"];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Some title"
+                                                            message:message
+                                                           delegate:self
+                                                  cancelButtonTitle:cancelTitle 
+                                                  otherButtonTitles:showTitle, nil];
+        [alertView show];
+    }
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
@@ -131,7 +230,13 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    
+    
+    
 }
+
+
+
 
 
 @end

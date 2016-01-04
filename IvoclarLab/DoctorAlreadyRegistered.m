@@ -36,6 +36,19 @@
     [navigationTitleView addSubview:label];
     self.navigationItem.titleView = navigationTitleView;
     
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.0f/255.0f green:128.0f/255.0f blue:255.0f/255.0f alpha:1];
+    
+    
+    // Keyboard will dismiss when user taps on the screen
+    [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self.view action:@selector(endEditing:)]];
+    
+    _registeredPasswordTF.delegate = self;
+    
+    _registeredSubmit.layer.cornerRadius = 10; // this value vary as per your desire
+    _registeredSubmit.clipsToBounds = YES;
+    
+    defaults = [NSUserDefaults standardUserDefaults];
+    
     
 }
 -(void)viewWillAppear:(BOOL)animated
@@ -65,7 +78,6 @@
 - (IBAction)registeredSubmit:(id)sender {
     
     
-    
     NSString *checkLoginDoctor = [NSString stringWithFormat:
                                @"<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
                                "<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n"
@@ -73,15 +85,15 @@
                                "<CheckLogin xmlns=\"http://www.kurnoolcity.com/wsdemo\">"
                                "<Mobile>%@</Mobile>\n"
                                "<Password>%@</Password>\n"
-                               "<RegId>-</RegId>\n"
+                               "<RegId>%@</RegId>\n"
                                "</CheckLogin>\n"
                                "</soap:Body>\n"
-                               "</soap:Envelope>\n",_registeredMobileNoTF.text,_registeredPasswordTF.text];
+                               "</soap:Envelope>\n",_registeredMobileNoTF.text,_registeredPasswordTF.text,[[NSUserDefaults standardUserDefaults] valueForKey:@"DeviceToken"]];
     
     [[CommonAppManager sharedAppManager]soapServiceMessage:checkLoginDoctor soapActionString:@"CheckLogin"withDelegate:self];
 
-    
 
+    
 }
 
 - (IBAction)forgotPassword:(id)sender {
@@ -142,11 +154,11 @@
   namespaceURI:(NSString *)namespaceURI qualifiedName:
 (NSString *)qName attributes:(NSDictionary *)attributeDict
 {
-    currentDescription = [NSString alloc];
+    response = [NSString alloc];
 }
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string
 {
-    currentDescription = string;
+    response = string;
 }
 - (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName
   namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
@@ -158,7 +170,15 @@
     
     if ([elementName isEqual:@"ForgotPasswordResult"]) {
         
-        NSLog(@"Password :%@",currentDescription);
+        NSLog(@"Password :%@",response);
+        
+        if ([response isEqual:@"\"Y\""]) {
+            
+            UIAlertView * forgotPasswordAlert = [[UIAlertView alloc]initWithTitle:@"Success" message:@"Your Password has been sent to your Email" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+            
+            [forgotPasswordAlert show];
+        }
+        
     }
     
     if ([elementName isEqual:@"CheckLoginResult"]) {
@@ -166,87 +186,136 @@
         // If the login is success then we will have DoctorId as the response
         
         
-        NSLog(@"doctor register login success : %@",currentDescription);
+        NSLog(@"doctor register login success : %@",response);
+    
         
-       // if (![currentDescription isEqual:@"\"N\""]) {
+        if (![response isEqual:@"\"N\""]) {
             
-            //[self saveDataInPlist:currentDescription];
-        //}
-        
-        // Goes to CaseEntry Screen after submitting
+            [self saveDataInPlist:response];
         
         SWRevealViewController * sideMenu = [self.storyboard instantiateViewControllerWithIdentifier:@"DoctorSWRevealViewController"];
         
         //[self.revealViewController pushFrontViewController:sideMenu animated:YES];
         
         [self presentViewController:sideMenu animated:YES completion:nil];
+            
+        [defaults setObject:@"DocLoginSuccess" forKey:@"loginStatus"];
+        [defaults synchronize];
+            
+
+
+        
+        }
+        
+        else
+        {
+            UIAlertView * passwordAlert = [[UIAlertView alloc]initWithTitle:@"Warning" message:@"Please enter the correct password" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+            [passwordAlert show];
+            
+            // Below id Only for my testing it should be deleted
+            
+//            [self saveDataInPlist:@"108"];
+//             SWRevealViewController * sideMenu = [self.storyboard instantiateViewControllerWithIdentifier:@"DoctorSWRevealViewController"];
+//            [self presentViewController:sideMenu animated:YES completion:nil];
+
+        }
+        
+        // Goes to CaseEntry Screen after submitting
+        
+       // SWRevealViewController * sideMenu = [self.storyboard instantiateViewControllerWithIdentifier:@"DoctorSWRevealViewController"];
+        
+        //[self.revealViewController pushFrontViewController:sideMenu animated:YES];
+        
+//        [self presentViewController:sideMenu animated:YES completion:nil];
     }
     
 }
 
-//
-//- (void)saveDataInPlist:(id)docID {
-//    
-//    //get the plist document path
-//    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-//    NSString *documentsDirectory = [paths objectAtIndex:0];
-//    NSString *plistFilePath = [documentsDirectory stringByAppendingPathComponent:@"OTPResult.plist"];
-//    
-//    NSFileManager *fileManager = [NSFileManager defaultManager];
-//    NSMutableDictionary *data = [[NSMutableDictionary alloc]init];
-//    NSMutableArray *contentArray= [[NSMutableArray alloc]init];
-//    
-//    if (![fileManager fileExistsAtPath: plistFilePath])
-//    {
-//        NSLog(@"File does not exist");
-//        
-//        // If the file doesn’t exist, create an empty plist file
-//        plistFilePath = [documentsDirectory stringByAppendingPathComponent:@"OTPResult.plist"];
-//        //NSLog(@"path is %@",plistFilePath);
-//        
-//    }
-//    else{
-//        NSLog(@"File exists, Get data if anything stored");
-//        
-//        contentArray = [[NSMutableArray alloc] initWithContentsOfFile:plistFilePath];
-//    }
-//    
-//    
-//    NSString *doctorID = docID;
-//    
-//    //check all the textfields have values
-//    if ([doctorID length] >1) {
-//        
-//        //add values to dictionary
-//        [data setValue:doctorID forKey:@"DoctorID"];
-//        
-//        //add dictionary to array
-//        [contentArray addObject:data];
-//        
-//        //write array to plist file
-//        if([contentArray writeToFile:plistFilePath atomically:YES]){
-//            
-//            //NSLog(@"saved");
-//            
-//            
-//            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Saved in plist" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-//            [alert show];
-//            
-//        }
-//        else {
-//            NSLog(@"Couldn't saved");
-//            
-//            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Couldn't Saved in plist" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-//            [alert show];
-//        }
-//    }
-//    
-//}
 
-
-
+- (void)saveDataInPlist:(id)docID {
+    
+    //get the plist document path
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSString *plistFilePath = [documentsDirectory stringByAppendingPathComponent:@"OTPResult.plist"];
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSMutableDictionary *data = [[NSMutableDictionary alloc]init];
+    NSMutableArray *contentArray= [[NSMutableArray alloc]init];
+    
+    if (![fileManager fileExistsAtPath: plistFilePath])
+    {
+        NSLog(@"File does not exist");
+        
+        // If the file doesn’t exist, create an empty plist file
+        plistFilePath = [documentsDirectory stringByAppendingPathComponent:@"OTPResult.plist"];
+        //NSLog(@"path is %@",plistFilePath);
+        
+    }
+    else{
+        NSLog(@"File exists, Get data if anything stored");
+        
+        contentArray = [[NSMutableArray alloc] initWithContentsOfFile:plistFilePath];
+    }
+    
+    
+    NSString *doctorID = docID;
+    
+    //check all the textfields have values
+    if ([doctorID length] >1) {
+        
+        //add values to dictionary
+        [data setValue:doctorID forKey:@"DoctorID"];
+        
+        //add dictionary to array
+        [contentArray addObject:data];
+        
+        //write array to plist file
+        if([contentArray writeToFile:plistFilePath atomically:YES]){
+            
+            //NSLog(@"saved");
+            
+            
+           // UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Saved in plist" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+           // [alert show];
+            
+        }
+        else {
+            NSLog(@"Couldn't saved");
+            
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Couldn't Save" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+            [alert show];
+        }
+    }
+    
+}
 
 
 - (IBAction)newUserRegistration:(id)sender {
+    
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+
+    
 }
+
+
+-(BOOL) textFieldShouldReturn:(UITextField *)textField{
+    
+    [textField resignFirstResponder];
+    return YES;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 @end

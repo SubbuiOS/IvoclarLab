@@ -13,6 +13,7 @@
 
 @end
 
+UITapGestureRecognizer * tapRecognizer;
 
 
 @implementation ComplaintsScreen
@@ -22,10 +23,38 @@
     // Do any additional setup after loading the view.
     
     [self complaintScreenDidLoad];
+    
+    
   
 
     
 }
+-(void)viewWillAppear:(BOOL)animated
+{
+    
+    
+    if([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad)
+    {
+        // iPad
+        
+        _complaintTypeLabel.frame = CGRectMake(_complaintTypeDDOutlet.frame.origin.x+135, _complaintTypeDDOutlet.frame.origin.y+15, 150, 32);
+        
+        _caseIdLabel.frame = CGRectMake(_caseIdDDOutlet.frame.origin.x+135, _caseIdDDOutlet.frame.origin.y+15, 150, 32);
+        
+    }
+    
+    _complaintButtonOutlet.layer.cornerRadius = 10; // this value vary as per your desire
+    _complaintButtonOutlet.clipsToBounds = YES;
+    
+    otherComplaints.layer.borderColor=[[UIColor blueColor]CGColor];
+    otherComplaints.layer.borderWidth=1.0;
+    
+    _commentsTF.layer.borderColor=[[UIColor blueColor]CGColor];
+    _commentsTF.layer.borderWidth=1.0;
+
+
+}
+
 
 -(void) complaintScreenDidLoad
 {
@@ -40,6 +69,8 @@
         
         
     }
+    [[NSUserDefaults standardUserDefaults] setValue:@"RegisteredUser" forKey:@"User"];
+
     
     // Customising the navigation Title
     // Taken a view and added a label to it with our required font
@@ -56,8 +87,9 @@
     [navigationTitleView addSubview:label];
     self.navigationItem.titleView = navigationTitleView;
     
-    self.navigationController.navigationBar.barTintColor = [UIColor blueColor];
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.0f/255.0f green:128.0f/255.0f blue:255.0f/255.0f alpha:1];
     self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
+    
     //    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName :[UIColor whiteColor]}];
     
     //Animating the navigation Bar
@@ -70,10 +102,6 @@
     
     complaintTypeArray = [[NSMutableArray alloc]initWithObjects:@"Select Complaint Type",@"Case Related Complaint",@"Others", nil];
     
-    complaintTypeTV = [[UITableView alloc]initWithFrame:CGRectMake(20, 180, 400, 100) style:UITableViewStylePlain];
-    
-    caseIdTV = [[UITableView alloc]initWithFrame:CGRectMake(20, 220, 400, 300) style:UITableViewStylePlain];
-    
     qualityCheckboxSelected = NO;
     notSatisfiedServiceCheckboxSelected = NO;
     callBackFromCompanyCheckboxSelected = NO;
@@ -83,12 +111,24 @@
     callBackFromCompany = @"N";
     callBackFromLab = @"N";
     
-    otherComplaints = [[UITextField alloc]initWithFrame:CGRectMake(20, 250, 320, 40)];
+    otherComplaints = [[UITextField alloc]initWithFrame:CGRectMake(_complaintTypeDDOutlet.frame.origin.x, _complaintTypeDDOutlet.frame.size.height+_complaintTypeDDOutlet.frame.origin.y+200, _complaintTypeDDOutlet.frame.size.width, 40)];
     otherComplaints.placeholder = @"Enter your Comments";
     otherComplaints.borderStyle = UITextBorderStyleLine;
     
     otherComplaints.hidden = YES;
+    otherComplaints.delegate = self;
+    _commentsTF.delegate = self;
     
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    
+    [nc addObserver:self selector:@selector(keyboardWillShow:) name:
+     UIKeyboardWillShowNotification object:nil];
+    
+    [nc addObserver:self selector:@selector(keyboardWillHide:) name:
+     UIKeyboardWillHideNotification object:nil];
+    
+    tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                            action:@selector(didTapAnywhere:)];
     
     _complaintTypePicker.layer.borderColor = [UIColor whiteColor].CGColor;
     _complaintTypePicker.backgroundColor = [UIColor lightGrayColor];
@@ -118,6 +158,20 @@
 }
 */
 
+-(void) keyboardWillShow:(NSNotification *) note {
+    [self.view addGestureRecognizer:tapRecognizer];
+}
+
+-(void) keyboardWillHide:(NSNotification *) note
+{
+    [self.view removeGestureRecognizer:tapRecognizer];
+}
+-(void)didTapAnywhere: (UITapGestureRecognizer*) recognizer {
+    [_commentsTF resignFirstResponder];
+    [otherComplaints resignFirstResponder];
+    
+    
+}
 
 
 -(void) getDataFromPlist
@@ -172,36 +226,63 @@
 
 - (IBAction)complaintTypeDD:(id)sender {
     
-    //complaintTypeTV.hidden = NO;
-    
-    //[self.view addSubview:complaintTypeTV];
-    
-    //complaintTypeTV.dataSource = self;
-    //complaintTypeTV.delegate = self;
     
     
-    [_complaintTypePicker reloadAllComponents];
-    [_complaintTypePicker selectRow:0 inComponent:0 animated:YES];
 
+    complaintTypeTV.hidden = NO;
     
-    _complaintTypePicker.hidden = NO;
+    [commonView removeFromSuperview];
+    [complaintTypeTV removeFromSuperview];
     
-    _complaintTypePicker.delegate = self;
-    _complaintTypePicker.dataSource = self;
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        
+        commonView = [[UIView alloc]initWithFrame:CGRectMake(_complaintTypeView.frame.origin.x+140, _complaintTypeView.frame.origin.y+_complaintTypeView.frame.size.height, _complaintTypeView.frame.size.width, 150)];
+        
+        
+    }
+    
+    else
+    {
+    
+    commonView = [[UIView alloc]initWithFrame:CGRectMake(_complaintTypeView.frame.origin.x+20, _complaintTypeView.frame.size.height+_complaintTypeView.frame.origin.y-10, _complaintTypeView.frame.size.width+200, 350)];
+        
+    }
+    commonView.backgroundColor = [UIColor clearColor];
+    [self.view addSubview:commonView];
+    
+    [complaintTypeTV reloadData];
     
     
-    _qualityButtonOutlet.alpha = 0.05;
-    _qualityLabel.alpha = 0.05;
-    _notSatisfiedServiceButtonOutlet.alpha = 0.05;
-    _notSatisfiedServiceLabel.alpha = 0.05;
-    _caseIdLabel.alpha = 0.05;
-    _caseIdDDOutlet.alpha = 0.05;
-    _commentsTF.alpha = 0.05;
-    _callBackFromCompanyButtonOutlet.alpha = 0.05;
-    _callBackFromCompanyLabel.alpha = 0.05;
-    _callBackFromLabButtonOutlet.alpha = 0.05;
-    _callBackFromLabLabel.alpha = 0.05;
-    otherComplaints.alpha = 0.05;
+    complaintTypeTV = [[UITableView alloc]initWithFrame:CGRectMake(5, 5, self.view.frame.size.width-50, 150) style:UITableViewStylePlain];
+
+    [commonView addSubview:complaintTypeTV];
+    
+    complaintTypeTV.dataSource = self;
+    complaintTypeTV.delegate = self;
+    
+    
+//    [_complaintTypePicker reloadAllComponents];
+//    [_complaintTypePicker selectRow:0 inComponent:0 animated:YES];
+//
+    
+//    _complaintTypePicker.hidden = NO;
+//    
+//    _complaintTypePicker.delegate = self;
+//    _complaintTypePicker.dataSource = self;
+    
+    
+    _qualityButtonOutlet.hidden = YES;
+    _qualityLabel.hidden = YES;
+    _notSatisfiedServiceButtonOutlet.hidden = YES;
+    _notSatisfiedServiceLabel.hidden = YES;
+    _caseIdLabel.hidden = YES;
+    _caseIdDDOutlet.hidden = YES;
+    _commentsTF.hidden = YES;
+    _callBackFromCompanyButtonOutlet.hidden = YES;
+    _callBackFromCompanyLabel.hidden = YES;
+    _callBackFromLabButtonOutlet.hidden = YES;
+    _callBackFromLabLabel.hidden = YES;
+    otherComplaints.hidden = YES;
 
     
     
@@ -211,11 +292,31 @@
 }
 - (IBAction)getCaseIds:(id)sender {
     
-    
-    
 
-    [_caseIdPicker reloadAllComponents];
-    [_caseIdPicker selectRow:0 inComponent:0 animated:YES];
+    [commonView removeFromSuperview];
+    [caseIdTV removeFromSuperview];
+    
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        
+        commonView = [[UIView alloc]initWithFrame:CGRectMake(_caseIdView.frame.origin.x+140, _caseIdView.frame.origin.y+_caseIdView.frame.size.height, _caseIdView.frame.size.width, 150)];
+        
+        
+    }
+    
+    else
+    {
+    
+    commonView = [[UIView alloc]initWithFrame:CGRectMake(_caseIdView.frame.origin.x+20, _caseIdView.frame.size.height+_caseIdView.frame.origin.y-10, _caseIdView.frame.size.width+200, 350)];
+        
+    }
+    commonView.backgroundColor = [UIColor clearColor];
+    [self.view addSubview:commonView];
+
+    
+    [caseIdTV reloadData];
+    
+//    [_caseIdPicker reloadAllComponents];
+//    [_caseIdPicker selectRow:0 inComponent:0 animated:YES];
     [self getDataFromPlist];
     
     
@@ -263,11 +364,11 @@
   namespaceURI:(NSString *)namespaceURI qualifiedName:
 (NSString *)qName attributes:(NSDictionary *)attributeDict
 {
-    currentDescription = [NSString alloc];
+    response = [NSString alloc];
 }
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string
 {
-    currentDescription = string;
+    response = string;
 }
 - (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName
   namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
@@ -276,31 +377,32 @@
     
     if ([elementName isEqual:@"GetCaseIdsResult"]) {
         
-//NSLog(@"Case Ids :%@",currentDescription);
-        NSData *objectData = [currentDescription dataUsingEncoding:NSUTF8StringEncoding];
+//NSLog(@"Case Ids :%@",response);
+        NSData *objectData = [response dataUsingEncoding:NSUTF8StringEncoding];
         caseIdDictionary = [NSJSONSerialization JSONObjectWithData:objectData options:NSJSONReadingMutableContainers error:nil];
         NSLog(@"partner dictionary :%@",caseIdDictionary);
         
-        //caseIdTV.hidden = NO;
+        caseIdTV.hidden = NO;
+        caseIdTV = [[UITableView alloc]initWithFrame:CGRectMake(5, 5, self.view.frame.size.width-50, 150) style:UITableViewStylePlain];
 
-       // [self.view addSubview:caseIdTV];
-        //caseIdTV.dataSource = self;
-        //caseIdTV.delegate = self;
+        [commonView addSubview:caseIdTV];
+        caseIdTV.dataSource = self;
+        caseIdTV.delegate = self;
         
-        _caseIdPicker.hidden = NO;
-        _caseIdPicker.delegate = self;
-        _caseIdPicker.dataSource = self;
+//        _caseIdPicker.hidden = NO;
+//        _caseIdPicker.delegate = self;
+//        _caseIdPicker.dataSource = self;
         
-        _qualityButtonOutlet.alpha = 0.05;
-        _qualityLabel.alpha = 0.05;
-        _notSatisfiedServiceButtonOutlet.alpha = 0.05;
-        _notSatisfiedServiceLabel.alpha = 0.05;
-        _commentsTF.alpha = 0.05;
-        _callBackFromCompanyButtonOutlet.alpha = 0.05;
-        _callBackFromCompanyLabel.alpha = 0.05;
-        _callBackFromLabButtonOutlet.alpha = 0.05;
-        _callBackFromLabLabel.alpha = 0.05;
-        otherComplaints.alpha = 0.05;
+        _qualityButtonOutlet.hidden = YES;
+        _qualityLabel.hidden = YES;
+        _notSatisfiedServiceButtonOutlet.hidden = YES;
+        _notSatisfiedServiceLabel.hidden = YES;
+        _commentsTF.hidden = YES;
+        _callBackFromCompanyButtonOutlet.hidden = YES;
+        _callBackFromCompanyLabel.hidden = YES;
+        _callBackFromLabButtonOutlet.hidden = YES;
+        _callBackFromLabLabel.hidden = YES;
+        otherComplaints.hidden = YES;
 
         
         
@@ -308,7 +410,18 @@
     
     if ([elementName isEqual:@"InsertComplaintsResult"]) {
         
-        NSLog(@"complaints :%@",currentDescription);
+        NSLog(@"complaints :%@",response);
+        if ([response isEqual:@"\"Y\""])
+        {
+            UIAlertView * insertComplaintResult = [[UIAlertView alloc]initWithTitle:@"Success" message:@"Your Complaint has been sent successfully" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+            [insertComplaintResult show];
+            
+            ComplaintsScreen * complaints = [self.storyboard instantiateViewControllerWithIdentifier:@"complaints"];
+            [self.revealViewController pushFrontViewController:complaints animated:YES];
+            
+            
+        }
+    
     }
 }
 
@@ -338,6 +451,8 @@
     if (cell == nil) {
         
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+        cell.backgroundColor = [UIColor colorWithRed:115.0f/225.0f green:153.0f/255.0f blue:203.0f/255.0f alpha:1.0f];
+
     }
     if (tableView == complaintTypeTV)
     {
@@ -351,7 +466,9 @@
 
     }
     
-   
+    cell.textLabel.textColor = [UIColor whiteColor];
+    cell.textLabel.font = [UIFont fontWithName:@"ChalkboardSE-Regular" size:20];
+
     
     
     return cell;
@@ -404,8 +521,11 @@
         
         otherComplaints.hidden = YES;
         
-        
     }
+        
+        [commonView removeFromSuperview];
+        [complaintTypeTV removeFromSuperview];
+
         
     }
     else
@@ -414,9 +534,22 @@
         [_caseIdLabel setText:[[caseIdDictionary valueForKey:@"CaseId"]objectAtIndex:indexPath.row]];
         
         caseIdTV.hidden=YES;
+        _qualityButtonOutlet.hidden = NO;
+        _qualityLabel.hidden = NO;
+        _notSatisfiedServiceButtonOutlet.hidden = NO;
+        _notSatisfiedServiceLabel.hidden = NO;
+        _commentsTF.hidden = NO;
+        _callBackFromCompanyButtonOutlet.hidden = NO;
+        _callBackFromCompanyLabel.hidden = NO;
+        _callBackFromLabButtonOutlet.hidden = NO;
+        _callBackFromLabLabel.hidden = NO;
+        otherComplaints.hidden = YES;
+        [commonView removeFromSuperview];
+        [caseIdTV removeFromSuperview];
+
+
     }
     
-
     
 }
 
@@ -493,18 +626,18 @@
         
         _complaintTypePicker.hidden = YES;
         
-        _qualityButtonOutlet.alpha = 1;
-        _qualityLabel.alpha = 1;
-        _notSatisfiedServiceButtonOutlet.alpha = 1;
-        _notSatisfiedServiceLabel.alpha = 1;
-        _caseIdLabel.alpha = 1;
-        _caseIdDDOutlet.alpha = 1;
-        _commentsTF.alpha = 1;
-        _callBackFromCompanyButtonOutlet.alpha = 1;
-        _callBackFromCompanyLabel.alpha = 1;
-        _callBackFromLabButtonOutlet.alpha = 1;
-        _callBackFromLabLabel.alpha = 1;
-        otherComplaints.alpha = 1;
+        _qualityButtonOutlet.hidden = NO;
+        _qualityLabel.hidden = NO;
+        _notSatisfiedServiceButtonOutlet.hidden = NO;
+        _notSatisfiedServiceLabel.hidden = NO;
+        _caseIdLabel.hidden = NO;
+        _caseIdDDOutlet.hidden = NO;
+        _commentsTF.hidden = NO;
+        _callBackFromCompanyButtonOutlet.hidden = NO;
+        _callBackFromCompanyLabel.hidden = NO;
+        _callBackFromLabButtonOutlet.hidden = NO;
+        _callBackFromLabLabel.hidden = NO;
+        otherComplaints.hidden = YES;
 
         
         
@@ -557,16 +690,16 @@
         
         _caseIdPicker.hidden=YES;
         
-        _qualityButtonOutlet.alpha = 1;
-        _qualityLabel.alpha = 1;
-        _notSatisfiedServiceButtonOutlet.alpha = 1;
-        _notSatisfiedServiceLabel.alpha = 1;
-        _commentsTF.alpha = 1;
-        _callBackFromCompanyButtonOutlet.alpha = 1;
-        _callBackFromCompanyLabel.alpha = 1;
-        _callBackFromLabButtonOutlet.alpha = 1;
-        _callBackFromLabLabel.alpha = 1;
-        otherComplaints.alpha = 1;
+        _qualityButtonOutlet.hidden = NO;
+        _qualityLabel.hidden = NO;
+        _notSatisfiedServiceButtonOutlet.hidden = NO;
+        _notSatisfiedServiceLabel.hidden = NO;
+        _commentsTF.hidden = NO;
+        _callBackFromCompanyButtonOutlet.hidden = NO;
+        _callBackFromCompanyLabel.hidden = NO;
+        _callBackFromLabButtonOutlet.hidden = NO;
+        _callBackFromLabLabel.hidden = NO;
+        otherComplaints.hidden = YES;
         
 
     }
@@ -603,6 +736,16 @@
 - (IBAction)complaintSubmit:(id)sender
 {
     
+    if ([_complaintTypeLabel isEqual:@"Select Complaint Type"] || [_caseIdLabel.text isEqual:@"Select CaseId"]) {
+        
+        UIAlertView * complaintAlert =[[UIAlertView alloc]initWithTitle:@"Warning" message:@"Please Select complaint type and caseId" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+        [complaintAlert show];
+        
+    }
+    
+    else
+    {
+    
     NSString * insertComplaint = [NSString stringWithFormat:
                                   @"<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
                                   "<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n"
@@ -624,7 +767,7 @@
     
     [[CommonAppManager sharedAppManager]soapServiceMessage:insertComplaint soapActionString:@"InsertComplaints" withDelegate:self];
     
-    
+    }
     
 }
 
@@ -687,7 +830,11 @@
 
 }
 
-
+-(BOOL) textFieldShouldReturn:(UITextField *)textField{
+    
+    [textField resignFirstResponder];
+    return YES;
+}
 
 
 @end

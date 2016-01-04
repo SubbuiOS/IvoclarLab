@@ -20,7 +20,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
+    [self setDataSource:self];
     [self pageControlDidLoad];
   
     
@@ -36,7 +36,8 @@
         //[self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
     }
     
-    
+    [[NSUserDefaults standardUserDefaults] setValue:@"RegisteredUser" forKey:@"User"];
+
     // Customising the navigation Title
     // Taken a view and added a label to it with our required font
     CGRect frame = CGRectMake(0, 0, 200, 44);
@@ -52,7 +53,7 @@
     [navigationTitleView addSubview:label];
     self.navigationItem.titleView = navigationTitleView;
     
-    self.navigationController.navigationBar.barTintColor = [UIColor blueColor];
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.0f/255.0f green:128.0f/255.0f blue:255.0f/255.0f alpha:1];
     // self.navigationController.navigationBar.translucent = NO;
     
     self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
@@ -141,12 +142,20 @@
 
 - (UIColor *)tabColor {
     // Default: [UIColor orangeColor];
-    return [UIColor purpleColor];
+    
+    return [UIColor whiteColor];
+    
+   // return [UIColor colorWithRed:0.0f/255.0f green:128.0f/255.0f blue:255.0f/255.0f alpha:1.0f];
+
 }
 
 - (UIColor *)tabBackgroundColor {
-    // Default: [UIColor colorWithWhite:0.95f alpha:1.0f];
-    return [UIColor lightTextColor];
+    //Default: [UIColor colorWithWhite:0.95f alpha:1.0f];
+    
+    //return [UIColor blueColor];
+
+    
+    return [UIColor colorWithRed:0.0f/255.0f green:204.0f/255.0f blue:204.0f/255.0f alpha:1.0f];
 }
 
 - (UIFont *)titleFont {
@@ -156,13 +165,31 @@
 
 - (UIColor *)titleColor {
     // Default: [UIColor blackColor];
-    return [UIColor colorWithRed:1.0f green:0.8f blue:0.0f alpha:1.0f];
+    
+    return [UIColor whiteColor];
+    //return [UIColor colorWithRed:0.0f/255.0f green:0.f/255.0f blue:0.0f/255.0f alpha:1.0f];
 }
 
 #pragma mark - Tab Pager Delegate
 
 - (void)tabPager:(GUITabPagerViewController *)tabPager willTransitionToTabAtIndex:(NSInteger)index {
    // NSLog(@"Will transition from tab %ld to %ld", (long)[self selectedIndex], (long)index);
+    
+    if (index == 0)
+    {
+        
+        [tabPager.tabViews[0] setBackgroundColor:[UIColor orangeColor]];
+        [tabPager.tabViews[1] setBackgroundColor:[UIColor clearColor]];
+
+    }
+    else
+    {
+        [tabPager.tabViews[1] setBackgroundColor:[UIColor orangeColor]];
+        //[tabPager.tabViews[1] setBackgroundImage:[UIImage imageNamed:@"tabPagingControl.png"] forState:UIControlStateNormal] ;
+        [tabPager.tabViews[0] setBackgroundColor:[UIColor clearColor]];
+    }
+
+
 }
 
 - (void)tabPager:(GUITabPagerViewController *)tabPager didTransitionToTabAtIndex:(NSInteger)index {

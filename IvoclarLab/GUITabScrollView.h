@@ -20,6 +20,7 @@
 - (void)animateToTabAtIndex:(NSInteger)index;
 - (void)animateToTabAtIndex:(NSInteger)index animated:(BOOL)animated;
 
+
 @end
 
 @protocol GUITabScrollDelegate <NSObject>

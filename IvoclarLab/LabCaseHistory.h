@@ -19,12 +19,15 @@
     NSMutableDictionary * caseHistoryDict;
     UIActivityIndicatorView * spinner;
     NSString * filteredLabCaseId;
-    NSString * currentDescription;
+    NSString * response;
     NSMutableArray * reqReceivedArray;
+    NSUserDefaults * defaults;
+
 
 }
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *labCaseHistorySideMenu;
+@property (weak, nonatomic) IBOutlet UILabel *caseHistoryLabel;
 
 -(void) getDataFromPlist;
 

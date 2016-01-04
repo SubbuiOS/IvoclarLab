@@ -12,7 +12,7 @@
 
 #import "NewUserOTPScreen.h"
 
-
+NSMutableDictionary * docIdDict;
 @interface DoctorLogin ()
 
 @end
@@ -25,10 +25,14 @@
     // Do any additional setup after loading the view.
     
     
+//    defaults = [NSUserDefaults standardUserDefaults];
+//    [defaults setValue:@"1" forKey:@"PresentScreen"];
+//    [defaults synchronize];
+    
     // Customising the navigation Title
     // Taken a view and added a label to it with our required font
-    CGRect frame = CGRectMake(0, 0, 400, 44);
-    
+  
+    CGRect frame = CGRectMake(0, 0, 200, 44);
     UIView * navigationTitleView = [[UIView alloc]initWithFrame:frame];
     navigationTitleView.backgroundColor = [UIColor clearColor];
     
@@ -40,12 +44,21 @@
     
     [navigationTitleView addSubview:label];
     self.navigationItem.titleView = navigationTitleView;
+
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.0f/255.0f green:128.0f/255.0f blue:255.0f/255.0f alpha:1];
     
-//    [self.navigationController.navigationBar
-//     setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+    // Keyboard will dismiss when user taps on the screen
+    [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self.view action:@selector(endEditing:)]];
     
     _doctorEmailTF.delegate = self;
-
+    _doctorEmailTF.keyboardType = UIKeyboardTypeEmailAddress;
+    _doctorMobileNoTF.delegate = self;
+    _doctorMobileNoTF.keyboardType = UIKeyboardTypePhonePad;
+    
+    _doctorLoginSubmit.layer.cornerRadius = 10; // this value vary as per your desire
+    _doctorLoginSubmit.clipsToBounds = YES;
+    
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -63,9 +76,29 @@
 }
 */
 
+//-(void)viewWillAppear:(BOOL)animated
+//{
+//    _doctorEmailTF.layer.borderColor=[[UIColor blueColor]CGColor];
+//    _doctorEmailTF.layer.borderWidth=1.0;
+//    
+//    _doctorMobileNoTF.layer.borderColor=[[UIColor blueColor]CGColor];
+//    _doctorMobileNoTF.layer.borderWidth=1.0;
+//
+//
+//}
+
 - (IBAction)submitActionDoctor:(id)sender {
     
     
+    if ([_doctorEmailTF.text isEqual: @""] || ([_doctorEmailTF.text isEqual:@""])) {
+        
+        UIAlertView * loginALert = [[UIAlertView alloc]initWithTitle:@"ALERT" message:@"Please enter all the details" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+        
+        [loginALert show];
+    }
+    
+    else
+    {
     //Check Mobile string
     
     checkMobile = [NSString stringWithFormat:
@@ -80,7 +113,7 @@
                              ];
 
     
-    
+       
     //OTP String
     
     OTPMessage = [NSString stringWithFormat:
@@ -91,12 +124,12 @@
                              "<Email>%@</Email>\n"
                              "<Mobile>%@</Mobile>\n"
                              "<UserType>Doctor</UserType>\n"
-                             "<RegId>-</RegId>\n"
+                             "<RegId>%@</RegId>\n"
                              "</SendOTP>\n"
                              "</soap:Body>\n"
-                             "</soap:Envelope>\n",_doctorEmailTF.text,_doctorMobileNoTF.text];
+                             "</soap:Envelope>\n",_doctorEmailTF.text,_doctorMobileNoTF.text,[[NSUserDefaults standardUserDefaults] valueForKey:@"DeviceToken"]];
     
-    
+   // NSLog(@"otp message :%@",OTPMessage);
     // first check the mobile is already registered or not
     
     [self saveDoctorMobileInPlist:_doctorMobileNoTF.text];
@@ -104,8 +137,7 @@
     // Until data is parsed a spinner is displayed
     
     spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    spinner.center = CGPointMake(175, 400);
-    //spinner.tag = 12;
+    spinner.center = CGPointMake((_doctorLoginSubmit.frame.size.width/2), _doctorLoginSubmit.frame.origin.y+60);
     [self.view addSubview:spinner];
     [spinner startAnimating];
     
@@ -117,7 +149,7 @@
     [[CommonAppManager sharedAppManager] soapServiceMessage:checkMobile soapActionString:@"CheckMobile" withDelegate:self];
     
     
-    
+    }
     
 }
 
@@ -172,7 +204,7 @@
         else {
             NSLog(@"Couldn't saved");
             
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Couldn't Saved in plist" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Couldn't Save" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
             [alert show];
         }
     }
@@ -212,11 +244,11 @@
   namespaceURI:(NSString *)namespaceURI qualifiedName:
 (NSString *)qName attributes:(NSDictionary *)attributeDict
 {
-    currentDescription = [NSString alloc];
+    response = [NSString alloc];
 }
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string
 {
-    currentDescription = string;
+    response= string;
 }
 - (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName
   namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
@@ -224,9 +256,9 @@
     
     if ([elementName isEqual:@"CheckMobileResponse"])
     {
-        NSLog(@"mobile response :%@",currentDescription);
+        NSLog(@"mobile response :%@",response);
         
-        if ([currentDescription isEqual:@"\"Y\""]) {
+        if ([response isEqual:@"\"Y\""]) {
             
             // Y represents already a registered user
             
@@ -236,21 +268,15 @@
             
             
             [self presentViewController:registeredLogin animated:YES completion:nil];
-            
-            // After successfull login we will get doctorID.
-            //[self saveDataInPlist:currentDescription];
 
             
             registeredLogin.registeredMobileNoTF.text = _doctorMobileNoTF.text;
             
-            [defaults setValue:@"DocLoginSuccess" forKey:@"loginStatus"];
-            [defaults synchronize];
-            
-            
+                       
             
         }
         
-        if ([currentDescription isEqual:@"\"N\""]) {
+        if ([response isEqual:@"\"N\""]) {
             
             // N represents new user
             // so OTP should be sent
@@ -271,14 +297,22 @@
         NewUserOTPScreen * OTPScreen = [self.storyboard instantiateViewControllerWithIdentifier:@"OTPScreen"];
         
         [self presentViewController:OTPScreen animated:YES completion:nil];
+        NSLog(@" New User doctor id  %@",response);
+
+        NSData *objectData = [response dataUsingEncoding:NSUTF8StringEncoding];
+        docIdDict = [NSJSONSerialization JSONObjectWithData:objectData options:NSJSONReadingMutableContainers error:nil];
         
-        [self saveDataInPlist:currentDescription];
+        NSLog(@"docidDict :%@",docIdDict);
+
+        //            docIdDict = [NSJSONSerialization JSONObjectWithData:drID options:NSJSONReadingMutableContainers error:nil];
+        //            NSLog(@"profile dictionary :%@",docIdDict);
+        
+        [self saveDataInPlist: [[docIdDict valueForKey:@"DoctorId"]objectAtIndex:0]];
         
         
-        //Here we will get doctor ID in current Description and we are storing it
+        //Here we will get doctor ID as response and we are storing it
         
-        NSLog(@" present doctor id  %@",currentDescription);
-            
+        
        
     }
     
@@ -329,15 +363,15 @@
             
             //NSLog(@"saved");
             
-            
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Saved in plist" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-            [alert show];
+//            
+//            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Saved in plist" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+//            [alert show];
             
         }
         else {
             NSLog(@"Couldn't saved");
             
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Couldn't Saved in plist" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Couldn't Save" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
             [alert show];
         }
     }
@@ -348,30 +382,32 @@
 
 -(void)textFieldDidEndEditing:(UITextField *)textField
 {
-    
-    NSString * email = _doctorEmailTF.text;
-    
+    if(textField == _doctorEmailTF)
+    {
+        NSString * email = _doctorEmailTF.text;
+        
         NSString *emailRegex = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,3}$";
         NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegex];
-       BOOL validEmail = [emailTest evaluateWithObject:email];
-    
-    //NSLog(@"valid email :%i",validEmail);
-    if (validEmail==0) {
+        BOOL validEmail = [emailTest evaluateWithObject:email];
         
-        UIAlertView * validEmailAlert = [[UIAlertView alloc]initWithTitle:@"Alert" message:@"Enter a valid email id" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-        [validEmailAlert show];
-        
-        _doctorEmailTF.text = nil;
-       
-    
-        
+        //NSLog(@"valid email :%i",validEmail);
+        if (validEmail==0) {
+            
+            UIAlertView * validEmailAlert = [[UIAlertView alloc]initWithTitle:@"Alert" message:@"Enter a Valid E-mail id" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+            [validEmailAlert show];
+            
+            _doctorEmailTF.text = nil;
+            
+        }
+
     }
     
-    
-    
 }
-
-
+-(BOOL) textFieldShouldReturn:(UITextField *)textField{
+    
+    [textField resignFirstResponder];
+    return YES;
+}
 
 
 @end

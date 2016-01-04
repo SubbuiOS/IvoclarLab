@@ -9,20 +9,23 @@
 #import "ViewController.h"
 #import "CommonAppManager.h"
 
-@interface DoctorAlreadyRegistered : ViewController<NSXMLParserDelegate>
+@interface DoctorAlreadyRegistered : ViewController<NSXMLParserDelegate,UITextFieldDelegate>
 
 
 {
-    NSURLConnection * urlConnection;
-    NSMutableData * webData;
-    NSString * currentDescription;
+  
+    NSString * response;
     UIActivityIndicatorView * spinner;
-
+    NSUserDefaults * defaults;
 
 }
 
 @property (weak, nonatomic) IBOutlet UITextField *registeredMobileNoTF;
 @property (weak, nonatomic) IBOutlet UITextField *registeredPasswordTF;
+
+@property (weak, nonatomic) IBOutlet UIButton *registeredSubmit;
+
+
 
 - (IBAction)registeredSubmit:(id)sender;
 

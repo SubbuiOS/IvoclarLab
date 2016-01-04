@@ -19,11 +19,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+
     
     self.view.backgroundColor = [UIColor colorWithRed:255.0f/255.0f green:255.0f/255.0f blue:255.0f/255.0f alpha:1.0f];
     
     
-    //self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:99.0f/255.0f green:99.0f/255.0f blue:240.0f/255.0f alpha:1.0f];
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.0f/255.0f green:128.0f/255.0f blue:255.0f/255.0f alpha:1];
 
     
     // Customising the navigation Title
@@ -46,19 +47,11 @@
     // For Changing the color of navigation bar
     self.navigationController.navigationBar.barTintColor = [UIColor blueColor];
 
-    // The below line is for changing the back button of navigation bar color
+    // The below line is for changing the back button color of navigation bar 
     
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     
     //[self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
-
-    
-    
-    //self.doctorLoginIcon.layer.cornerRadius = 20.0f;
-    //self.doctorLoginIcon.layer.borderWidth = 2.0f;
-    //self.doctorLoginIcon.layer.borderColor = [UIColor blueColor].CGColor;
-    
-    
     
 }
 
@@ -87,7 +80,6 @@
     //[self presentViewController:doctorLoginPage animated:YES completion:nil];
     
     
-    
 }
 
 - (IBAction)labPersonLogin:(id)sender {
@@ -97,7 +89,6 @@
     
     [self.navigationController pushViewController:labPersonLoginPage animated:YES];
 
-    
     //[self presentViewController:labPersonLoginPage animated:YES completion:nil];
     
     

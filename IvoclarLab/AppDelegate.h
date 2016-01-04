@@ -8,7 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate,UIAlertViewDelegate>
+
+{
+    NSMutableArray * menuArray;
+    NSUserDefaults * defaults;
+}
 
 @property (strong, nonatomic) UIWindow *window;
 

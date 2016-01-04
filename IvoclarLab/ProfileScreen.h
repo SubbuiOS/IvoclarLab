@@ -9,12 +9,11 @@
 #import "ViewController.h"
 #import "CommonAppManager.h"
 
-@interface ProfileScreen : ViewController<NSXMLParserDelegate,UITableViewDataSource,UITableViewDelegate,UIPickerViewDelegate,UIPickerViewDataSource>
+@interface ProfileScreen : ViewController<NSXMLParserDelegate,UITableViewDataSource,UITableViewDelegate/*,UIPickerViewDelegate,UIPickerViewDataSource*/,UITextFieldDelegate>
 
 {
-    NSURLConnection * urlConnection;
-    NSMutableData * webData;
-    NSString * currentDescription;
+    
+    NSString * response;
     NSString * filteredDoctorID;
     NSData *myData;
     NSMutableDictionary *jsonStatesData;
@@ -23,7 +22,8 @@
     UITableView * statesTableView;
     UITableView * cityTableView;
     UIActivityIndicatorView * spinner;
-
+    UIView * commonView;
+    
 }
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *sidebarButton;
@@ -51,17 +51,21 @@
 - (IBAction)cityDropDown:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *cityDDOutlet;
 
--(void)connectionData:(NSData*)data status:(BOOL)status;
-
 @property (weak, nonatomic) IBOutlet UILabel *selectYourStateLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *selectYourCityLabel;
 
 @property (weak, nonatomic) IBOutlet UIPickerView *statePicker;
 @property (weak, nonatomic) IBOutlet UIPickerView *cityPicker;
+@property (weak, nonatomic) IBOutlet UIView *stateView;
+
+@property (weak, nonatomic) IBOutlet UIView *cityView;
 
 
 
+- (void)saveDataInPlist:(NSString *)doctorName;
+
+-(void)connectionData:(NSData*)data status:(BOOL)status;
 
 
 @end

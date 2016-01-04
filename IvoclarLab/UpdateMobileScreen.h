@@ -9,20 +9,24 @@
 #import <UIKit/UIKit.h>
 #import "CommonAppManager.h"
 
-@interface UpdateMobileScreen : UIViewController<NSXMLParserDelegate>
+@interface UpdateMobileScreen : UIViewController<NSXMLParserDelegate,UITextFieldDelegate>
 
 
 {
     
     NSString * filteredDoctorID;
     NSString * filteredDoctorMobile;
-    NSString * currentDescription;
+    NSString * response;
 
 }
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *updateMobileSideMenu;
 
 @property (weak, nonatomic) IBOutlet UITextField *mobileNumberTF;
+
+
+@property (weak, nonatomic) IBOutlet UIButton *updateMobileButtonOutlet;
+
 - (IBAction)updateMobile:(id)sender;
 
 -(void)connectionData:(NSData*)data status:(BOOL)status;

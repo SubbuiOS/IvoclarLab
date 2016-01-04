@@ -1,9 +1,9 @@
 //
-//  ERGameManager.h
-//  GoodieLetters
+//  CommonAppManager.h
+//  IvoclarLab
 //
-//  Created by Coding Cursors on 05/05/11.
-//  Copyright 2011 What IS? Properties LLC. All rights reserved.
+//  Created by Subramanyam on 05/11/15.
+//  Copyright(c) 2015 Subramanyam. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -20,14 +20,14 @@
 #import "CaseDelivery.h"
 #import "LabCaseStatus.h"
 #import "LabCaseHistory.h"
+#import "PasswordGenarationScreen.h"
 
 #define MainURL  @"http://www.kurnoolcity.com/wsdemo"
 @interface CommonAppManager : NSObject{
     
     
-    NSURLConnection *urlConnection;
+    NSURLConnection *URLConnection;
     NSMutableData *webData;
-    
     NSMutableArray * menuArray;
     
     id delegate;
@@ -38,5 +38,6 @@
 -(void) soapServiceMessage: (NSString * )message soapActionString:appendingString withDelegate:(id)viewController;
 
 -(void)viewController:viewControllerName;
+
 
 @end

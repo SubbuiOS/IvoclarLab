@@ -13,10 +13,7 @@
 @interface CaseHistory : UIViewController<NSXMLParserDelegate,UITableViewDataSource,UITableViewDelegate>
 
 {
-    
-    NSURLConnection * urlConnection;
-    NSMutableData * webData;
-    NSString * currentDescription;
+    NSString * response;
     NSString * filteredDoctorID;
     NSMutableDictionary * CHDict;
     UITableView * caseHistoryTV;
@@ -27,6 +24,7 @@
 
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *CHSidebarButton;
+@property (weak, nonatomic) IBOutlet UILabel *caseHistoryLabel;
 
 
 -(void)connectionData:(NSData*)data status:(BOOL)status;

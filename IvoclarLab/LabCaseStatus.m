@@ -13,14 +13,35 @@
 
 @end
 
-
-
 @implementation LabCaseStatus
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    [self labCaseStatusDidLoad];
+   
+    
+}
+-(void)viewWillAppear:(BOOL)animated
+{
+    if([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad)
+    {
+        // iPad
+        _caseIdLabel.frame = CGRectMake(_caseIdButtonOutlet.frame.origin.x+145, _caseIdButtonOutlet.frame.origin.y+10, 200, 32);
+        
+        _statusLabel.frame = CGRectMake(_statusButtonOutlet.frame.origin.x+145, _statusButtonOutlet.frame.origin.y+10, 200, 32);
+        
+    }
+    
+    _submitCaseIdButtonOutlet.layer.cornerRadius = 10; // this value vary as per your desire
+    _submitCaseIdButtonOutlet.clipsToBounds = YES;
+    
+}
+
+
+-(void) labCaseStatusDidLoad
+{
     SWRevealViewController *revealViewController = self.revealViewController;
     if ( revealViewController )
     {
@@ -31,13 +52,13 @@
     
     
     //self.navigationItem.title = @"Ivoclar lab";
-    self.navigationController.navigationBar.barTintColor = [UIColor blueColor];
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.0f/255.0f green:128.0f/255.0f blue:255.0f/255.0f alpha:1];
     // self.navigationController.navigationBar.translucent = NO;
     
     self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
     
-//    [self.navigationController.navigationBar
-//     setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+    //    [self.navigationController.navigationBar
+    //     setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
     
     // Customising the navigation Title
     // Taken a view and added a label to it with our required font
@@ -53,6 +74,7 @@
     
     [navigationTitleView addSubview:label];
     self.navigationItem.titleView = navigationTitleView;
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.0f/255.0f green:128.0f/255.0f blue:255.0f/255.0f alpha:1];
     
     //Animating the navigation Bar
     CATransition *fadeTextAnimation = [CATransition animation];
@@ -62,16 +84,14 @@
     [self.navigationController.navigationBar.layer addAnimation: fadeTextAnimation forKey: @"fadeText"];
     //self.navigationItem.title = @"Ivoclar Lab";
     
-        statusArray = [[NSMutableArray alloc]initWithObjects:@"In-Process",@"Out for Dispatch",@"Delivered", nil];
-        _statusPicker.hidden = YES;
-        _caseIdPicker.hidden = YES;
+    statusArray = [[NSMutableArray alloc]initWithObjects:@"In-Process",@"Out for Dispatch",@"Delivered", nil];
+    caseIdTV.hidden = YES;
+    caseStatusTV.hidden = YES;
     
     
-   
-    _caseIdPicker.layer.borderColor = [UIColor whiteColor].CGColor;
-    _caseIdPicker.layer.borderWidth = 1;
-    _caseIdPicker.backgroundColor = [UIColor lightGrayColor];
-    
+//    _caseIdPicker.layer.borderColor = [UIColor whiteColor].CGColor;
+//    _caseIdPicker.layer.borderWidth = 1;
+//    _caseIdPicker.backgroundColor = [UIColor lightGrayColor];
 }
 
 
@@ -136,18 +156,38 @@
 - (IBAction)statusButtonAction:(id)sender {
     
     
-    [_statusPicker reloadAllComponents];
-    [_statusPicker selectRow:0 inComponent:0 animated:YES];
+    [commonView removeFromSuperview];
+    [caseStatusTV removeFromSuperview];
     
-    _statusPicker.hidden = NO;
-    _statusPicker.delegate = self;
-    _statusPicker.dataSource = self;
+    
+    commonView = [[UIView alloc]initWithFrame:CGRectMake(_labCaseStatusView.frame.origin.x+17, _labCaseStatusView.frame.size.height+_labCaseStatusView.frame.origin.y-20, _labCaseStatusView.frame.size.width+200, 350)];
+    commonView.backgroundColor = [UIColor clearColor];
+    [self.view addSubview:commonView];
+    
+    
+    [caseStatusTV reloadData];
+    
+    caseStatusTV.hidden = NO;
+    
+    caseStatusTV = [[UITableView alloc]initWithFrame:CGRectMake(5, 5, self.view.frame.size.width-50, 150) style:UITableViewStylePlain];
+
+    caseStatusTV.delegate = self;
+    caseStatusTV.dataSource = self;
+    
+    [commonView addSubview:caseStatusTV];
+    
+  //  [_statusPicker reloadAllComponents];
+    //[_statusPicker selectRow:0 inComponent:0 animated:YES];
+    
+   // _statusPicker.hidden = NO;
+   // _statusPicker.delegate = self;
+   // _statusPicker.dataSource = self;
     _submitCaseIdButtonOutlet.hidden = YES;
     
-    _statusPicker.layer.borderColor = [UIColor whiteColor].CGColor;
-    _statusPicker.layer.borderWidth = 1;
-    _statusPicker.backgroundColor = [UIColor lightGrayColor];
-    
+//    _statusPicker.layer.borderColor = [UIColor whiteColor].CGColor;
+//    _statusPicker.layer.borderWidth = 1;
+//    _statusPicker.backgroundColor = [UIColor lightGrayColor];
+//    
     
     
     
@@ -157,9 +197,18 @@
 - (IBAction)labCaseIdButtonAction:(id)sender
 {
     
-    [_caseIdPicker reloadAllComponents];
-    [_caseIdPicker selectRow:0 inComponent:0 animated:YES];
+    [commonView removeFromSuperview];
+    [caseIdTV removeFromSuperview];
     
+    commonView = [[UIView alloc]initWithFrame:CGRectMake(_labCaseIdView.frame.origin.x+17, _labCaseIdView.frame.size.height+_labCaseIdView.frame.origin.y-20, _labCaseIdView.frame.size.width+200, 350)];
+    commonView.backgroundColor = [UIColor clearColor];
+    [self.view addSubview:commonView];
+    
+    [caseIdTV reloadData];
+    
+//    [_caseIdPicker reloadAllComponents];
+//    [_caseIdPicker selectRow:0 inComponent:0 animated:YES];
+//    
     [self getDataFromPlist];
     
     NSString * labLoginCheck =  [NSString stringWithFormat:
@@ -209,11 +258,11 @@
   namespaceURI:(NSString *)namespaceURI qualifiedName:
 (NSString *)qName attributes:(NSDictionary *)attributeDict
 {
-    currentDescription = [NSString alloc];
+    response = [NSString alloc];
 }
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string
 {
-    currentDescription = string;
+    response = string;
 }
 - (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName
   namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
@@ -223,18 +272,41 @@
     
     //NSLog(@"element names :%@\n\n",elementName);
     
+    if ([elementName isEqual:@"UpdateCaseStatusLabResult"]) {
+        
+        NSLog(@"UpdateCaseStatusLab response :%@",response);
+        
+        if ([response isEqual:@"\"Y\""]) {
+            
+            UIAlertView * caseStatusSubmitAlert = [[UIAlertView alloc]initWithTitle:@"Success" message:@"Case Updated Successfully" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+            [caseStatusSubmitAlert show];
+            
+            LabCaseStatus *labCaseStatus = [self.storyboard instantiateViewControllerWithIdentifier:@"labCaseStatus"];
+            [self.revealViewController pushFrontViewController:labCaseStatus animated:YES];
+        }
+    }
+    
+    
     if ([elementName isEqual:@"GetLabCaseIdsResult"]) {
         
-        NSLog(@"lab login :%@",currentDescription);
+        NSLog(@"lab login :%@",response);
         
-        NSData *objectData = [currentDescription dataUsingEncoding:NSUTF8StringEncoding];
+        NSData *objectData = [response dataUsingEncoding:NSUTF8StringEncoding];
         labCaseIdDict = [NSJSONSerialization JSONObjectWithData:objectData options:NSJSONReadingMutableContainers error:nil];
         
         NSLog(@"case id's %@",labCaseIdDict);
         
-        _caseIdPicker.hidden = NO;
-        _caseIdPicker.delegate = self;
-        _caseIdPicker.dataSource = self;
+        
+        caseIdTV.hidden  = NO;
+        caseIdTV = [[UITableView alloc]initWithFrame:CGRectMake(5, 5, self.view.frame.size.width-50, 150) style:UITableViewStylePlain];
+
+        caseIdTV.dataSource = self;
+        caseIdTV.delegate = self;
+        
+        [commonView addSubview:caseIdTV];
+//        _caseIdPicker.hidden = NO;
+//        _caseIdPicker.delegate = self;
+//        _caseIdPicker.dataSource = self;
         
         _submitCaseIdButtonOutlet.hidden = YES;
         _statusButtonOutlet.hidden = YES;
@@ -251,85 +323,86 @@
 - (IBAction)submitCaseStatus:(id)sender
 {
     
-    //PUSH NOTIFICATIONS
-    
-}
-
-
-
-
-- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
-{
-    return 1;
-}
-
-
--(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
-{
-    
-    if (pickerView == _caseIdPicker) {
+    if ([_statusLabel.text isEqual:@"Status"] || [_caseIdLabel.text isEqual:@"Select CaseId"]) {
         
-        return labCaseIdDict.count;
+        UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"Warning" message:@"Please select a CaseID and Status " delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+        
+        [alert show];
+        
     }
     else
+    {
+    
+    //PUSH NOTIFICATIONS
+    NSString * caseStatusSubmit =  [NSString stringWithFormat:
+                                 @"<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
+                                 "<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n"
+                                 "<soap:Body>\n"
+                                 "<UpdateCaseStatusLab xmlns=\"http://www.kurnoolcity.com/wsdemo\">"
+                                 "<CaseId>%@</CaseId>\n"
+                                 "<Status>%@</Status>\n"
+                                 "</UpdateCaseStatusLab>\n"
+                                 "</soap:Body>\n"
+                                 "</soap:Envelope>\n",_caseIdLabel.text,_statusLabel.text];
+    
+    [[CommonAppManager sharedAppManager]soapServiceMessage:caseStatusSubmit soapActionString:@"UpdateCaseStatusLab" withDelegate:self];
+    
+    
+    
+    }
+    
+    
+}
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    if (tableView == caseStatusTV)
     {
         return statusArray.count;
     }
+    else
+    {
+        return labCaseIdDict.count;
+        
+    }
 }
 
--(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (pickerView == _caseIdPicker) {
+    NSString * identifier = @"lab";
+    
+    cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    
+    if (cell == nil) {
         
-        return [[labCaseIdDict valueForKey:@"CaseId"]objectAtIndex:row];
+        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+        cell.backgroundColor = [UIColor colorWithRed:115.0f/225.0f green:153.0f/255.0f blue:203.0f/255.0f alpha:1.0f];
+
+    }
+    
+    if (tableView == caseStatusTV) {
+        
+        cell.textLabel.text = [statusArray objectAtIndex:indexPath.row];
         
     }
     else
     {
-        return [statusArray objectAtIndex:row];
-        
+        cell.textLabel.text = [[labCaseIdDict valueForKey:@"CaseId"]objectAtIndex:indexPath.row];
     }
+    
+    cell.textLabel.textColor = [UIColor whiteColor];
+    cell.textLabel.font = [UIFont fontWithName:@"ChalkboardSE-Regular" size:20];
+
+    
+    return cell;
     
 }
-
-
-
-- (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    UILabel *pickerViewLabel = (id)view;
-    
-    if (!pickerViewLabel) {
-        pickerViewLabel= [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, [pickerView rowSizeForComponent:component].width - 10.0f, [pickerView rowSizeForComponent:component].height)];
-    }
-    
-    pickerViewLabel.backgroundColor = [UIColor whiteColor];
-    pickerViewLabel.textAlignment = NSTextAlignmentCenter;
-    
-    if (pickerView == _caseIdPicker)
-    {
-        pickerViewLabel.text =[[labCaseIdDict valueForKey:@"CaseId" ]objectAtIndex:row];
-        pickerViewLabel.font = [UIFont fontWithName:@"ChalkboardSE-Regular" size:18];
+    if (tableView == caseIdTV) {
         
-    }
-    else if (pickerView == _statusPicker)
-        
-    {
-        pickerViewLabel.text =[statusArray objectAtIndex:row];
-        pickerViewLabel.font = [UIFont fontWithName:@"ChalkboardSE-Regular" size:16];
-        
-    }
-    
-    return pickerViewLabel;
-}
-
--(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
-{
-    
-    if (pickerView == _caseIdPicker) {
-        
-        [_caseIdLabel setText:[[labCaseIdDict valueForKey:@"CaseId"]objectAtIndex:row]];
-        _caseIdPicker.hidden = YES;
+        [_caseIdLabel setText:[[labCaseIdDict valueForKey:@"CaseId"]objectAtIndex:indexPath.row]];
+        caseIdTV.hidden = YES;
         _statusLabel.hidden = NO;
         _statusButtonOutlet.hidden = NO;
         _submitCaseIdButtonOutlet.hidden = NO;
@@ -340,17 +413,112 @@
     else
     {
         
-        [_statusLabel setText:[statusArray objectAtIndex:row]];
+        [_statusLabel setText:[statusArray objectAtIndex:indexPath.row]];
         
-        _statusPicker.hidden = YES;
+        caseStatusTV.hidden = YES;
         _submitCaseIdButtonOutlet.hidden = NO;
         
     }
-    
-    
+
+    [commonView removeFromSuperview];
+    [tableView removeFromSuperview];
     
 }
 
+
+//- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+//{
+//    return 1;
+//}
+//
+//
+//-(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+//{
+//    
+//    if (pickerView == _caseIdPicker) {
+//        
+//        return labCaseIdDict.count;
+//    }
+//    else
+//    {
+//        return statusArray.count;
+//    }
+//}
+//
+//-(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+//{
+//    if (pickerView == _caseIdPicker) {
+//        
+//        return [[labCaseIdDict valueForKey:@"CaseId"]objectAtIndex:row];
+//        
+//    }
+//    else
+//    {
+//        return [statusArray objectAtIndex:row];
+//        
+//    }
+//    
+//}
+//
+//
+//
+//- (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view
+//{
+//    
+//    UILabel *pickerViewLabel = (id)view;
+//    
+//    if (!pickerViewLabel) {
+//        pickerViewLabel= [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, [pickerView rowSizeForComponent:component].width - 10.0f, [pickerView rowSizeForComponent:component].height)];
+//    }
+//    
+//    pickerViewLabel.backgroundColor = [UIColor whiteColor];
+//    pickerViewLabel.textAlignment = NSTextAlignmentCenter;
+//    
+//    if (pickerView == _caseIdPicker)
+//    {
+//        pickerViewLabel.text =[[labCaseIdDict valueForKey:@"CaseId" ]objectAtIndex:row];
+//        pickerViewLabel.font = [UIFont fontWithName:@"ChalkboardSE-Regular" size:18];
+//        
+//    }
+//    else if (pickerView == _statusPicker)
+//        
+//    {
+//        pickerViewLabel.text =[statusArray objectAtIndex:row];
+//        pickerViewLabel.font = [UIFont fontWithName:@"ChalkboardSE-Regular" size:16];
+//        
+//    }
+//    
+//    return pickerViewLabel;
+//}
+//
+//-(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+//{
+//    
+//    if (pickerView == _caseIdPicker) {
+//        
+//        [_caseIdLabel setText:[[labCaseIdDict valueForKey:@"CaseId"]objectAtIndex:row]];
+//        _caseIdPicker.hidden = YES;
+//        _statusLabel.hidden = NO;
+//        _statusButtonOutlet.hidden = NO;
+//        _submitCaseIdButtonOutlet.hidden = NO;
+//        
+//        
+//    }
+//    
+//    else
+//    {
+//        
+//        [_statusLabel setText:[statusArray objectAtIndex:row]];
+//        
+//        _statusPicker.hidden = YES;
+//        _submitCaseIdButtonOutlet.hidden = NO;
+//        
+//    }
+//    
+//    
+//    
+//}
+//
 
 
 

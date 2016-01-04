@@ -7,8 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SWRevealViewController.h"
+#import "LoginPage.h"
 
 @interface ViewController : UIViewController
+
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+
+
+@property (weak, nonatomic) IBOutlet UIButton *getStartedButtonOutlet;
+
+
+- (IBAction)getStartedButtonAction:(id)sender;
 
 
 @end

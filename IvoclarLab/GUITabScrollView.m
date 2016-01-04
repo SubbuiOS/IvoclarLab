@@ -9,7 +9,6 @@
 #import "GUITabScrollView.h"
 
 #define MAP(a, b, c) MIN(MAX(a, b), c)
-
 @interface GUITabScrollView ()
 
 - (void)_initTabbatAtIndex:(NSInteger)index;
@@ -24,7 +23,8 @@
 
 #pragma mark - Initialize Methods
 
-- (instancetype)initWithFrame:(CGRect)frame tabViews:(NSArray *)tabViews tabBarHeight:(CGFloat)height tabColor:(UIColor *)color backgroundColor:(UIColor *)backgroundColor selectedTabIndex:(NSInteger)index {
+- (instancetype)initWithFrame:(CGRect)frame tabViews:(NSArray *)tabViews tabBarHeight:(CGFloat)height tabColor:(UIColor *)color backgroundColor:(UIColor *)backgroundColor selectedTabIndex:(NSInteger)index
+{
     self = [self initWithFrame:frame tabViews:tabViews tabBarHeight:height tabColor:color backgroundColor:backgroundColor];
     if (self) {
         NSInteger tabIndex = 0;
@@ -36,7 +36,8 @@
     return self;
 }
 
-- (instancetype)initWithFrame:(CGRect)frame tabViews:(NSArray *)tabViews tabBarHeight:(CGFloat)height tabColor:(UIColor *)color backgroundColor:(UIColor *)backgroundColor {
+- (instancetype)initWithFrame:(CGRect)frame tabViews:(NSArray *)tabViews tabBarHeight:(CGFloat)height tabColor:(UIColor *)color backgroundColor:(UIColor *)backgroundColor
+{
     self = [super initWithFrame:frame];
     
     if (self) {
@@ -55,7 +56,7 @@
         
         CGFloat widthDifference = MAX(0, self.frame.size.width * 1.0f - width);
         
-        UIView *contentView = [UIView new];
+      UIView * contentView = [UIView new];
         [contentView setFrame:CGRectMake(0, 0, MAX(width, self.frame.size.width), height)];
         [contentView setBackgroundColor:backgroundColor];
         [contentView setTranslatesAutoresizingMaskIntoConstraints:NO];
@@ -93,7 +94,7 @@
         UIView *bottomLine = [UIView new];
         [bottomLine setTranslatesAutoresizingMaskIntoConstraints:NO];
         [contentView addSubview:bottomLine];
-        [bottomLine setBackgroundColor:color];
+        [bottomLine setBackgroundColor:[UIColor orangeColor]];
         
         [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[S]-0-|"
                                                                             options:0
@@ -104,7 +105,7 @@
                                                                             options:0
                                                                             metrics:@{@"height": @(height - 2.0f)}
                                                                               views:@{@"S": bottomLine}]];
-        UIView *tabIndicator = [UIView new];
+       UIView * tabIndicator = [UIView new];
         [tabIndicator setTranslatesAutoresizingMaskIntoConstraints:NO];
         [contentView addSubview:tabIndicator];
         [tabIndicator setBackgroundColor:color];
@@ -140,6 +141,13 @@
 
 - (void)animateToTabAtIndex:(NSInteger)index {
     [self animateToTabAtIndex:index animated:YES];
+    
+//    [_tabViews[index] setBackgroundColor:[UIColor darkTextColor]];
+//
+//    NSLog(@"tabView :%@",_tabViews);
+    
+
+    
 }
 
 - (void)animateToTabAtIndex:(NSInteger)index animated:(BOOL)animated {
@@ -173,6 +181,7 @@
         NSInteger index = [[gestureRecognizer view] tag];
         [[self tabScrollDelegate] tabScrollView:self didSelectTabAtIndex:index];
         [self animateToTabAtIndex:index];
+
     }
 }
 

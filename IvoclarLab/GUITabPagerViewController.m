@@ -163,13 +163,12 @@
         [self setTabBackgroundColor:[UIColor colorWithWhite:0.95f alpha:1.0f]];
     }
     
-    NSMutableArray *tabViews = [NSMutableArray array];
-    
+    _tabViews = [[NSMutableArray alloc]init];
     if ([[self dataSource] respondsToSelector:@selector(viewForTabAtIndex:)]) {
         for (int i = 0; i < [[self viewControllers] count]; i++) {
             UIView *view;
             if ((view = [[self dataSource] viewForTabAtIndex:i]) != nil) {
-                [tabViews addObject:view];
+                [_tabViews addObject:view];
             }
         }
     } else {
@@ -188,27 +187,36 @@
         }
         
         for (NSString *title in [self tabTitles]) {
-            UILabel *label = [UILabel new];
-            [label setText:title];
-            [label setTextAlignment:NSTextAlignmentCenter];
-            [label setFont:font];
-            [label setTextColor:color];
-            [label sizeToFit];
-            
-            CGRect frame = [label frame];
+            UILabel * tabLabel = [UILabel new];
+            [tabLabel setText:title];
+            [tabLabel setTextAlignment:NSTextAlignmentCenter];
+            [tabLabel setFont:font];
+            [tabLabel setTextColor:color];
+            [tabLabel sizeToFit];
+//            UIButton * tabButton = [UIButton buttonWithType:UIButtonTypeSystem];
+//            [tabButton setTitle:title forState:UIControlStateNormal];
+//            tabButton.titleLabel.textAlignment = NSTextAlignmentCenter;
+//            [tabButton setTitleColor:color forState:UIControlStateNormal];
+//            [tabButton sizeToFit];
+//            
+//            CGRect frame = [tabButton frame];
+            CGRect frame = [tabLabel frame];
             frame.size.width = MAX(frame.size.width + 20, 85);
-            [label setFrame:frame];
-            [tabViews addObject:label];
+            [tabLabel setFrame:frame];
+            //[tabButton setFrame:frame];
+            //[_tabViews addObject:tabButton];
+            [_tabViews addObject:tabLabel];
         }
     }
     
+    [_tabViews[0] setBackgroundColor:[UIColor orangeColor]];
     if ([self header]) {
         [[self header] removeFromSuperview];
     }
     CGRect frame = self.view.frame;
     frame.origin.y = 0;
     frame.size.height = [self headerHeight];
-    [self setHeader:[[GUITabScrollView alloc] initWithFrame:frame tabViews:tabViews tabBarHeight:[self headerHeight] tabColor:[self headerColor] backgroundColor:[self tabBackgroundColor] selectedTabIndex:self.selectedIndex]];
+    [self setHeader:[[GUITabScrollView alloc] initWithFrame:frame tabViews:_tabViews tabBarHeight:[self headerHeight] tabColor:[self headerColor] backgroundColor:[self tabBackgroundColor] selectedTabIndex:self.selectedIndex]];
     [[self header] setTabScrollDelegate:self];
     
     [[self view] addSubview:[self header]];
@@ -226,6 +234,7 @@
                                        animated:animation
                                      completion:nil];
     [[self header] animateToTabAtIndex:index animated:animation];
+    
     [self setSelectedIndex:index];
 }
 

@@ -8,15 +8,21 @@
 
 #import "ViewController.h"
 
-@interface PasswordGenarationScreen : ViewController
+@interface PasswordGenarationScreen : ViewController<UITextFieldDelegate,NSXMLParserDelegate>
+
+{
+    NSUserDefaults * defaults;
+    NSString * response;
+}
 @property (weak, nonatomic) IBOutlet UITextField *passwordTF;
 
 
 @property (weak, nonatomic) IBOutlet UITextField *reenterPasswordTF;
+@property (weak, nonatomic) IBOutlet UIButton *passwordSubmitOutlet;
 
 - (IBAction)passwordSubmit:(id)sender;
 
-
+-(void)connectionData:(NSData*)data status:(BOOL)status;
 
 
 

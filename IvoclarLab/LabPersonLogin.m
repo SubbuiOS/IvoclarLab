@@ -37,30 +37,50 @@
     
     [navigationTitleView addSubview:label];
     self.navigationItem.titleView = navigationTitleView;
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.0f/255.0f green:128.0f/255.0f blue:255.0f/255.0f alpha:1];
     
+    defaults = [NSUserDefaults standardUserDefaults];
     
-//    CATransition *fadeTextAnimation = [CATransition animation];
-//    fadeTextAnimation.duration = 1;
-//    fadeTextAnimation.type = kCATransitionPush;
-//    
-//    [self.navigationController.navigationBar.layer addAnimation: fadeTextAnimation forKey: @"fadeText"];
-//    self.navigationItem.title = @"Ivoclar Lab";
+
     
-//    statusArray = [[NSMutableArray alloc]initWithObjects:@"In-Process",@"Out for Dispatch",@"Delivered", nil];
-//    _statusPicker.hidden = YES;
-//    _statusPicker.delegate = self;
-//    _statusPicker.dataSource = self;
+    _labPersonUserName.delegate = self;
+    _labPersonPassword.delegate = self;
+    
+    // Keyboard will dismiss when user taps on the screen
+    [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self.view action:@selector(endEditing:)]];
     
     
     
     
 }
 
+-(void) viewWillAppear:(BOOL)animated
+{
+    _labLoginSubmit.layer.cornerRadius = 10; // this value vary as per your desire
+    _labLoginSubmit.clipsToBounds = YES;
+    
+//    _labPersonUserName.layer.borderColor=[[UIColor blueColor]CGColor];
+//    _labPersonUserName.layer.borderWidth=1.0;
+//    
+//    _labPersonPassword.layer.borderColor=[[UIColor blueColor]CGColor];
+//    _labPersonPassword.layer.borderWidth=1.0;
 
+
+    
+}
 
 - (IBAction)labLoginSubmit:(id)sender
 {
     
+    if ([_labPersonUserName.text isEqual: @""] || [_labPersonPassword.text isEqual:@""]) {
+        
+        UIAlertView * loginAlert = [[UIAlertView alloc]initWithTitle:@"Warning" message:@"Please enter all the details" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+        
+        [loginAlert show];
+    }
+    
+    else
+    {
     NSString * labLoginCheck =  [NSString stringWithFormat:
                                  @"<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
                                  "<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n"
@@ -68,20 +88,20 @@
                                  "<CheckLoginLab xmlns=\"http://www.kurnoolcity.com/wsdemo\">"
                                  "<Username>%@</Username>\n"
                                  "<Password>%@</Password>\n"
-                                 "<RegId>-</RegId>\n"
+                                 "<RegId>%@</RegId>\n"
                                  "</CheckLoginLab>\n"
                                  "</soap:Body>\n"
-                                 "</soap:Envelope>\n",_labPersonUserName.text,_labPersonPassword.text];
+                                 "</soap:Envelope>\n",_labPersonUserName.text,_labPersonPassword.text,[[NSUserDefaults standardUserDefaults] valueForKey:@"DeviceToken"]];
     
     spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    spinner.center = CGPointMake(170, 400);
+    spinner.center = CGPointMake((_labLoginSubmit.frame.size.width/2), _labLoginSubmit.frame.origin.y+_labLoginSubmit.frame.size.height+60);
     [self.view addSubview:spinner];
     [spinner startAnimating];
     
     
     [[CommonAppManager sharedAppManager]soapServiceMessage:labLoginCheck soapActionString:@"CheckLoginLab" withDelegate:self];
     
-
+    }
 
     
 }
@@ -117,11 +137,11 @@
   namespaceURI:(NSString *)namespaceURI qualifiedName:
 (NSString *)qName attributes:(NSDictionary *)attributeDict
 {
-    currentDescription = [NSString alloc];
+    response = [NSString alloc];
 }
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string
 {
-    currentDescription = string;
+    response = string;
 }
 - (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName
   namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
@@ -133,18 +153,30 @@
     
     if ([elementName isEqual:@"CheckLoginLabResult"]) {
         
-        NSLog(@"lab login :%@",currentDescription);
+        NSLog(@"lab login :%@",response);
         
-        [self saveDataInPlist:currentDescription];
+        if (response !=nil) {
+            
         
-        [defaults setValue:@"LabLoginSuccess" forKey:@"loginStatus"];
+        [self saveDataInPlist:response];
+        
+        [defaults setObject:@"LabLoginSuccess" forKey:@"loginStatus"];
         [defaults synchronize];
+        
+        
         
         SWRevealViewController * labCaseStatus = [self.storyboard instantiateViewControllerWithIdentifier:@"LabSWRevealViewController"];
         
         [self presentViewController:labCaseStatus animated:YES completion:nil];
         
+        }
         
+        else
+        {
+            UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"Warning" message:@"Enter correct details" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+            
+            [alert show];
+        }
         
         
     }
@@ -206,7 +238,7 @@
         else {
             NSLog(@"Couldn't saved");
             
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Couldn't Saved in plist" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Couldn't Save" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
             [alert show];
         }
     }
@@ -221,6 +253,11 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(BOOL) textFieldShouldReturn:(UITextField *)textField{
+    
+    [textField resignFirstResponder];
+    return YES;
+}
 
 
 /*

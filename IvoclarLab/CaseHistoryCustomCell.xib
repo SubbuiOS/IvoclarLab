@@ -61,12 +61,12 @@
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qU8-e2-KWI">
-                        <rect key="frame" x="158" y="52" width="160" height="20"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
+                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ddK-zt-M8l">
+                        <rect key="frame" x="152" y="45" width="160" height="30"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                    </textView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RYe-Hu-BDL">
                         <rect key="frame" x="158" y="80" width="160" height="20"/>
                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -124,7 +124,7 @@
                 <outlet property="cellNumberCH" destination="xli-rc-W6b" id="gYO-Hb-06n"/>
                 <outlet property="crownBrandCH" destination="RYe-Hu-BDL" id="JDJ-83-vwb"/>
                 <outlet property="crownTypeCH" destination="9up-0f-dUh" id="2K0-GN-tOB"/>
-                <outlet property="docAddressCH" destination="qU8-e2-KWI" id="txc-ga-ZaL"/>
+                <outlet property="docAddressCH" destination="ddK-zt-M8l" id="VjL-FR-4Xc"/>
                 <outlet property="doctorNameCH" destination="klB-h5-q5J" id="XnD-qv-IaL"/>
                 <outlet property="doctorNameTitle" destination="LzW-De-huq" id="zv5-iw-tV0"/>
                 <outlet property="issueDateCH" destination="Gnq-KM-ch0" id="1eq-pC-U5a"/>

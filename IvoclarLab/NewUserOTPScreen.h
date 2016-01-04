@@ -9,23 +9,24 @@
 #import "ViewController.h"
 #import "CommonAppManager.h"
 
-@interface NewUserOTPScreen : ViewController<NSXMLParserDelegate>
+@interface NewUserOTPScreen : ViewController<NSXMLParserDelegate,UITextFieldDelegate>
 
 
 {
     
-    NSURLConnection * urlConnection;
-    NSMutableData * webData;
-    NSString * currentDescription;
+    NSString * response;
     NSString *filteredDoctorID;
     UIActivityIndicatorView * spinner;
-
+    NSUserDefaults * defaults;
     
 }
 
+
+@property (weak, nonatomic) IBOutlet UIButton *OTPSubmitOutlet;
+
 - (IBAction)OTPSubmit:(id)sender;
 
-@property (weak, nonatomic) IBOutlet UITextField *doctorIDTF;
+//@property (weak, nonatomic) IBOutlet UITextField *doctorIDTF;
 @property (weak, nonatomic) IBOutlet UITextField *OTPTF;
 
 -(void)connectionData:(NSData*)data status:(BOOL)status;

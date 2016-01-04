@@ -14,17 +14,17 @@
     
     NSString *OTPMessage;
     NSString * checkMobile;
-    NSURLConnection *theConnection;
-    NSMutableData * webData;
-    NSString * currentDescription;
+    NSString * response;
     UIActivityIndicatorView *spinner;
-    NSUserDefaults * defaults;
+   // NSUserDefaults * defaults;
     
 }
 
 @property (weak, nonatomic) IBOutlet UITextField *doctorEmailTF;
 
 @property (weak, nonatomic) IBOutlet UITextField *doctorMobileNoTF;
+
+@property (weak, nonatomic) IBOutlet UIButton *doctorLoginSubmit;
 
 - (IBAction)submitActionDoctor:(id)sender;
 

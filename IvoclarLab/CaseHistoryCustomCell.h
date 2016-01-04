@@ -10,7 +10,10 @@
 
 @interface CaseHistoryCustomCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *doctorNameCH;
-@property (weak, nonatomic) IBOutlet UILabel *docAddressCH;
+//@property (weak, nonatomic) IBOutlet UILabel *docAddressCH;
+@property (weak, nonatomic) IBOutlet UITextView *docAddressCH;
+
+
 
 @property (weak, nonatomic) IBOutlet UILabel *crownBrandCH;
 @property (weak, nonatomic) IBOutlet UILabel *noOfUnitsCH;

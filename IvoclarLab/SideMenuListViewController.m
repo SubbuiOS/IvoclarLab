@@ -28,16 +28,34 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.view.backgroundColor = [UIColor colorWithRed:115.0f/225.0f green:153.0f/255.0f blue:203.0f/255.0f alpha:1.0f];
-    // This View Controller is for displaying the contents in sidemenu
     
     [_sidebarMenuTV reloadData];
+
+    
+    if (_sidebarMenuTV.tag == 2)
+    {
+        self.view.backgroundColor = [UIColor colorWithRed:115.0f/225.0f green:153.0f/255.0f blue:203.0f/255.0f alpha:1.0f];
+
+        _sidebarMenuTV.backgroundColor = [UIColor colorWithRed:115.0f/225.0f green:153.0f/255.0f blue:203.0f/255.0f alpha:1.0f];
+    }
+    else
+    {
+        
+        self.view.backgroundColor = [UIColor colorWithRed:21.0f/225.0f green:75.0f/255.0f blue:145.0f/255.0f alpha:1.0f];
+        
+        _sidebarMenuTV.backgroundColor = [UIColor colorWithRed:21.0f/225.0f green:75.0f/255.0f blue:145.0f/255.0f alpha:1.0f];
+
+
+    }
+    
+  
+    // This View Controller is for displaying the contents in sidemenu
+    
     
     [[CommonAppManager sharedAppManager]viewController:self];
     
-    _sidebarMenuTV.backgroundColor = [UIColor colorWithRed:115.0f/225.0f green:153.0f/255.0f blue:203.0f/255.0f alpha:1.0f];
+    
 
-        
     
     
   //  menuArray = [[NSMutableArray alloc]initWithObjects:@"CaseEntry",@"Profile",@"CaseHistory",@"Feedback",@"Update Mobile",@"Complaints",@"CaseDelivery",@"Home", nil];
@@ -89,10 +107,13 @@
             
             cell.backgroundColor = [UIColor colorWithRed:115.0f/225.0f green:153.0f/255.0f blue:203.0f/255.0f alpha:1.0f];
         }
-        //cell.backgroundColor = [UIColor blueColor];
-
+ 
     }
     
+    if (tableView.tag==1)
+    {
+        cell.backgroundColor = [UIColor colorWithRed:21.0f/225.0f green:75.0f/255.0f blue:145.0f/255.0f alpha:1.0f];
+    }
 
     cell.textLabel.text = [menuArray objectAtIndex:indexPath.row];
     cell.textLabel.textColor = [UIColor whiteColor];
@@ -104,8 +125,41 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+
+  //  ProfileScreen * profilePage = [self.storyboard instantiateViewControllerWithIdentifier:@"newProfile"];
+    
+    //    if ((profilePage.doctorNameTF.text == nil) && (profilePage.areaNameTF.text == nil) && (profilePage.emailTF.text == nil) && (profilePage.pincodeTF.text == nil) && (profilePage.stateDDOutlet.titleLabel.text == nil) && (profilePage.cityDDOutlet.titleLabel.text == nil)) {
+    
+      //      UIAlertView * profileAlert = [[UIAlertView alloc]initWithTitle:@"Warning" message:@"Please fill all the details in profile" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+        //    [profileAlert show];
+            
+      //     ProfileScreen * profile = [self.storyboard instantiateViewControllerWithIdentifier:@"profilePage"];
+            
+      //      [self.revealViewController pushFrontViewController:profile animated:YES];
+    
+      //  }
+    
+//    else
+//    {
+    
+    if ([[[NSUserDefaults standardUserDefaults]valueForKey:@"User"] isEqual:@"NewUser"]) {
+        
+        ProfileScreen * profilePage = [self.storyboard instantiateViewControllerWithIdentifier:@"newProfile"];
+        
+        if ((profilePage.doctorNameTF.text == nil) || (profilePage.areaNameTF.text == nil) || (profilePage.emailTF.text == nil) || (profilePage.pincodeTF.text == nil) || (profilePage.stateDDOutlet.titleLabel.text == nil) || (profilePage.cityDDOutlet.titleLabel.text == nil))
+            
+            {
+                UIAlertView * profileAlert = [[UIAlertView alloc]initWithTitle:@"Warning" message:@"Please fill all the details in profile" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+                [profileAlert show];
+            }
+        
+    }
+    
+    else
+    {
     
     if (tableView.tag == 1) {
+        
         
         
         if ([[menuArray objectAtIndex:indexPath.row ] isEqual:@"CaseEntry"]) {
@@ -122,6 +176,8 @@
             
             [self.revealViewController pushFrontViewController:profilePage animated:YES];
             
+            
+            
         }
         else if ([[menuArray objectAtIndex:indexPath.row ] isEqual:@"CaseHistory"]) {
             
@@ -130,13 +186,13 @@
             [self.revealViewController pushFrontViewController:caseHistory animated:YES];
             
         }
-        else if ([[menuArray objectAtIndex:indexPath.row ] isEqual:@"Feedback"]) {
-           
-           FeedbackViewController * caseHistory = [self.storyboard instantiateViewControllerWithIdentifier:@"feedback"];
-           
-           [self.revealViewController pushFrontViewController:caseHistory animated:YES];
-           
-       }
+//        else if ([[menuArray objectAtIndex:indexPath.row ] isEqual:@"Feedback"]) {
+//           
+//           FeedbackViewController * caseHistory = [self.storyboard instantiateViewControllerWithIdentifier:@"feedback"];
+//           
+//           [self.revealViewController pushFrontViewController:caseHistory animated:YES];
+//           
+//       }
        else if ([[menuArray objectAtIndex:indexPath.row ] isEqual:@"Update Mobile"]) {
            
            UpdateMobileScreen * updateMobile = [self.storyboard instantiateViewControllerWithIdentifier:@"updateMobile"];
@@ -172,7 +228,7 @@
         
         
     }
-    
+    }
     
     if (tableView.tag == 2) {
        
@@ -215,6 +271,8 @@
         
         
     }
+        
+    
     
 }
 

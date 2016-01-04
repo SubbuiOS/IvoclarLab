@@ -12,15 +12,20 @@
 
 @end
 
-NSUserDefaults * defaults;
-
 @implementation LabCaseHistory
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    [self labCaseHistoryDidLoad];
     
+  
+    
+    
+}
+-(void) labCaseHistoryDidLoad
+{
     SWRevealViewController *revealViewController = self.revealViewController;
     if ( revealViewController )
     {
@@ -31,13 +36,13 @@ NSUserDefaults * defaults;
     
     
     //self.navigationItem.title = @"Ivoclar lab";
-    self.navigationController.navigationBar.barTintColor = [UIColor blueColor];
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.0f/255.0f green:128.0f/255.0f blue:255.0f/255.0f alpha:1];
     // self.navigationController.navigationBar.translucent = NO;
     
     self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
     
-//    [self.navigationController.navigationBar
-//     setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+    //    [self.navigationController.navigationBar
+    //     setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
     
     
     // Customising the navigation Title
@@ -55,6 +60,8 @@ NSUserDefaults * defaults;
     [navigationTitleView addSubview:label];
     self.navigationItem.titleView = navigationTitleView;
     
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.0f/255.0f green:128.0f/255.0f blue:255.0f/255.0f alpha:1];
+    
     
     //Animating the navigation Bar
     CATransition *fadeTextAnimation = [CATransition animation];
@@ -65,15 +72,15 @@ NSUserDefaults * defaults;
     //self.navigationItem.title = @"Ivoclar Lab";
     
     
-    labCaseHistoryTV= [[UITableView alloc]initWithFrame:CGRectMake(0, 105, 372, 520) style:UITableViewStylePlain];
+    labCaseHistoryTV= [[UITableView alloc]initWithFrame:CGRectMake(0, _caseHistoryLabel.frame.origin.y+ _caseHistoryLabel.frame.size.height+10, self.view.frame.size.width, 500) style:UITableViewStylePlain];
     
     defaults = [NSUserDefaults standardUserDefaults];
     
     reqReceivedArray = [[NSMutableArray alloc]init];
     caseHistoryDict = [[NSMutableDictionary alloc]init];
     
-    
 }
+
 
 -(void) getDataFromPlist
 {
@@ -133,8 +140,7 @@ NSUserDefaults * defaults;
     [self getDataFromPlist];
     
     spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    spinner.center = CGPointMake(170, 400);
-    //spinner.tag = 12;
+    spinner.center = self.view.center;
     [self.view addSubview:spinner];
     [spinner startAnimating];
     
@@ -221,11 +227,11 @@ NSUserDefaults * defaults;
   namespaceURI:(NSString *)namespaceURI qualifiedName:
 (NSString *)qName attributes:(NSDictionary *)attributeDict
 {
-    currentDescription = [NSString alloc];
+    response = [NSString alloc];
 }
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string
 {
-    currentDescription = string;
+    response = string;
 }
 - (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName
   namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
@@ -237,7 +243,7 @@ NSUserDefaults * defaults;
     
     if ([elementName isEqual:@"LabCaseHistoryResult"]) {
         
-        NSLog(@"lab login :%@",currentDescription);
+        NSLog(@"lab login :%@",response);
 
         // Clearing the NSUserDefaults
         NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
@@ -246,7 +252,7 @@ NSUserDefaults * defaults;
 
         [reqReceivedArray removeAllObjects];
         
-        NSData *objectData = [currentDescription dataUsingEncoding:NSUTF8StringEncoding];
+        NSData *objectData = [response dataUsingEncoding:NSUTF8StringEncoding];
         
         caseHistoryDict = [NSJSONSerialization JSONObjectWithData:objectData options:NSJSONReadingMutableContainers error:nil];
         NSLog(@"partner dictionary :%@",caseHistoryDict);
@@ -256,6 +262,9 @@ NSUserDefaults * defaults;
         [defaults setObject:caseHistoryDict forKey:@"CaseHistoryLab"];
         [defaults synchronize];
         NSLog(@"defaults: %@",[defaults objectForKey:@"CaseHistoryLab"]);
+        
+        [defaults setValue:@"LabLoginSuccess" forKey:@"loginStatus"];
+        [defaults synchronize];
 
         labCaseHistoryTV.delegate = self;
         labCaseHistoryTV.dataSource = self;

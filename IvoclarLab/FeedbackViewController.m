@@ -18,11 +18,11 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    [self feedBackDidLoad];
+    [self feedbackDidLoad];
     
 }
 
--(void) feedBackDidLoad
+-(void) feedbackDidLoad
 {
     SWRevealViewController *revealViewController = self.revealViewController;
     if ( revealViewController )

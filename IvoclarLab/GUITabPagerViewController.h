@@ -15,6 +15,8 @@
 
 @property (weak, nonatomic) id<GUITabPagerDataSource> dataSource;
 @property (weak, nonatomic) id<GUITabPagerDelegate> delegate;
+@property (strong,nonatomic) NSMutableArray *tabViews;
+
 
 - (void)reloadData;
 - (NSInteger)selectedIndex;
@@ -46,6 +48,7 @@
 @optional
 - (void)tabPager:(GUITabPagerViewController *)tabPager willTransitionToTabAtIndex:(NSInteger)index;
 - (void)tabPager:(GUITabPagerViewController *)tabPager didTransitionToTabAtIndex:(NSInteger)index;
+
 
 
 @end

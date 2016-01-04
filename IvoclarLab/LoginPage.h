@@ -9,8 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
 
-@interface LoginPage : UIViewController<UIViewControllerTransitioningDelegate>
-
+@interface LoginPage : UIViewController
 
 
 - (IBAction)doctorLogin:(id)sender;
@@ -19,7 +18,6 @@
 
 - (IBAction)labPersonLogin:(id)sender;
 
-@property (weak, nonatomic) IBOutlet UIImageView *doctorLoginIcon;
 
 
 
