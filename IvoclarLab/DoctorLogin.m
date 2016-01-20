@@ -62,6 +62,8 @@ NSMutableDictionary * docIdDict;
     self.titleLabel.textColor = [UIColor whiteColor];
     self.titleLabel.text = @"Ivoclar Lab";
     
+    
+    // Navigation bar is customised so we will hide the navigation bar
     self.navigationController.navigationBarHidden = YES;
     
 //    _backButtonOutlet.layer.cornerRadius = 10;

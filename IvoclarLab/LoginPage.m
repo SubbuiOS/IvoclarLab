@@ -55,6 +55,8 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    // Navigation bar is customised so we will hide the navigation bar
+    
     self.navigationController.navigationBarHidden = YES;
     
     self.view.backgroundColor = [UIColor colorWithRed:255.0f/255.0f green:255.0f/255.0f blue:255.0f/255.0f alpha:1.0f];

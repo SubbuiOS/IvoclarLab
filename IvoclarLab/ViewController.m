@@ -52,7 +52,7 @@
 
 - (IBAction)getStartedButtonAction:(id)sender
 {
-    
+   // If already login it will be redirected to respective viewcontrollers
     
     NSString *loginStatusString = [[NSUserDefaults standardUserDefaults]stringForKey:@"loginStatus"];
     

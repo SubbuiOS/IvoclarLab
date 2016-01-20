@@ -47,6 +47,8 @@
 - (IBAction)clickToOrder:(id)sender
 {
     
+    // If already login as a doctor it will be redirected to caseEntry
+
     
     NSString *loginStatusString = [[NSUserDefaults standardUserDefaults]stringForKey:@"loginStatus"];
     

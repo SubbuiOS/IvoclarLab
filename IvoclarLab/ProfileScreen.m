@@ -55,6 +55,7 @@ UITapGestureRecognizer * tapRecognizer;
     _pincodeTF.layer.borderWidth = 1.0;
     
     
+    // If the user is already registered get profile details should be called to get the doctor name
     
     if (![[[NSUserDefaults standardUserDefaults]valueForKey:@"User"] isEqual:@"NewUser"]) {
         

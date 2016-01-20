@@ -474,6 +474,19 @@ UITapGestureRecognizer * tapRecognizer;
 - (IBAction)selectPartner:(id)sender {
     
     
+    if ([_welcomeNameLabel.text isEqual:@""] || _welcomeNameLabel.text== nil)
+    {
+        
+        UIAlertView * selectPartnerAlert = [[UIAlertView alloc]initWithTitle:@"Warning" message:@"Please Update the profile" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+        
+        [selectPartnerAlert show];
+        
+        
+    }
+    
+    else
+    {
+    
     //First we will get Mpartners by clicking the button
     
     NSString * MPartner = [NSString stringWithFormat:
@@ -488,7 +501,7 @@ UITapGestureRecognizer * tapRecognizer;
     
     [[CommonAppManager sharedAppManager]soapServiceMessage:MPartner soapActionString:@"GetMPartners" withDelegate:self];
     
-    
+    }
     
 }
 
@@ -577,8 +590,9 @@ UITapGestureRecognizer * tapRecognizer;
         
         if ([response isEqual:@"[]"]) {
             
+            // If the user did not enter the profile details at the beginning the profile should be updated.
             
-            UIAlertView * profileAlert = [[UIAlertView alloc]initWithTitle:@"Warning" message:@"Please update the profile" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+            UIAlertView * profileAlert = [[UIAlertView alloc]initWithTitle:@"Warning" message:@"Please Update the profile" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
             
             [profileAlert show];
         }

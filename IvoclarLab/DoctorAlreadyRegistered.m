@@ -192,6 +192,8 @@
         if (![response isEqual:@"\"N\""]) {
             
             [self saveDataInPlist:response];
+            
+            
         
         SWRevealViewController * sideMenu = [self.storyboard instantiateViewControllerWithIdentifier:@"DoctorSWRevealViewController"];
         
@@ -296,6 +298,7 @@
 
 - (IBAction)newUserRegistration:(id)sender {
     
+    // For New user it will redirect back to doctor login screen
     
     [self dismissViewControllerAnimated:YES completion:nil];
 

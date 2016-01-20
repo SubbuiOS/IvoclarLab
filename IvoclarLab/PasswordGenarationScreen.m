@@ -202,12 +202,12 @@ NSString * filteredDoctorID;
         if ([response isEqual:@"\"Y\""]) {
             
             
-            // Y represents we entered the password saved
+            // Y represents entered password is saved
             
             UIAlertView * savedPwd = [[UIAlertView alloc]initWithTitle:@"Success" message:@"Password is saved" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
             [savedPwd show];
 
-            
+            // It will goes to new user profile screen
             
             SWRevealViewController * profilePage = [self.storyboard instantiateViewControllerWithIdentifier:@"profileSW"];
             // [self.revealViewController pushFrontViewController:profilePage animated:YES];
