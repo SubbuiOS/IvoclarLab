@@ -39,7 +39,7 @@
         //[self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
     }
     
-    [[NSUserDefaults standardUserDefaults] setValue:@"RegisteredUser" forKey:@"User"];
+    [[NSUserDefaults standardUserDefaults] setValue:@"alreadyRegistered" forKey:@"User"];
 
     
     // Customising the navigation Title

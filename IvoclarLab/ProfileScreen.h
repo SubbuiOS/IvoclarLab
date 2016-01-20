@@ -23,6 +23,8 @@
     UITableView * cityTableView;
     UIActivityIndicatorView * spinner;
     UIView * commonView;
+    NSUserDefaults * defaults;
+
     
 }
 

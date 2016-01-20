@@ -20,6 +20,11 @@
     
 }
 
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UIButton *backButtonOutlet;
+- (IBAction)backButton:(id)sender;
+
+
 @property (weak, nonatomic) IBOutlet UITextField *doctorEmailTF;
 
 @property (weak, nonatomic) IBOutlet UITextField *doctorMobileNoTF;

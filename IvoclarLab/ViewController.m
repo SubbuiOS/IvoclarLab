@@ -29,6 +29,8 @@
     _titleLabel.textColor = [UIColor whiteColor];
     _titleLabel.text = @"Ivoclar Lab";
     
+
+    
     
 //    [navigationTitleView addSubview:label];
 //    self.navigationItem.titleView = navigationTitleView;

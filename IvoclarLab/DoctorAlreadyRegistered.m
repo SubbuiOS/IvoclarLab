@@ -202,7 +202,10 @@
         [defaults setObject:@"DocLoginSuccess" forKey:@"loginStatus"];
         [defaults synchronize];
             
-
+//        [defaults setObject:@"alreadyRegistered" forKey:@"User"];
+//        [defaults synchronize];
+//            
+//
 
         
         }

@@ -30,7 +30,7 @@
     NSString * callBackFromCompany;
     NSString * callBackFromLab;
     
-    UITextField * otherComplaints;
+    UITextView * otherComplaints;
     UIView * commonView;
 
 

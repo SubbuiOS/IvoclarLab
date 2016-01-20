@@ -25,7 +25,7 @@ NSString * filteredDoctorID;
     _passwordTF.delegate = self;
     _reenterPasswordTF.delegate = self;
     
-    defaults = [NSUserDefaults standardUserDefaults];
+    
     
     _passwordSubmitOutlet.layer.cornerRadius = 10; // this value vary as per your desire
     _passwordSubmitOutlet.clipsToBounds = YES;
@@ -213,8 +213,7 @@ NSString * filteredDoctorID;
             // [self.revealViewController pushFrontViewController:profilePage animated:YES];
             [self presentViewController:profilePage animated:YES completion:nil];
 
-            [defaults setObject:@"DocLoginSuccess" forKey:@"loginStatus"];
-            [defaults synchronize];
+           
             
         }
         

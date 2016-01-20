@@ -32,20 +32,20 @@ NSMutableDictionary * docIdDict;
     // Customising the navigation Title
     // Taken a view and added a label to it with our required font
   
-    CGRect frame = CGRectMake(0, 0, 200, 44);
-    UIView * navigationTitleView = [[UIView alloc]initWithFrame:frame];
-    navigationTitleView.backgroundColor = [UIColor clearColor];
-    
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(20, 0, 200, 40)];
-    label.backgroundColor = [UIColor clearColor];
-    label.font = [UIFont boldSystemFontOfSize:25.0];
-    label.textColor = [UIColor whiteColor];
-    label.text = @"Ivoclar Lab";
-    
-    [navigationTitleView addSubview:label];
-    self.navigationItem.titleView = navigationTitleView;
-
-    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.0f/255.0f green:128.0f/255.0f blue:255.0f/255.0f alpha:1];
+//    CGRect frame = CGRectMake(0, 0, 200, 44);
+//    UIView * navigationTitleView = [[UIView alloc]initWithFrame:frame];
+//    navigationTitleView.backgroundColor = [UIColor clearColor];
+//    
+//    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(20, 0, 200, 40)];
+//    label.backgroundColor = [UIColor clearColor];
+//    label.font = [UIFont boldSystemFontOfSize:25.0];
+//    label.textColor = [UIColor whiteColor];
+//    label.text = @"Ivoclar Lab";
+//    
+//    [navigationTitleView addSubview:label];
+//    self.navigationItem.titleView = navigationTitleView;
+//
+//    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.0f/255.0f green:128.0f/255.0f blue:255.0f/255.0f alpha:1];
     
     // Keyboard will dismiss when user taps on the screen
     [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self.view action:@selector(endEditing:)]];
@@ -57,9 +57,19 @@ NSMutableDictionary * docIdDict;
     
     _doctorLoginSubmit.layer.cornerRadius = 10; // this value vary as per your desire
     _doctorLoginSubmit.clipsToBounds = YES;
+
+    self.titleLabel.font = [UIFont boldSystemFontOfSize:25.0];
+    self.titleLabel.textColor = [UIColor whiteColor];
+    self.titleLabel.text = @"Ivoclar Lab";
     
+    self.navigationController.navigationBarHidden = YES;
+    
+//    _backButtonOutlet.layer.cornerRadius = 10;
+//    _backButtonOutlet.clipsToBounds = YES;
+   
     
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -76,16 +86,12 @@ NSMutableDictionary * docIdDict;
 }
 */
 
-//-(void)viewWillAppear:(BOOL)animated
-//{
-//    _doctorEmailTF.layer.borderColor=[[UIColor blueColor]CGColor];
-//    _doctorEmailTF.layer.borderWidth=1.0;
-//    
-//    _doctorMobileNoTF.layer.borderColor=[[UIColor blueColor]CGColor];
-//    _doctorMobileNoTF.layer.borderWidth=1.0;
-//
-//
-//}
+-(void)viewWillAppear:(BOOL)animated
+{
+    _doctorMobileNoTF.text = @"";
+    _doctorEmailTF.text = @"";
+
+}
 
 - (IBAction)submitActionDoctor:(id)sender {
     
@@ -403,6 +409,7 @@ NSMutableDictionary * docIdDict;
     }
     
 }
+
 -(BOOL) textFieldShouldReturn:(UITextField *)textField{
     
     [textField resignFirstResponder];
@@ -410,4 +417,9 @@ NSMutableDictionary * docIdDict;
 }
 
 
+- (IBAction)backButton:(id)sender
+{
+    //[self dismissViewControllerAnimated:YES completion:nil];
+    
+}
 @end

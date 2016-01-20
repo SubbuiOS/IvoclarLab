@@ -88,6 +88,9 @@ UITapGestureRecognizer * tapRecognizer;
         [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
     }
     
+    defaults = [NSUserDefaults standardUserDefaults];
+
+    
     self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.0f/255.0f green:128.0f/255.0f blue:255.0f/255.0f alpha:1];
     // self.navigationController.navigationBar.translucent = NO;
     
@@ -433,6 +436,9 @@ UITapGestureRecognizer * tapRecognizer;
             [self.revealViewController pushFrontViewController:caseEntry animated:YES];
             
             [self saveDataInPlist:_doctorNameTF.text];
+            
+            [defaults setObject:@"DocLoginSuccess" forKey:@"loginStatus"];
+            [defaults synchronize];
             
         }
         

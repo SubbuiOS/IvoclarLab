@@ -41,6 +41,12 @@ UITapGestureRecognizer * tapRecognizer;
         
         _caseIdLabel.frame = CGRectMake(_caseIdDDOutlet.frame.origin.x+135, _caseIdDDOutlet.frame.origin.y+15, 150, 32);
         
+        otherComplaints = [[UITextView alloc]initWithFrame:CGRectMake(_complaintTypeDDOutlet.frame.origin.x+40, _complaintTypeDDOutlet.frame.size.height+_complaintTypeDDOutlet.frame.origin.y+260, _complaintTypeDDOutlet.frame.size.width-50, 60)];
+        
+    }
+    else
+    {
+        otherComplaints = [[UITextView alloc]initWithFrame:CGRectMake(_complaintTypeDDOutlet.frame.origin.x, _complaintTypeDDOutlet.frame.size.height+_complaintTypeDDOutlet.frame.origin.y+200, _complaintTypeDDOutlet.frame.size.width, 60)];
     }
     
     _complaintButtonOutlet.layer.cornerRadius = 10; // this value vary as per your desire
@@ -69,7 +75,7 @@ UITapGestureRecognizer * tapRecognizer;
         
         
     }
-    [[NSUserDefaults standardUserDefaults] setValue:@"RegisteredUser" forKey:@"User"];
+    [[NSUserDefaults standardUserDefaults] setValue:@"alreadyRegistered" forKey:@"User"];
 
     
     // Customising the navigation Title
@@ -111,12 +117,12 @@ UITapGestureRecognizer * tapRecognizer;
     callBackFromCompany = @"N";
     callBackFromLab = @"N";
     
-    otherComplaints = [[UITextField alloc]initWithFrame:CGRectMake(_complaintTypeDDOutlet.frame.origin.x, _complaintTypeDDOutlet.frame.size.height+_complaintTypeDDOutlet.frame.origin.y+200, _complaintTypeDDOutlet.frame.size.width, 40)];
-    otherComplaints.placeholder = @"Enter your Comments";
-    otherComplaints.borderStyle = UITextBorderStyleLine;
+    
+//    otherComplaints.placeholder = @"Enter your Comments";
+//    otherComplaints.borderStyle = UITextBorderStyleLine;
     
     otherComplaints.hidden = YES;
-    otherComplaints.delegate = self;
+    //otherComplaints.delegate = self;
     _commentsTF.delegate = self;
     
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
@@ -130,15 +136,15 @@ UITapGestureRecognizer * tapRecognizer;
     tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                             action:@selector(didTapAnywhere:)];
     
-    _complaintTypePicker.layer.borderColor = [UIColor whiteColor].CGColor;
-    _complaintTypePicker.backgroundColor = [UIColor lightGrayColor];
-    _complaintTypePicker.layer.borderWidth = 1;
-    _complaintTypePicker.hidden = YES;
+//    _complaintTypePicker.layer.borderColor = [UIColor whiteColor].CGColor;
+//    _complaintTypePicker.backgroundColor = [UIColor lightGrayColor];
+//    _complaintTypePicker.layer.borderWidth = 1;
+//    _complaintTypePicker.hidden = YES;
     
-    _caseIdPicker.layer.borderColor = [UIColor whiteColor].CGColor;
-    _caseIdPicker.backgroundColor = [UIColor lightGrayColor];
-    _caseIdPicker.layer.borderWidth = 1;
-    _caseIdPicker.hidden = YES;
+//    _caseIdPicker.layer.borderColor = [UIColor whiteColor].CGColor;
+//    _caseIdPicker.backgroundColor = [UIColor lightGrayColor];
+//    _caseIdPicker.layer.borderWidth = 1;
+//    _caseIdPicker.hidden = YES;
     
     
 }
@@ -306,7 +312,7 @@ UITapGestureRecognizer * tapRecognizer;
     else
     {
     
-    commonView = [[UIView alloc]initWithFrame:CGRectMake(_caseIdView.frame.origin.x+20, _caseIdView.frame.size.height+_caseIdView.frame.origin.y-10, _caseIdView.frame.size.width+200, 350)];
+        commonView = [[UIView alloc]initWithFrame:CGRectMake(_caseIdView.frame.origin.x+20, _caseIdView.frame.size.height+_caseIdView.frame.origin.y-10, _caseIdView.frame.size.width+200, 350)];
         
     }
     commonView.backgroundColor = [UIColor clearColor];
@@ -555,157 +561,157 @@ UITapGestureRecognizer * tapRecognizer;
 
 
 
-- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
-{
-    return 1;
-}
-
-
--(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
-{
-    if (pickerView == _complaintTypePicker)
-    {
-        return complaintTypeArray.count;
-    }
-    else
-    {
-        return caseIdDictionary.count;
-    }
-}
-
--(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
-{
-    if (pickerView == _complaintTypePicker)
-    {
-        return [complaintTypeArray objectAtIndex:row];
-        
-    }
-    else
-    {
-        return [[caseIdDictionary valueForKey:@"CaseId"]objectAtIndex:row];
-        
-    }
-    
-}
-
-
-- (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view
-{
-    
-    UILabel *pickerViewLabel = (id)view;
-    
-    if (!pickerViewLabel) {
-        pickerViewLabel= [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, [pickerView rowSizeForComponent:component].width - 10.0f, [pickerView rowSizeForComponent:component].height)];
-    }
-    
-    pickerViewLabel.backgroundColor = [UIColor whiteColor];
-    
-    if (pickerView == _complaintTypePicker)
-    {
-        pickerViewLabel.text =[complaintTypeArray objectAtIndex:row];
-        pickerViewLabel.font = [UIFont fontWithName:@"ChalkboardSE-Regular" size:16];
-
-    }
-    else
-    {
-           pickerViewLabel.text =[[caseIdDictionary valueForKey:@"CaseId"]objectAtIndex:row];
-        pickerViewLabel.font = [UIFont fontWithName:@"ChalkboardSE-Regular" size:17];
-
-    }
-    pickerViewLabel.textAlignment = NSTextAlignmentCenter;
-    
-    return pickerViewLabel;
-}
-
--(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
-{
-    
-    if (pickerView == _complaintTypePicker)
-    {
-        _complaintTypeLabel.text =[complaintTypeArray objectAtIndex:row];
-        
-        _complaintTypePicker.hidden = YES;
-        
-        _qualityButtonOutlet.hidden = NO;
-        _qualityLabel.hidden = NO;
-        _notSatisfiedServiceButtonOutlet.hidden = NO;
-        _notSatisfiedServiceLabel.hidden = NO;
-        _caseIdLabel.hidden = NO;
-        _caseIdDDOutlet.hidden = NO;
-        _commentsTF.hidden = NO;
-        _callBackFromCompanyButtonOutlet.hidden = NO;
-        _callBackFromCompanyLabel.hidden = NO;
-        _callBackFromLabButtonOutlet.hidden = NO;
-        _callBackFromLabLabel.hidden = NO;
-        otherComplaints.hidden = YES;
-
-        
-        
-        if (row == 2)
-        {
-            
-            _caseIdDDOutlet.hidden=YES;
-            _caseIdLabel.hidden = YES;
-            _callBackFromCompanyLabel.hidden = YES;
-            _callBackFromCompanyButtonOutlet.hidden = YES;
-            _callBackFromLabButtonOutlet.hidden = YES;
-            _callBackFromLabLabel.hidden = YES;
-            _notSatisfiedServiceButtonOutlet.hidden = YES;
-            _notSatisfiedServiceLabel.hidden = YES;
-            _qualityButtonOutlet.hidden = YES;
-            _qualityLabel.hidden = YES;
-            _commentsTF.hidden = YES;
-            
-            otherComplaints.hidden = NO;
-            [self.view addSubview:otherComplaints];
-            
-            
-        }
-        
-        else
-        {
-            _caseIdDDOutlet.hidden=NO;
-            _caseIdLabel.hidden = NO;
-            _callBackFromCompanyLabel.hidden = NO;
-            _callBackFromCompanyButtonOutlet.hidden = NO;
-            _callBackFromLabButtonOutlet.hidden = NO;
-            _callBackFromLabLabel.hidden = NO;
-            _notSatisfiedServiceButtonOutlet.hidden = NO;
-            _notSatisfiedServiceLabel.hidden = NO;
-            _qualityButtonOutlet.hidden = NO;
-            _qualityLabel.hidden = NO;
-            _commentsTF.hidden = NO;
-            
-            otherComplaints.hidden = YES;
-            
-            
-        }
-
-        
-        
-    }
-    else
-    {
-        _caseIdLabel.text = [[caseIdDictionary valueForKey:@"CaseId"]objectAtIndex:row];
-        
-        _caseIdPicker.hidden=YES;
-        
-        _qualityButtonOutlet.hidden = NO;
-        _qualityLabel.hidden = NO;
-        _notSatisfiedServiceButtonOutlet.hidden = NO;
-        _notSatisfiedServiceLabel.hidden = NO;
-        _commentsTF.hidden = NO;
-        _callBackFromCompanyButtonOutlet.hidden = NO;
-        _callBackFromCompanyLabel.hidden = NO;
-        _callBackFromLabButtonOutlet.hidden = NO;
-        _callBackFromLabLabel.hidden = NO;
-        otherComplaints.hidden = YES;
-        
-
-    }
-    
-    
-}
+//- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+//{
+//    return 1;
+//}
+//
+//
+//-(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+//{
+//    if (pickerView == _complaintTypePicker)
+//    {
+//        return complaintTypeArray.count;
+//    }
+//    else
+//    {
+//        return caseIdDictionary.count;
+//    }
+//}
+//
+//-(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+//{
+//    if (pickerView == _complaintTypePicker)
+//    {
+//        return [complaintTypeArray objectAtIndex:row];
+//        
+//    }
+//    else
+//    {
+//        return [[caseIdDictionary valueForKey:@"CaseId"]objectAtIndex:row];
+//        
+//    }
+//    
+//}
+//
+//
+//- (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view
+//{
+//    
+//    UILabel *pickerViewLabel = (id)view;
+//    
+//    if (!pickerViewLabel) {
+//        pickerViewLabel= [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, [pickerView rowSizeForComponent:component].width - 10.0f, [pickerView rowSizeForComponent:component].height)];
+//    }
+//    
+//    pickerViewLabel.backgroundColor = [UIColor whiteColor];
+//    
+//    if (pickerView == _complaintTypePicker)
+//    {
+//        pickerViewLabel.text =[complaintTypeArray objectAtIndex:row];
+//        pickerViewLabel.font = [UIFont fontWithName:@"ChalkboardSE-Regular" size:16];
+//
+//    }
+//    else
+//    {
+//           pickerViewLabel.text =[[caseIdDictionary valueForKey:@"CaseId"]objectAtIndex:row];
+//        pickerViewLabel.font = [UIFont fontWithName:@"ChalkboardSE-Regular" size:17];
+//
+//    }
+//    pickerViewLabel.textAlignment = NSTextAlignmentCenter;
+//    
+//    return pickerViewLabel;
+//}
+//
+//-(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+//{
+//    
+//    if (pickerView == _complaintTypePicker)
+//    {
+//        _complaintTypeLabel.text =[complaintTypeArray objectAtIndex:row];
+//        
+//        _complaintTypePicker.hidden = YES;
+//        
+//        _qualityButtonOutlet.hidden = NO;
+//        _qualityLabel.hidden = NO;
+//        _notSatisfiedServiceButtonOutlet.hidden = NO;
+//        _notSatisfiedServiceLabel.hidden = NO;
+//        _caseIdLabel.hidden = NO;
+//        _caseIdDDOutlet.hidden = NO;
+//        _commentsTF.hidden = NO;
+//        _callBackFromCompanyButtonOutlet.hidden = NO;
+//        _callBackFromCompanyLabel.hidden = NO;
+//        _callBackFromLabButtonOutlet.hidden = NO;
+//        _callBackFromLabLabel.hidden = NO;
+//        otherComplaints.hidden = YES;
+//
+//        
+//        
+//        if (row == 2)
+//        {
+//            
+//            _caseIdDDOutlet.hidden=YES;
+//            _caseIdLabel.hidden = YES;
+//            _callBackFromCompanyLabel.hidden = YES;
+//            _callBackFromCompanyButtonOutlet.hidden = YES;
+//            _callBackFromLabButtonOutlet.hidden = YES;
+//            _callBackFromLabLabel.hidden = YES;
+//            _notSatisfiedServiceButtonOutlet.hidden = YES;
+//            _notSatisfiedServiceLabel.hidden = YES;
+//            _qualityButtonOutlet.hidden = YES;
+//            _qualityLabel.hidden = YES;
+//            _commentsTF.hidden = YES;
+//            
+//            otherComplaints.hidden = NO;
+//            [self.view addSubview:otherComplaints];
+//            
+//            
+//        }
+//        
+//        else
+//        {
+//            _caseIdDDOutlet.hidden=NO;
+//            _caseIdLabel.hidden = NO;
+//            _callBackFromCompanyLabel.hidden = NO;
+//            _callBackFromCompanyButtonOutlet.hidden = NO;
+//            _callBackFromLabButtonOutlet.hidden = NO;
+//            _callBackFromLabLabel.hidden = NO;
+//            _notSatisfiedServiceButtonOutlet.hidden = NO;
+//            _notSatisfiedServiceLabel.hidden = NO;
+//            _qualityButtonOutlet.hidden = NO;
+//            _qualityLabel.hidden = NO;
+//            _commentsTF.hidden = NO;
+//            
+//            otherComplaints.hidden = YES;
+//            
+//            
+//        }
+//
+//        
+//        
+//    }
+//    else
+//    {
+//        _caseIdLabel.text = [[caseIdDictionary valueForKey:@"CaseId"]objectAtIndex:row];
+//        
+//        _caseIdPicker.hidden=YES;
+//        
+//        _qualityButtonOutlet.hidden = NO;
+//        _qualityLabel.hidden = NO;
+//        _notSatisfiedServiceButtonOutlet.hidden = NO;
+//        _notSatisfiedServiceLabel.hidden = NO;
+//        _commentsTF.hidden = NO;
+//        _callBackFromCompanyButtonOutlet.hidden = NO;
+//        _callBackFromCompanyLabel.hidden = NO;
+//        _callBackFromLabButtonOutlet.hidden = NO;
+//        _callBackFromLabLabel.hidden = NO;
+//        otherComplaints.hidden = YES;
+//        
+//
+//    }
+//    
+//    
+//}
 
 //-(CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component
 //{
@@ -726,17 +732,19 @@ UITapGestureRecognizer * tapRecognizer;
 //    
 //}
 
-- (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component
-{
-    return (40.0);
-}
+//- (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component
+//{
+//    return (40.0);
+//}
 
 
 
 - (IBAction)complaintSubmit:(id)sender
 {
     
-    if ([_complaintTypeLabel isEqual:@"Select Complaint Type"] || [_caseIdLabel.text isEqual:@"Select CaseId"]) {
+
+    if ([_complaintTypeLabel.text isEqual:@"Select Complaint Type"] || [_caseIdLabel.text isEqual:@"Select CaseId"])
+    {
         
         UIAlertView * complaintAlert =[[UIAlertView alloc]initWithTitle:@"Warning" message:@"Please Select complaint type and caseId" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
         [complaintAlert show];

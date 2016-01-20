@@ -27,6 +27,10 @@ NSMutableDictionary * docIdDict;
     [defaults setValue:@"NewUser" forKey:@"User"];
     [defaults synchronize];
     
+    [defaults setObject:@"DocLoginSuccess" forKey:@"loginStatus"];
+    [defaults synchronize];
+
+    
     _OTPSubmitOutlet.layer.cornerRadius = 10; // this value vary as per your desire
     _OTPSubmitOutlet.clipsToBounds = YES;
     
@@ -35,6 +39,13 @@ NSMutableDictionary * docIdDict;
     
     [OTPAlert show];
     
+    
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    
+    _OTPTF.text = @"";
     
 }
 

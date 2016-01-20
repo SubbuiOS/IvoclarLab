@@ -23,6 +23,9 @@
 //    [self.navigationController.navigationBar
 //     setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
     
+    
+    self.navigationController.navigationBarHidden = NO;
+    
     // Customising the navigation Title
     // Taken a view and added a label to it with our required font
     CGRect frame = CGRectMake(0, 0, 200, 44);
@@ -38,6 +41,7 @@
     [navigationTitleView addSubview:label];
     self.navigationItem.titleView = navigationTitleView;
     self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.0f/255.0f green:128.0f/255.0f blue:255.0f/255.0f alpha:1];
+    
     
     defaults = [NSUserDefaults standardUserDefaults];
     
@@ -155,7 +159,9 @@
         
         NSLog(@"lab login :%@",response);
         
-        if (response !=nil) {
+        
+        
+        if (![response isEqual:@"\"N\""]) {
             
         
         [self saveDataInPlist:response];
@@ -173,9 +179,13 @@
         
         else
         {
-            UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"Warning" message:@"Enter correct details" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+            UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"Warning" message:@"Enter valid login details" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
             
             [alert show];
+            
+            _labPersonUserName.text = @"";
+            _labPersonPassword.text = @"";
+            
         }
         
         

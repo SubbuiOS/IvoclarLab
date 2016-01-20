@@ -62,7 +62,7 @@ UITapGestureRecognizer * tapRecognizer;
         [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
     }
     
-    [[NSUserDefaults standardUserDefaults] setValue:@"RegisteredUser" forKey:@"User"];
+    [[NSUserDefaults standardUserDefaults] setValue:@"alreadyRegistered" forKey:@"User"];
     
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     
@@ -139,8 +139,7 @@ UITapGestureRecognizer * tapRecognizer;
         _crownBrandLabel.frame = CGRectMake(_crownBrandDDOutlet.frame.origin.x+130, _crownBrandDDOutlet.frame.origin.y+25, 150, 32);
         
         _typeOfCaseLabel.frame = CGRectMake(_typeOfCaseLabel.frame.origin.x+130, _typeOfCaseLabel.frame.origin.y+10, 150, 32);
-        
-        
+    
         _noOfUnitsTF.frame = CGRectMake(_natureOfWorkOutlet.frame.origin.x+100, _crownBrandView.frame.size.height+_crownBrandView.frame.origin.y+30, 440, 30);
         
         
@@ -201,9 +200,12 @@ UITapGestureRecognizer * tapRecognizer;
         
     }
     
-    // After Login we will get doctor id, by using it we will get the profile details
-
-    [self getProfileDetails:filteredDoctorID];
+        // After Login we will get doctor id, by using it we will get the profile details
+        
+         [self getProfileDetails:filteredDoctorID];
+        
+    
+    
 
     // Get CaseId using below service
     
@@ -563,7 +565,7 @@ UITapGestureRecognizer * tapRecognizer;
         
         NSLog(@"\n\n Profile Details :%@",response);
         
-        if (response!=nil)
+        if ((response!=nil) && ![response isEqual:@"[]"])
         {
             NSData *objectData = [response dataUsingEncoding:NSUTF8StringEncoding];
             profileDetailsDict = [NSJSONSerialization JSONObjectWithData:objectData options:NSJSONReadingMutableContainers error:nil];
@@ -571,6 +573,14 @@ UITapGestureRecognizer * tapRecognizer;
             
             [self updateProfile:profileDetailsDict];
         
+        }
+        
+        if ([response isEqual:@"[]"]) {
+            
+            
+            UIAlertView * profileAlert = [[UIAlertView alloc]initWithTitle:@"Warning" message:@"Please update the profile" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+            
+            [profileAlert show];
         }
 
     }
@@ -593,6 +603,7 @@ UITapGestureRecognizer * tapRecognizer;
         NSString * caseId = [[response componentsSeparatedByCharactersInSet:invalidCharSet]componentsJoinedByString:@""];
         
         _caseIdLabel.text = caseId;
+          [self getDoctorName];
         
     }
     
@@ -1050,192 +1061,192 @@ UITapGestureRecognizer * tapRecognizer;
 //    
 //}
 
-#pragma mark picker view delegate methods
-
-- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
-{
-    return 1;
-}
-
-
--(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
-{
-    if (pickerView == _natureOfWorkPicker)
-    {
-        return natureOfWorkArray.count;
-    }
-    else if (pickerView == _crownBrandPicker)
-    {
-        return crownBrandArray.count;
-    }
-    
-    else
-    {
-        return typeOfCaseArray.count;
-    }
-    
-}
-
--(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
-{
-    if (pickerView == _natureOfWorkPicker)
-    {
-        return [natureOfWorkArray objectAtIndex:row];
-        
-    }
-    else if (pickerView == _crownBrandPicker)
-    {
-        return [crownBrandArray objectAtIndex:row];
-        
-    }
-    else
-    {
-        return [typeOfCaseArray objectAtIndex:row];
-    }
-    
-}
-
-
-- (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view
-{
-    
-    UILabel *pickerViewLabel = (id)view;
-    
-    if (!pickerViewLabel) {
-        pickerViewLabel= [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f,[pickerView rowSizeForComponent:component].width - 10.0f, [pickerView rowSizeForComponent:component].height)];
-        
-       // NSLog(@"picker view height and width :%f %f",[pickerView rowSizeForComponent:component].height,[pickerView rowSizeForComponent:component].width);
-    }
-    
-    pickerViewLabel.backgroundColor = [UIColor whiteColor];
-    
-    if (pickerView == _natureOfWorkPicker)
-    {
-        pickerViewLabel.text =[natureOfWorkArray objectAtIndex:row];
-        pickerViewLabel.font = [UIFont fontWithName:@"ChalkboardSE-Regular" size:18];
-        
-    }
-    else if (pickerView == _crownBrandPicker)
-
-    {
-        pickerViewLabel.text =[crownBrandArray objectAtIndex:row];
-        pickerViewLabel.font = [UIFont fontWithName:@"ChalkboardSE-Regular" size:18];
-        
-    }
-    
-    else
-    {
-        pickerViewLabel.text =[typeOfCaseArray objectAtIndex:row];
-        pickerViewLabel.font = [UIFont fontWithName:@"ChalkboardSE-Regular" size:18];
-    }
-    
-    pickerViewLabel.textAlignment = NSTextAlignmentCenter;
-
-    return pickerViewLabel;
-}
-
--(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
-{
-    
-    if (pickerView == _natureOfWorkPicker)
-    {
-        _selectNatureOfWorkLabel.text =[natureOfWorkArray objectAtIndex:row];
-        
-        _natureOfWorkPicker.hidden = YES;
-        
-        _crownBrandDDOutlet.hidden = NO;
-        _crownBrandLabel.hidden = NO;
-        _noOfUnitsTF.hidden = NO;
-        _typeOfCaseOutlet.hidden = NO;
-        _typeOfCaseLabel.hidden = NO;
-        
-
-        
-        if ([[natureOfWorkArray objectAtIndex:row] isEqual:@"PFM"])
-        {
-            
-            UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"Note" message:@"Please note this App is being updated for PFM and Ips e.max labs.You can however register and start the High Quality Zirconia Work-Zenostar immediately from Your Closest Ivoclar Vivadent Recognised Lab" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-            
-            [alert show];
-            
-            _selectNatureOfWorkLabel.text = @"Select Nature of Work";
-            
-            [_crownBrandLabel setText:@""];
-            
-            
-        }
-        
-        else
-        {
-            [ _selectNatureOfWorkLabel setText:[natureOfWorkArray objectAtIndex:row]];
-            
-        }
-        
-        
-        
-        
-    }
-    else if (pickerView == _crownBrandPicker)
-    {
-        
-        _crownBrandPicker.hidden = YES;
-        
-       // _crownBrandDDOutlet.alpha = 1;
-        //_crownBrandLabel.alpha = 1;
-        _noOfUnitsTF.hidden = NO;
-        _typeOfCaseOutlet.hidden = NO;
-        _typeOfCaseLabel.hidden = NO;
-
-        
-        if ([[crownBrandArray objectAtIndex:row] isEqual:@"e.max"])
-        {
-            
-            UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"Note" message:@"Please note this App is being updated for PFM and Ips e.max labs.You can however register and start the High Quality Zirconia Work-Zenostar immediately from Your Closest Ivoclar Vivadent Recognised Lab" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-            
-            [alert show];
-            
-            [_crownBrandLabel setText:@""];
-            
-        }
-        
-        else
-        {
-            
-            [_crownBrandLabel setText:[crownBrandArray objectAtIndex:row]];
-            
-        }
-        
-    }
-    
-    else if (pickerView == _typeOfCasePicker)
-    {
-        [_typeOfCaseLabel setText:[typeOfCaseArray objectAtIndex:row]];
-        
-        _typeOfCasePicker.hidden = YES;
-        
-    }
-
-    
-}
-
--(CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component
-{
-    if (pickerView == _natureOfWorkPicker) {
-        return 45.0;
-    }
-    else if (pickerView == _crownBrandPicker)
-    {
-        return 45.0f;
-    }
-    
-    else
-    {
-        return 40.0;
-
-    }
-    
-    
-}
+//#pragma mark picker view delegate methods
+//
+//- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+//{
+//    return 1;
+//}
+//
+//
+//-(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+//{
+//    if (pickerView == _natureOfWorkPicker)
+//    {
+//        return natureOfWorkArray.count;
+//    }
+//    else if (pickerView == _crownBrandPicker)
+//    {
+//        return crownBrandArray.count;
+//    }
+//    
+//    else
+//    {
+//        return typeOfCaseArray.count;
+//    }
+//    
+//}
+//
+//-(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+//{
+//    if (pickerView == _natureOfWorkPicker)
+//    {
+//        return [natureOfWorkArray objectAtIndex:row];
+//        
+//    }
+//    else if (pickerView == _crownBrandPicker)
+//    {
+//        return [crownBrandArray objectAtIndex:row];
+//        
+//    }
+//    else
+//    {
+//        return [typeOfCaseArray objectAtIndex:row];
+//    }
+//    
+//}
+//
+//
+//- (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view
+//{
+//    
+//    UILabel *pickerViewLabel = (id)view;
+//    
+//    if (!pickerViewLabel) {
+//        pickerViewLabel= [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f,[pickerView rowSizeForComponent:component].width - 10.0f, [pickerView rowSizeForComponent:component].height)];
+//        
+//       // NSLog(@"picker view height and width :%f %f",[pickerView rowSizeForComponent:component].height,[pickerView rowSizeForComponent:component].width);
+//    }
+//    
+//    pickerViewLabel.backgroundColor = [UIColor whiteColor];
+//    
+//    if (pickerView == _natureOfWorkPicker)
+//    {
+//        pickerViewLabel.text =[natureOfWorkArray objectAtIndex:row];
+//        pickerViewLabel.font = [UIFont fontWithName:@"ChalkboardSE-Regular" size:18];
+//        
+//    }
+//    else if (pickerView == _crownBrandPicker)
+//
+//    {
+//        pickerViewLabel.text =[crownBrandArray objectAtIndex:row];
+//        pickerViewLabel.font = [UIFont fontWithName:@"ChalkboardSE-Regular" size:18];
+//        
+//    }
+//    
+//    else
+//    {
+//        pickerViewLabel.text =[typeOfCaseArray objectAtIndex:row];
+//        pickerViewLabel.font = [UIFont fontWithName:@"ChalkboardSE-Regular" size:18];
+//    }
+//    
+//    pickerViewLabel.textAlignment = NSTextAlignmentCenter;
+//
+//    return pickerViewLabel;
+//}
+//
+//-(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+//{
+//    
+//    if (pickerView == _natureOfWorkPicker)
+//    {
+//        _selectNatureOfWorkLabel.text =[natureOfWorkArray objectAtIndex:row];
+//        
+//        _natureOfWorkPicker.hidden = YES;
+//        
+//        _crownBrandDDOutlet.hidden = NO;
+//        _crownBrandLabel.hidden = NO;
+//        _noOfUnitsTF.hidden = NO;
+//        _typeOfCaseOutlet.hidden = NO;
+//        _typeOfCaseLabel.hidden = NO;
+//        
+//
+//        
+//        if ([[natureOfWorkArray objectAtIndex:row] isEqual:@"PFM"])
+//        {
+//            
+//            UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"Note" message:@"Please note this App is being updated for PFM and Ips e.max labs.You can however register and start the High Quality Zirconia Work-Zenostar immediately from Your Closest Ivoclar Vivadent Recognised Lab" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+//            
+//            [alert show];
+//            
+//            _selectNatureOfWorkLabel.text = @"Select Nature of Work";
+//            
+//            [_crownBrandLabel setText:@""];
+//            
+//            
+//        }
+//        
+//        else
+//        {
+//            [ _selectNatureOfWorkLabel setText:[natureOfWorkArray objectAtIndex:row]];
+//            
+//        }
+//        
+//        
+//        
+//        
+//    }
+//    else if (pickerView == _crownBrandPicker)
+//    {
+//        
+//        _crownBrandPicker.hidden = YES;
+//        
+//       // _crownBrandDDOutlet.alpha = 1;
+//        //_crownBrandLabel.alpha = 1;
+//        _noOfUnitsTF.hidden = NO;
+//        _typeOfCaseOutlet.hidden = NO;
+//        _typeOfCaseLabel.hidden = NO;
+//
+//        
+//        if ([[crownBrandArray objectAtIndex:row] isEqual:@"e.max"])
+//        {
+//            
+//            UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"Note" message:@"Please note this App is being updated for PFM and Ips e.max labs.You can however register and start the High Quality Zirconia Work-Zenostar immediately from Your Closest Ivoclar Vivadent Recognised Lab" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+//            
+//            [alert show];
+//            
+//            [_crownBrandLabel setText:@""];
+//            
+//        }
+//        
+//        else
+//        {
+//            
+//            [_crownBrandLabel setText:[crownBrandArray objectAtIndex:row]];
+//            
+//        }
+//        
+//    }
+//    
+//    else if (pickerView == _typeOfCasePicker)
+//    {
+//        [_typeOfCaseLabel setText:[typeOfCaseArray objectAtIndex:row]];
+//        
+//        _typeOfCasePicker.hidden = YES;
+//        
+//    }
+//
+//    
+//}
+//
+//-(CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component
+//{
+//    if (pickerView == _natureOfWorkPicker) {
+//        return 45.0;
+//    }
+//    else if (pickerView == _crownBrandPicker)
+//    {
+//        return 45.0f;
+//    }
+//    
+//    else
+//    {
+//        return 40.0;
+//
+//    }
+//    
+//    
+//}
 
 //-(CGFloat) pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component
 //{
@@ -1255,7 +1266,7 @@ UITapGestureRecognizer * tapRecognizer;
 }
 */
 
-
+//
 #pragma mark saveDoctorName
 
 - (void)saveDocName : (NSString * )doctorName  {
@@ -1354,10 +1365,19 @@ UITapGestureRecognizer * tapRecognizer;
             NSCharacterSet *invalidCharSet = [[[NSCharacterSet characterSetWithCharactersInString:@"0123456789"""]invertedSet]invertedSet];
             filteredDoctorName = [[drName componentsSeparatedByCharactersInSet:invalidCharSet]componentsJoinedByString:@""];
             
+            if ([filteredDoctorName isEqual:nil] || [filteredDoctorName isEqual:@""]) {
+                
+                UIAlertView * profileAlert = [[UIAlertView alloc]initWithTitle:@"Warning" message:@"Please enter the profile details" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+                [profileAlert show];
+            }
+            
+            else
+            {
             NSString * appendString = @"Welcome Dr.";
             
             welcomeString = [appendString stringByAppendingString:filteredDoctorName];
-            
+            }
+                
         }
         
         
@@ -1375,6 +1395,8 @@ UITapGestureRecognizer * tapRecognizer;
     [textField resignFirstResponder];
     return YES;
 }
+
+
 
 
 @end

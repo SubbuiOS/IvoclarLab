@@ -11,7 +11,6 @@
 @interface PasswordGenarationScreen : ViewController<UITextFieldDelegate,NSXMLParserDelegate>
 
 {
-    NSUserDefaults * defaults;
     NSString * response;
 }
 @property (weak, nonatomic) IBOutlet UITextField *passwordTF;
