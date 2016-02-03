@@ -3,7 +3,7 @@
 //  IvoclarLab
 //
 //  Created by Subramanyam on 05/11/15.
-//  Copyright (c) 2015 Subramanyam. All rights reserved.
+//  Copyright (c) 2015 Ivoclar Vivadent. All rights reserved.
 //
 
 #import "AppDelegate.h"
@@ -26,8 +26,17 @@
 @implementation AppDelegate
 
 
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    //[NSThread sleepForTimeInterval:5];
+    
+   
+    // The Launch screen image should display for 5seconds, so we kept the didFinishLaunchingWithOptions method to sleep
+    
+        sleep(5);
+    
     
     
 //    
@@ -48,7 +57,12 @@
    // NSSetUncaughtExceptionHandler(&myExceptionHandler);
 
     
-        //LoginScreen should only come once.
+    
+    
+    //LoginScreen should only come once.
+    // So we have saved the login status, once login it will be set to DocLoginSuccess or LabLoginSuccess based on the login
+    // So every time it checks for login string when the app is opened and if it is not equal to 0 it will directly open without login screen
+    
     
     NSString *loginStatusString = [[NSUserDefaults standardUserDefaults]stringForKey:@"loginStatus"];
    // NSString * presentScreen = [[NSUserDefaults standardUserDefaults] valueForKey:@"PresentScreen"];
@@ -92,6 +106,9 @@
         self.window.backgroundColor = [UIColor grayColor];
         [self.window makeKeyAndVisible];
     }
+
+    
+    // If the login status string value is equal to zero, the app will be opened from the initial view controller which will include login page.
     
     else if (loginStatusString.length == 0)
     {
@@ -110,10 +127,10 @@
         NSLog(@"device version :%@",[[UIDevice currentDevice]systemVersion]);
 
 
-        if([[UIDevice currentDevice]systemVersion]>=[NSString stringWithFormat:@"8.0"])
-        {
-            
-            
+//        if([[UIDevice currentDevice]systemVersion]>=[NSString stringWithFormat:@"8.0"])
+//        {
+//            
+    
             if ([application respondsToSelector:@selector(registerUserNotificationSettings:)])
             {
                 UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeAlert
@@ -123,7 +140,7 @@
 
             
             }
-        }
+       // }
     
         
         
@@ -135,10 +152,10 @@
 //        [application registerUserNotificationSettings:settings];
 //#endif
   // }
- //   else if ([[UIDevice currentDevice]systemVersion]<[NSString stringWithFormat:@"8.0"]) {
-   //     UIRemoteNotificationType notificationTypes = UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound;
-     //   [application registerForRemoteNotificationTypes:notificationTypes];
-   // }
+//    else if ([[UIDevice currentDevice]systemVersion]<[NSString stringWithFormat:@"8.0"]) {
+//        UIRemoteNotificationType notificationTypes = UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound;
+//        [application registerForRemoteNotificationTypes:notificationTypes];
+//    }
     
     
     
@@ -207,6 +224,11 @@
                                                   cancelButtonTitle:cancelTitle 
                                                   otherButtonTitles:showTitle, nil];
         [alertView show];
+    }
+    
+    else if (application.applicationState == UIApplicationStateInactive || application.applicationState == UIApplicationStateBackground)
+    {
+        // go to screen relevant to Notification content
     }
 }
 

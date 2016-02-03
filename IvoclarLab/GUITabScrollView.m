@@ -3,7 +3,7 @@
 //  IvoclarLab
 //
 //  Created by Subramanyam on 20/11/15.
-//  Copyright (c) 2015 Subramanyam. All rights reserved.
+//  Copyright (c) 2015 Ivoclar Vivadent. All rights reserved.
 //
 
 #import "GUITabScrollView.h"
@@ -61,6 +61,8 @@
         [contentView setBackgroundColor:backgroundColor];
         [contentView setTranslatesAutoresizingMaskIntoConstraints:NO];
         [self addSubview:contentView];
+    
+
         
         NSMutableString *VFL = [NSMutableString stringWithString:@"H:|"];
         NSMutableDictionary *views = [NSMutableDictionary dictionary];
@@ -81,6 +83,7 @@
             [tab setUserInteractionEnabled:YES];
             [tab addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tabTapHandler:)]];
             
+            
             index++;
         }
         
@@ -94,7 +97,7 @@
         UIView *bottomLine = [UIView new];
         [bottomLine setTranslatesAutoresizingMaskIntoConstraints:NO];
         [contentView addSubview:bottomLine];
-        [bottomLine setBackgroundColor:[UIColor orangeColor]];
+        [bottomLine setBackgroundColor:[UIColor colorWithRed:27.0/255.0 green:32.0/255.0 blue:52.0/255.0 alpha:1]];
         
         [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[S]-0-|"
                                                                             options:0
@@ -132,6 +135,9 @@
                                                                               views:@{@"S": tabIndicator}]];
         
         [contentView addConstraints:@[[self tabIndicatorDisplacement], [self tabIndicatorWidth]]];
+        
+        
+        
     }
     
     return self;
@@ -150,19 +156,21 @@
     
 }
 
+// To change the scroll bar x and width
+
 - (void)animateToTabAtIndex:(NSInteger)index animated:(BOOL)animated {
     CGFloat animatedDuration = 0.8f;
     if (!animated) {
         animatedDuration = 0.0f;
     }
     
-    CGFloat x = [[self tabViews][0] frame].origin.x-50 ;
+    CGFloat x = [[self tabViews][0] frame].origin.x ;
     
     for (int i = 0; i < index; i++) {
-        x += [[self tabViews][i] frame].size.width + 80;
+        x += [[self tabViews][i] frame].size.width+15;
     }
     
-    CGFloat w = [[self tabViews][index] frame].size.width + 30;
+    CGFloat w = [[self tabViews][index] frame].size.width;
     [UIView animateWithDuration:animatedDuration
                      animations:^{
                          CGFloat p = x - (self.frame.size.width - w) / 2;
@@ -185,10 +193,24 @@
     }
 }
 
+// Scroll bar at beginning before transition
+
 #pragma mark - Private Methods
 
 - (void)_initTabbatAtIndex:(NSInteger)index {
-    CGFloat x = [[self tabViews][0] frame].origin.x - 5;
+    
+    CGFloat x;
+    
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        
+       x  = [[self tabViews][0] frame].origin.x +250;
+    }
+    else
+    {
+         x = [[self tabViews][0] frame].origin.x +20;
+    }
+    
+    
     
     for (int i = 0; i < index; i++) {
         x += [[self tabViews][i] frame].size.width + 10;

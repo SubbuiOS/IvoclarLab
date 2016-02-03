@@ -3,7 +3,7 @@
 //  IvoclarLab
 //
 //  Created by Subramanyam on 09/11/15.
-//  Copyright (c) 2015 Subramanyam. All rights reserved.
+//  Copyright (c) 2015 Ivoclar Vivadent. All rights reserved.
 //
 
 #import "ProfileScreen.h"
@@ -13,9 +13,6 @@
 @interface ProfileScreen ()
 
 @end
-
-NSMutableDictionary * profileDetailsDict;
-UITapGestureRecognizer * tapRecognizer;
 
 
 @implementation ProfileScreen
@@ -92,7 +89,10 @@ UITapGestureRecognizer * tapRecognizer;
     defaults = [NSUserDefaults standardUserDefaults];
 
     
-    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.0f/255.0f green:128.0f/255.0f blue:255.0f/255.0f alpha:1];
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:71.0f/255.0f green:118.0f/255.0f blue:172.0f/255.0f alpha:1];
+
+    
+    //self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.0f/255.0f green:128.0f/255.0f blue:255.0f/255.0f alpha:1];
     // self.navigationController.navigationBar.translucent = NO;
     
     self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
@@ -313,7 +313,7 @@ UITapGestureRecognizer * tapRecognizer;
     else
     {
     spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    spinner.center = CGPointMake(170, _profileSubmitOutlet.frame.size.height+_profileSubmitOutlet.frame.origin.y+30);
+    spinner.center = CGPointMake(_profileSubmitOutlet.frame.origin.x+_profileSubmitOutlet.frame.size.width/2, _profileSubmitOutlet.frame.size.height+_profileSubmitOutlet.frame.origin.y+30);
     [self.view addSubview:spinner];
     [spinner startAnimating];
     
@@ -455,8 +455,20 @@ UITapGestureRecognizer * tapRecognizer;
         jsonStatesData = [NSJSONSerialization JSONObjectWithData:objectData options:NSJSONReadingMutableContainers error:nil];
         
         
+        if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+            
+            
+            statesTableView = [[UITableView alloc]initWithFrame:CGRectMake(5, 5, self.view.frame.size.width-320, 250) style:UITableViewStylePlain];
+            
+        }
+        
+        else
+        {
+            statesTableView = [[UITableView alloc]initWithFrame:CGRectMake(5, 5, self.view.frame.size.width-50, 250) style:UITableViewStylePlain];
+        }
+        
        // NSLog(@"json data %@",json);
-       statesTableView = [[UITableView alloc]initWithFrame:CGRectMake(5, 5, self.view.frame.size.width-50, 150) style:UITableViewStylePlain];
+       
         
         statesTableView.delegate = self;
         statesTableView.dataSource = self;
@@ -470,6 +482,8 @@ UITapGestureRecognizer * tapRecognizer;
 //        _statePicker.delegate = self;
 //        _statePicker.dataSource = self;
         
+        
+        _cityDDOutlet.hidden = YES;
         _selectYourCityLabel.hidden = YES;
         _cityDDOutlet.hidden = YES;
         _areaNameTF.hidden = YES;
@@ -501,8 +515,19 @@ UITapGestureRecognizer * tapRecognizer;
         else
         {
         // NSLog(@"json data %@",json);
+        
+            if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+                
+                
+                cityTableView = [[UITableView alloc]initWithFrame:CGRectMake(5, 5, self.view.frame.size.width-320, 250) style:UITableViewStylePlain];
+                
+            }
+            else
+            {
+                cityTableView = [[UITableView alloc]initWithFrame:CGRectMake(5, 5, self.view.frame.size.width-50, 250) style:UITableViewStylePlain];
+            }
             
-        cityTableView = [[UITableView alloc]initWithFrame:CGRectMake(5, 5, self.view.frame.size.width-50, 150) style:UITableViewStylePlain];
+        
             
         cityTableView.delegate = self;
         cityTableView.dataSource = self;
@@ -585,6 +610,7 @@ UITapGestureRecognizer * tapRecognizer;
         
         statesTableView.hidden = YES;
         
+        _cityDDOutlet.hidden = NO;
         _selectYourCityLabel.hidden = NO;
         _cityDDOutlet.hidden = NO;
         _areaNameTF.hidden = NO;
@@ -640,7 +666,7 @@ UITapGestureRecognizer * tapRecognizer;
     
     if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
         
-        commonView = [[UIView alloc]initWithFrame:CGRectMake(_stateView.frame.origin.x+150, _stateView.frame.origin.y+_stateView.frame.size.height+5, _stateView.frame.size.width, 150)];
+        commonView = [[UIView alloc]initWithFrame:CGRectMake(_stateView.frame.origin.x+150, _stateView.frame.origin.y+_stateView.frame.size.height+5, _stateView.frame.size.width, 250)];
         
         
     }
@@ -648,7 +674,7 @@ UITapGestureRecognizer * tapRecognizer;
     else
     {
     
-    commonView = [[UIView alloc]initWithFrame:CGRectMake(_stateView.frame.origin.x+20, _stateView.frame.size.height+_stateView.frame.origin.y-10, _stateView.frame.size.width+200, 350)];
+    commonView = [[UIView alloc]initWithFrame:CGRectMake(_stateView.frame.origin.x+20, _stateView.frame.size.height+_stateView.frame.origin.y-10, _stateView.frame.size.width+200, 400)];
         
     }
     commonView.backgroundColor = [UIColor clearColor];
@@ -692,7 +718,7 @@ UITapGestureRecognizer * tapRecognizer;
     
     if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
         
-        commonView = [[UIView alloc]initWithFrame:CGRectMake(_cityView.frame.origin.x+150, _cityView.frame.origin.y+_cityView.frame.size.height+5, _cityView.frame.size.width, 150)];
+        commonView = [[UIView alloc]initWithFrame:CGRectMake(_cityView.frame.origin.x+150, _cityView.frame.origin.y+_cityView.frame.size.height+5, _cityView.frame.size.width, 250)];
         
         
     }
@@ -701,7 +727,7 @@ UITapGestureRecognizer * tapRecognizer;
     {
         
 
-    commonView = [[UIView alloc]initWithFrame:CGRectMake(_cityView.frame.origin.x+20, _cityView.frame.size.height+_cityView.frame.origin.y-10, _cityView.frame.size.width, 350)];
+    commonView = [[UIView alloc]initWithFrame:CGRectMake(_cityView.frame.origin.x+20, _cityView.frame.size.height+_cityView.frame.origin.y-10, _cityView.frame.size.width, 400)];
         
     }
     commonView.backgroundColor = [UIColor clearColor];

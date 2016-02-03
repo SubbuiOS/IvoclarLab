@@ -3,7 +3,7 @@
 //  IvoclarLab
 //
 //  Created by Subramanyam on 09/11/15.
-//  Copyright (c) 2015 Subramanyam. All rights reserved.
+//  Copyright (c) 2015 Ivoclar Vivadent. All rights reserved.
 //
 
 #import "ViewController.h"
@@ -22,6 +22,8 @@
     UITableView * statesTableView;
     UITableView * cityTableView;
     UIActivityIndicatorView * spinner;
+    NSMutableDictionary * profileDetailsDict;
+    UITapGestureRecognizer * tapRecognizer;
     UIView * commonView;
     NSUserDefaults * defaults;
 

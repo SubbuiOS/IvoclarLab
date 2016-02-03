@@ -3,7 +3,7 @@
 //  IvoclarLab
 //
 //  Created by Subramanyam on 08/11/15.
-//  Copyright (c) 2015 Subramanyam. All rights reserved.
+//  Copyright (c) 2015 Ivoclar Vivadent. All rights reserved.
 //
 
 #import "DoctorAlreadyRegistered.h"
@@ -23,20 +23,24 @@
     
     // Customising the navigation Title
     // Taken a view and added a label to it with our required font
-    CGRect frame = CGRectMake(0, 0, 200, 44);
-    UIView * navigationTitleView = [[UIView alloc]initWithFrame:frame];
-    navigationTitleView.backgroundColor = [UIColor clearColor];
+//    CGRect frame = CGRectMake(0, 0, 200, 44);
+//    UIView * navigationTitleView = [[UIView alloc]initWithFrame:frame];
+//    navigationTitleView.backgroundColor = [UIColor clearColor];
+//    
+//    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(35, 3, 200, 40)];
+//    label.backgroundColor = [UIColor clearColor];
+//    label.font = [UIFont boldSystemFontOfSize:25.0];
+//    label.textColor = [UIColor whiteColor];
+//    label.text = @"Ivoclar Lab";
+//    
+//    [navigationTitleView addSubview:label];
+//    self.navigationItem.titleView = navigationTitleView;
+//    
+//   // self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.0f/255.0f green:128.0f/255.0f blue:255.0f/255.0f alpha:1];
+//   self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:16.0f/255.0f green:141.0f/255.0f blue:171.0f/255.0f alpha:1];
+
     
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(35, 3, 200, 40)];
-    label.backgroundColor = [UIColor clearColor];
-    label.font = [UIFont boldSystemFontOfSize:25.0];
-    label.textColor = [UIColor whiteColor];
-    label.text = @"Ivoclar Lab";
-    
-    [navigationTitleView addSubview:label];
-    self.navigationItem.titleView = navigationTitleView;
-    
-    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.0f/255.0f green:128.0f/255.0f blue:255.0f/255.0f alpha:1];
+    [self.titleLabel setBackgroundColor:[UIColor colorWithRed:71.0f/255.0f green:118.0f/255.0f blue:172.0f/255.0f alpha:1]];
     
     
     // Keyboard will dismiss when user taps on the screen
@@ -90,6 +94,9 @@
                                "</soap:Body>\n"
                                "</soap:Envelope>\n",_registeredMobileNoTF.text,_registeredPasswordTF.text,[[NSUserDefaults standardUserDefaults] valueForKey:@"DeviceToken"]];
     
+    
+    NSLog(@"device token :%@",[[NSUserDefaults standardUserDefaults] valueForKey:@"DeviceToken"]);
+    
     [[CommonAppManager sharedAppManager]soapServiceMessage:checkLoginDoctor soapActionString:@"CheckLogin"withDelegate:self];
 
 
@@ -97,6 +104,8 @@
 }
 
 - (IBAction)forgotPassword:(id)sender {
+    
+    // If user taps on forgot Password, an email will be sent having the password.
     
     
     spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];

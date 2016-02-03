@@ -3,7 +3,7 @@
 //  IvoclarLab
 //
 //  Created by Subramanyam on 05/11/15.
-//  Copyright (c) 2015 Subramanyam. All rights reserved.
+//  Copyright (c) 2015 Ivoclar Vivadent. All rights reserved.
 //
 
 #import "ViewController.h"
@@ -25,6 +25,8 @@
 //    
 //    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(35, 3, 200, 40)];
 //    label.backgroundColor = [UIColor clearColor];
+    
+    
     _titleLabel.font = [UIFont boldSystemFontOfSize:25.0];
     _titleLabel.textColor = [UIColor whiteColor];
     _titleLabel.text = @"Ivoclar Lab";
@@ -42,6 +44,10 @@
 {
     _getStartedButtonOutlet.layer.cornerRadius = 10; // this value vary as per your desire
     _getStartedButtonOutlet.clipsToBounds = YES;
+    [_titleLabel setBackgroundColor:[UIColor colorWithRed:71.0f/255.0f green:118.0f/255.0f blue:172.0f/255.0f alpha:1]];
+
+
+    
 }
 
 

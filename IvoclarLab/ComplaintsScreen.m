@@ -3,7 +3,7 @@
 //  IvoclarLab
 //
 //  Created by Subramanyam on 20/11/15.
-//  Copyright (c) 2015 Subramanyam. All rights reserved.
+//  Copyright (c) 2015 Ivoclar Vivadent. All rights reserved.
 //
 
 #import "ComplaintsScreen.h"
@@ -13,7 +13,6 @@
 
 @end
 
-UITapGestureRecognizer * tapRecognizer;
 
 
 @implementation ComplaintsScreen
@@ -93,7 +92,8 @@ UITapGestureRecognizer * tapRecognizer;
     [navigationTitleView addSubview:label];
     self.navigationItem.titleView = navigationTitleView;
     
-    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.0f/255.0f green:128.0f/255.0f blue:255.0f/255.0f alpha:1];
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:71.0f/255.0f green:118.0f/255.0f blue:172.0f/255.0f alpha:1];
+    
     self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
     
     //    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName :[UIColor whiteColor]}];
@@ -244,6 +244,9 @@ UITapGestureRecognizer * tapRecognizer;
         
         commonView = [[UIView alloc]initWithFrame:CGRectMake(_complaintTypeView.frame.origin.x+140, _complaintTypeView.frame.origin.y+_complaintTypeView.frame.size.height, _complaintTypeView.frame.size.width, 150)];
         
+        complaintTypeTV = [[UITableView alloc]initWithFrame:CGRectMake(5, 5, self.view.frame.size.width-320, 200) style:UITableViewStylePlain];
+
+        
         
     }
     
@@ -252,6 +255,9 @@ UITapGestureRecognizer * tapRecognizer;
     
     commonView = [[UIView alloc]initWithFrame:CGRectMake(_complaintTypeView.frame.origin.x+20, _complaintTypeView.frame.size.height+_complaintTypeView.frame.origin.y-10, _complaintTypeView.frame.size.width+200, 350)];
         
+        complaintTypeTV = [[UITableView alloc]initWithFrame:CGRectMake(5, 5, self.view.frame.size.width-50, 200) style:UITableViewStylePlain];
+
+        
     }
     commonView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:commonView];
@@ -259,8 +265,7 @@ UITapGestureRecognizer * tapRecognizer;
     [complaintTypeTV reloadData];
     
     
-    complaintTypeTV = [[UITableView alloc]initWithFrame:CGRectMake(5, 5, self.view.frame.size.width-50, 150) style:UITableViewStylePlain];
-
+    
     [commonView addSubview:complaintTypeTV];
     
     complaintTypeTV.dataSource = self;
@@ -389,7 +394,21 @@ UITapGestureRecognizer * tapRecognizer;
         NSLog(@"partner dictionary :%@",caseIdDictionary);
         
         caseIdTV.hidden = NO;
-        caseIdTV = [[UITableView alloc]initWithFrame:CGRectMake(5, 5, self.view.frame.size.width-50, 150) style:UITableViewStylePlain];
+        
+        if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+            
+            
+            caseIdTV = [[UITableView alloc]initWithFrame:CGRectMake(5, 5, self.view.frame.size.width-320, 250) style:UITableViewStylePlain];
+            
+        }
+        
+        else
+        {
+            
+            caseIdTV = [[UITableView alloc]initWithFrame:CGRectMake(5, 5, self.view.frame.size.width-50, 250) style:UITableViewStylePlain];
+            
+        }
+        
 
         [commonView addSubview:caseIdTV];
         caseIdTV.dataSource = self;
@@ -472,6 +491,9 @@ UITapGestureRecognizer * tapRecognizer;
 
     }
     
+    cell.backgroundColor = [UIColor colorWithRed:115.0f/225.0f green:153.0f/255.0f blue:203.0f/255.0f alpha:1.0f];
+    
+
     cell.textLabel.textColor = [UIColor whiteColor];
     cell.textLabel.font = [UIFont fontWithName:@"ChalkboardSE-Regular" size:20];
 

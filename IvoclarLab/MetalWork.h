@@ -11,6 +11,7 @@
 @interface MetalWork : UIViewController
 
 
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 
 @property (weak, nonatomic) IBOutlet UIButton *clickToOrderButtonOutlet;
 - (IBAction)clickToOrder:(id)sender;

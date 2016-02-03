@@ -3,12 +3,13 @@
 //  IvoclarLab
 //
 //  Created by Subramanyam on 16/11/15.
-//  Copyright (c) 2015 Subramanyam. All rights reserved.
+//  Copyright (c) 2015 Ivoclar Vivadent. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 #import "CommonAppManager.h"
 #import "CaseHistoryCustomCell.h"
+#import "CHDoctorCustomCell.h"
 
 @interface CaseHistory : UIViewController<NSXMLParserDelegate,UITableViewDataSource,UITableViewDelegate>
 
@@ -18,7 +19,7 @@
     NSMutableDictionary * CHDict;
     UITableView * caseHistoryTV;
     UIActivityIndicatorView * spinner;
-    CaseHistoryCustomCell * caseHistoryCell;
+    CHDoctorCustomCell * caseHistoryCell;
 }
 @property NSUInteger index;
 

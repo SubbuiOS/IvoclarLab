@@ -3,7 +3,7 @@
 //  IvoclarLab
 //
 //  Created by Subramanyam on 19/11/15.
-//  Copyright (c) 2015 Subramanyam. All rights reserved.
+//  Copyright (c) 2015 Ivoclar Vivadent. All rights reserved.
 //
 
 #import "PagingControl.h"
@@ -53,7 +53,9 @@
     [navigationTitleView addSubview:label];
     self.navigationItem.titleView = navigationTitleView;
     
-    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.0f/255.0f green:128.0f/255.0f blue:255.0f/255.0f alpha:1];
+    
+    
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:71.0f/255.0f green:118.0f/255.0f blue:172.0f/255.0f alpha:1];
     // self.navigationController.navigationBar.translucent = NO;
     
     self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
@@ -135,9 +137,11 @@
     
 }
 
+// tab view height
+
 - (CGFloat)tabHeight {
     // Default: 44.0f
-    return 30.0f;
+    return 40.0f;
 }
 
 - (UIColor *)tabColor {
@@ -155,7 +159,8 @@
     //return [UIColor blueColor];
 
     
-    return [UIColor colorWithRed:0.0f/255.0f green:204.0f/255.0f blue:204.0f/255.0f alpha:1.0f];
+    return [UIColor colorWithRed:16.0f/255.0f green:141.0f/255.0f blue:171.0f/255.0f alpha:1];
+
 }
 
 - (UIFont *)titleFont {
@@ -178,15 +183,44 @@
     if (index == 0)
     {
         
-        [tabPager.tabViews[0] setBackgroundColor:[UIColor orangeColor]];
+       // [tabLabel setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"tab_bg.jpg"]]];
+
+        
+        [tabPager.tabViews[0] setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"tab_bg.jpg"]]];
         [tabPager.tabViews[1] setBackgroundColor:[UIColor clearColor]];
+        
+        
+        
+        //[UIBezierPath bezierPathWithRoundedRect:frame byRoundingCorners:(UIRectCornerTopLeft|UIRectCornerTopRight) cornerRadii:CGSizeMake(3.0, 3.0)];
+        UIBezierPath *maskPath;
+        maskPath = [UIBezierPath bezierPathWithRoundedRect:[tabPager.tabViews[0] bounds]
+                                         byRoundingCorners:(UIRectCornerTopLeft|UIRectCornerTopRight)
+                                               cornerRadii:CGSizeMake(8.0, 8.0)];
+        
+        CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
+        maskLayer.frame = [tabPager.tabViews[0] bounds];
+        maskLayer.path = maskPath.CGPath;
+        [tabPager.tabViews[0] layer].mask = maskLayer;
+
 
     }
     else
     {
-        [tabPager.tabViews[1] setBackgroundColor:[UIColor orangeColor]];
+        [tabPager.tabViews[1] setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"tab_bg.jpg"]]];
         //[tabPager.tabViews[1] setBackgroundImage:[UIImage imageNamed:@"tabPagingControl.png"] forState:UIControlStateNormal] ;
         [tabPager.tabViews[0] setBackgroundColor:[UIColor clearColor]];
+        
+        UIBezierPath *maskPath;
+        maskPath = [UIBezierPath bezierPathWithRoundedRect:[tabPager.tabViews[1] bounds]
+                                         byRoundingCorners:(UIRectCornerTopLeft|UIRectCornerTopRight)
+                                               cornerRadii:CGSizeMake(8.0, 8.0)];
+        
+        CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
+        maskLayer.frame = [tabPager.tabViews[1] bounds];
+        maskLayer.path = maskPath.CGPath;
+        [tabPager.tabViews[1] layer].mask = maskLayer;
+        
+
     }
 
 

@@ -3,7 +3,7 @@
 //  IvoclarLab
 //
 //  Created by Subramanyam on 05/11/15.
-//  Copyright (c) 2015 Subramanyam. All rights reserved.
+//  Copyright (c) 2015 Ivoclar Vivadent. All rights reserved.
 //
 
 #import "CommonAppManager.h"
@@ -44,6 +44,10 @@ static CommonAppManager *_sharedAppManager;
 
 
 
+// Below is the method for calling the web service(SOAP) and getting the response
+// This method is used in entire project
+// Here message will be the xml message received from various view controllers
+// appending string is the soap Action string, which is used to perform the specific soap action.
 
 
 -(void) soapServiceMessage:(NSString *)message soapActionString:(id)appendingString withDelegate:(id)viewController
@@ -100,6 +104,9 @@ static CommonAppManager *_sharedAppManager;
 {
     NSLog(@"ERROR with theConenction  %@",error);
 
+    
+    // If there is no active network or if there is any problem with the network connection we send the response as nil to the specific class
+    
         
         if ([delegate isKindOfClass:[DoctorLogin class]])
         {
@@ -160,6 +167,9 @@ static CommonAppManager *_sharedAppManager;
    // NSLog(@"%@",data);
     
     NSData *encodedData = [data dataUsingEncoding:NSUTF8StringEncoding];
+    
+    // Sending the response to specific class.
+    
     
     if ([delegate isKindOfClass:[DoctorLogin class]])
     {
@@ -226,6 +236,10 @@ static CommonAppManager *_sharedAppManager;
 -(void)viewController:(id)viewControllerName
 {
     
+    // This method is used in side menu view controller
+    // Based on the login(either Doctor or Lab) we send the menu list and their respective images
+    
+    
     delegate = viewControllerName;
     
     if ([delegate isKindOfClass:[SideMenuListViewController class]]) {
@@ -236,17 +250,25 @@ static CommonAppManager *_sharedAppManager;
             
             menuArray = [[NSMutableArray alloc]initWithObjects:@"CaseEntry",@"Profile",@"CaseHistory",@"Update Mobile",@"Complaints",@"CaseDelivery",@"Home", nil];
             
+            cellImages = [[NSMutableArray alloc]initWithObjects:[UIImage imageNamed:@"CaseEntryIcon.png"],[UIImage imageNamed:@"EditProfileIcon.png"],[UIImage imageNamed:@"history.png"],[UIImage imageNamed:@"mobileIcon.png"],[UIImage imageNamed:@"complaintsIcon.png"],[UIImage imageNamed:@"caseDeliveryIcon.png"],[UIImage imageNamed:@"HomeBlueIcon.png"], nil];
+            
+
+             
+            
         }
         
         else if ([loginStatus isEqual:@"LabLoginSuccess"])
         {
             menuArray = [[NSMutableArray alloc]initWithObjects:@"CaseStatus",@"CaseHistory",@"Home", nil];
             
+             cellImages = [[NSMutableArray alloc]initWithObjects:[UIImage imageNamed:@"caseStatus.png"],[UIImage imageNamed:@"history.png"],[UIImage imageNamed:@"HomeBlueIcon.png"], nil];
+            
         }
         
         NSLog(@"menu array :%@",menuArray);
 
-        [(SideMenuListViewController*)delegate sideMenuList:menuArray];
+        [(SideMenuListViewController*)delegate sideMenuList:menuArray images:cellImages];
+        
     }
     
     

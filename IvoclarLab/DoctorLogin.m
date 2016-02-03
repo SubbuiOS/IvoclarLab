@@ -3,7 +3,7 @@
 //  IvoclarLab
 //
 //  Created by Subramanyam on 07/11/15.
-//  Copyright (c) 2015 Subramanyam. All rights reserved.
+//  Copyright (c) 2015 Ivoclar Vivadent. All rights reserved.
 //
 
 #import "DoctorLogin.h"
@@ -12,7 +12,6 @@
 
 #import "NewUserOTPScreen.h"
 
-NSMutableDictionary * docIdDict;
 @interface DoctorLogin ()
 
 @end
@@ -46,6 +45,7 @@ NSMutableDictionary * docIdDict;
 //    self.navigationItem.titleView = navigationTitleView;
 //
 //    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.0f/255.0f green:128.0f/255.0f blue:255.0f/255.0f alpha:1];
+    
     
     // Keyboard will dismiss when user taps on the screen
     [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self.view action:@selector(endEditing:)]];
@@ -92,7 +92,18 @@ NSMutableDictionary * docIdDict;
 {
     _doctorMobileNoTF.text = @"";
     _doctorEmailTF.text = @"";
+    
+    [self.titleLabel setBackgroundColor:[UIColor colorWithRed:71.0f/255.0f green:118.0f/255.0f blue:172.0f/255.0f alpha:1]];
+    
 
+    //self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:16.0f/255.0f green:141.0f/255.0f blue:171.0f/255.0f alpha:1];
+
+    _backButtonOutlet.layer.cornerRadius = 6;
+    _backButtonOutlet.clipsToBounds = YES;
+    
+     [_backButtonOutlet setBackgroundColor:[UIColor colorWithRed:27.0/255.0 green:32.0/255.0 blue:52.0/255.0 alpha:1]];
+    
+    
 }
 
 - (IBAction)submitActionDoctor:(id)sender {
@@ -136,6 +147,12 @@ NSMutableDictionary * docIdDict;
                              "</SendOTP>\n"
                              "</soap:Body>\n"
                              "</soap:Envelope>\n",_doctorEmailTF.text,_doctorMobileNoTF.text,[[NSUserDefaults standardUserDefaults] valueForKey:@"DeviceToken"]];
+        
+        
+        
+        
+        
+        NSLog(@"device token :%@",[[NSUserDefaults standardUserDefaults] valueForKey:@"DeviceToken"]);
     
    // NSLog(@"otp message :%@",OTPMessage);
     // first check the mobile is already registered or not
@@ -145,7 +162,7 @@ NSMutableDictionary * docIdDict;
     // Until data is parsed a spinner is displayed
     
     spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    spinner.center = CGPointMake((_doctorLoginSubmit.frame.size.width/2), _doctorLoginSubmit.frame.origin.y+60);
+    spinner.center = CGPointMake((_doctorLoginSubmit.frame.size.width/2), _doctorLoginSubmit.frame.origin.y+_doctorLoginSubmit.frame.size.height+30);
     [self.view addSubview:spinner];
     [spinner startAnimating];
     
@@ -225,6 +242,9 @@ NSMutableDictionary * docIdDict;
 -(void)connectionData:(NSData*)data status:(BOOL)status
 {
     
+    // If status is Yes it will parse the data using NSXMLParser
+    // If status is NO an alert will be displayed
+    
     if (status) {
         
         
@@ -270,6 +290,8 @@ NSMutableDictionary * docIdDict;
             
             // Y represents already a registered user
             
+
+            
             [spinner stopAnimating];
             
             DoctorAlreadyRegistered * registeredLogin = [self.storyboard instantiateViewControllerWithIdentifier:@"alreadyRegistered"];
@@ -280,7 +302,14 @@ NSMutableDictionary * docIdDict;
             
             registeredLogin.registeredMobileNoTF.text = _doctorMobileNoTF.text;
             
-                       
+            
+            //Testing
+//            
+//            UIAlertView * deviceTokenAlert = [[UIAlertView alloc]initWithTitle:@"DeviceToken" message:[NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults]valueForKey:@"DeviceToken" ]] delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+//            
+//            [deviceTokenAlert show];
+//            
+            
             
         }
         
@@ -315,10 +344,17 @@ NSMutableDictionary * docIdDict;
         //            docIdDict = [NSJSONSerialization JSONObjectWithData:drID options:NSJSONReadingMutableContainers error:nil];
         //            NSLog(@"profile dictionary :%@",docIdDict);
         
-        [self saveDataInPlist: [[docIdDict valueForKey:@"DoctorId"]objectAtIndex:0]];
         
+       // [self saveDataInPlist:[[docIdDict valueForKey:@"DoctorId"]objectAtIndex:0] OTP:[[docIdDict valueForKey:@"OTP"]objectAtIndex:0] doctorMobile:_doctorMobileNoTF.text];
         
-        //Here we will get doctor ID as response and we are storing it
+        [self saveDataInPlist:[[docIdDict valueForKey:@"DoctorId"]objectAtIndex:0]];
+        
+        [self saveOTPInPlist:[[docIdDict valueForKey:@"OTP"]objectAtIndex:0]];
+        
+       //[self saveDataInPlist:[[docIdDict valueForKey:@"DoctorId"]objectAtIndex:0] OTP:[[docIdDict valueForKey:@"OTP"]objectAtIndex:0] doctorMobile:_doctorMobileNoTF.text];
+      
+        
+        //Here we will get doctor ID and OTP as response and we are storing it
         
         
        
@@ -328,7 +364,8 @@ NSMutableDictionary * docIdDict;
 
 }
 
-- (void)saveDataInPlist:(id)docID {
+- (void)saveDataInPlist:(id)docID
+{
     
     //get the plist document path
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -358,10 +395,11 @@ NSMutableDictionary * docIdDict;
     NSString *doctorID = docID;
     
     //check all the textfields have values
-    if ([doctorID length] >1) {
+    if ([doctorID length] >0) {
         
         //add values to dictionary
         [data setValue:doctorID forKey:@"DoctorID"];
+        
         
         //add dictionary to array
         [contentArray addObject:data];
@@ -384,6 +422,68 @@ NSMutableDictionary * docIdDict;
         }
     }
    
+}
+
+
+
+- (void)saveOTPInPlist:(id)OTP
+{
+    
+    //get the plist document path
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSString *plistFilePath = [documentsDirectory stringByAppendingPathComponent:@"OTPResult.plist"];
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSMutableDictionary *data = [[NSMutableDictionary alloc]init];
+    NSMutableArray *contentArray= [[NSMutableArray alloc]init];
+    
+    if (![fileManager fileExistsAtPath: plistFilePath])
+    {
+        NSLog(@"File does not exist");
+        
+        // If the file doesn’t exist, create an empty plist file
+        plistFilePath = [documentsDirectory stringByAppendingPathComponent:@"OTPResult.plist"];
+        //NSLog(@"path is %@",plistFilePath);
+        
+    }
+    else{
+        NSLog(@"File exists, Get data if anything stored");
+        
+        contentArray = [[NSMutableArray alloc] initWithContentsOfFile:plistFilePath];
+    }
+    
+    
+    NSString *otp = OTP;
+    
+    //check all the textfields have values
+    if ([otp length] >0) {
+        
+        //add values to dictionary
+        [data setValue:otp forKey:@"OTP"];
+        
+        
+        //add dictionary to array
+        [contentArray addObject:data];
+        
+        //write array to plist file
+        if([contentArray writeToFile:plistFilePath atomically:YES]){
+            
+            //NSLog(@"saved");
+            
+            //
+            //            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Saved in plist" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+            //            [alert show];
+            
+        }
+        else {
+            NSLog(@"Couldn't saved");
+            
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"Couldn't Save" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+            [alert show];
+        }
+    }
+    
 }
 
 

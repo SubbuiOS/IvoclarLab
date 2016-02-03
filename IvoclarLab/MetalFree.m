@@ -25,6 +25,7 @@
 {
     _clickToOrderButtonOutlet.layer.cornerRadius = 10; // this value vary as per your desire
     _clickToOrderButtonOutlet.clipsToBounds = YES;
+    [_titleLabel setBackgroundColor:[UIColor colorWithRed:71.0f/255.0f green:118.0f/255.0f blue:172.0f/255.0f alpha:1]];
     
     
 }

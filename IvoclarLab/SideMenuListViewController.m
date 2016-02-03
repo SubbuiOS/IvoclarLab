@@ -3,7 +3,7 @@
 //  IvoclarLab
 //
 //  Created by Subramanyam on 05/11/15.
-//  Copyright (c) 2015 Subramanyam. All rights reserved.
+//  Copyright (c) 2015 Ivoclar Vivadent. All rights reserved.
 //
 
 #import "SideMenuListViewController.h"
@@ -31,12 +31,23 @@
     
     [_sidebarMenuTV reloadData];
 
+    // tag ==2 represents lab tableview
     
     if (_sidebarMenuTV.tag == 2)
     {
-        self.view.backgroundColor = [UIColor colorWithRed:115.0f/225.0f green:153.0f/255.0f blue:203.0f/255.0f alpha:1.0f];
+        
+        self.view.backgroundColor = [UIColor colorWithRed:21.0f/225.0f green:75.0f/255.0f blue:145.0f/255.0f alpha:1.0f];
 
-        _sidebarMenuTV.backgroundColor = [UIColor colorWithRed:115.0f/225.0f green:153.0f/255.0f blue:203.0f/255.0f alpha:1.0f];
+        _sidebarMenuTV.backgroundColor = [UIColor colorWithRed:21.0f/225.0f green:75.0f/255.0f blue:145.0f/255.0f alpha:1.0f];
+        
+        if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+            
+            _sidebarMenuTV.rowHeight = 60;
+            
+            
+        }
+        
+        
     }
     else
     {
@@ -44,6 +55,13 @@
         self.view.backgroundColor = [UIColor colorWithRed:21.0f/225.0f green:75.0f/255.0f blue:145.0f/255.0f alpha:1.0f];
         
         _sidebarMenuTV.backgroundColor = [UIColor colorWithRed:21.0f/225.0f green:75.0f/255.0f blue:145.0f/255.0f alpha:1.0f];
+        
+        if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+            
+            _sidebarMenuTV.rowHeight = 60;
+            
+            
+        }
 
 
     }
@@ -53,9 +71,6 @@
     
     
     [[CommonAppManager sharedAppManager]viewController:self];
-    
-    
-
     
     
   //  menuArray = [[NSMutableArray alloc]initWithObjects:@"CaseEntry",@"Profile",@"CaseHistory",@"Feedback",@"Update Mobile",@"Complaints",@"CaseDelivery",@"Home", nil];
@@ -70,9 +85,11 @@
     
 }
 
--(void) sideMenuList:(NSMutableArray *)sideMenuListArray
+-(void) sideMenuList:(NSMutableArray *)sideMenuListArray images : (NSMutableArray *) cellImagesArray
 {
     menuArray = sideMenuListArray;
+    
+    cellImages = cellImagesArray;
     NSLog(@"sidemenu list : %@",sideMenuListArray);
     
 }
@@ -105,7 +122,9 @@
 
         if (tableView.tag==2) {
             
-            cell.backgroundColor = [UIColor colorWithRed:115.0f/225.0f green:153.0f/255.0f blue:203.0f/255.0f alpha:1.0f];
+           cell.backgroundColor = [UIColor colorWithRed:21.0f/225.0f green:75.0f/255.0f blue:145.0f/255.0f alpha:1.0f];
+        
+            
         }
  
     }
@@ -113,10 +132,24 @@
     if (tableView.tag==1)
     {
         cell.backgroundColor = [UIColor colorWithRed:21.0f/225.0f green:75.0f/255.0f blue:145.0f/255.0f alpha:1.0f];
+
     }
 
     cell.textLabel.text = [menuArray objectAtIndex:indexPath.row];
+    
     cell.textLabel.textColor = [UIColor whiteColor];
+    
+    cell.imageView.image = [cellImages objectAtIndex:indexPath.row];
+
+    
+    CGSize itemSize = CGSizeMake(25, 25);
+    UIGraphicsBeginImageContextWithOptions(itemSize, NO, UIScreen.mainScreen.scale);
+    CGRect imageRect = CGRectMake(0.0, 0.0, itemSize.width, itemSize.height);
+    [cell.imageView.image drawInRect:imageRect];
+    cell.imageView.image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    
     
     return cell;
     

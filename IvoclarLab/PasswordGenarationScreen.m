@@ -3,7 +3,7 @@
 //  IvoclarLab
 //
 //  Created by Subramanyam on 09/11/15.
-//  Copyright (c) 2015 Subramanyam. All rights reserved.
+//  Copyright (c) 2015 Ivoclar Vivadent. All rights reserved.
 //
 
 #import "PasswordGenarationScreen.h"
@@ -14,7 +14,6 @@
 
 @end
 
-NSString * filteredDoctorID;
 
 @implementation PasswordGenarationScreen
 
@@ -26,10 +25,6 @@ NSString * filteredDoctorID;
     _reenterPasswordTF.delegate = self;
     
     
-    
-    _passwordSubmitOutlet.layer.cornerRadius = 10; // this value vary as per your desire
-    _passwordSubmitOutlet.clipsToBounds = YES;
-    
     // Keyboard will dismiss when user taps on the screen
     [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self.view action:@selector(endEditing:)]];
 }
@@ -37,6 +32,17 @@ NSString * filteredDoctorID;
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    _passwordSubmitOutlet.layer.cornerRadius = 10; // this value vary as per your desire
+    _passwordSubmitOutlet.clipsToBounds = YES;
+    
+    
+    [self.titleLabel setBackgroundColor:[UIColor colorWithRed:71.0f/255.0f green:118.0f/255.0f blue:172.0f/255.0f alpha:1]];
+
+
 }
 
 /*
@@ -204,9 +210,9 @@ NSString * filteredDoctorID;
             
             // Y represents entered password is saved
             
-            UIAlertView * savedPwd = [[UIAlertView alloc]initWithTitle:@"Success" message:@"Password is saved" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-            [savedPwd show];
-
+//            UIAlertView * savedPwd = [[UIAlertView alloc]initWithTitle:@"Success" message:@"Password is saved" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+//            [savedPwd show];
+//
             // It will goes to new user profile screen
             
             SWRevealViewController * profilePage = [self.storyboard instantiateViewControllerWithIdentifier:@"profileSW"];

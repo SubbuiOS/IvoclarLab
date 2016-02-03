@@ -3,7 +3,7 @@
 //  IvoclarLab
 //
 //  Created by Subramanyam on 08/11/15.
-//  Copyright (c) 2015 Subramanyam. All rights reserved.
+//  Copyright (c) 2015 Ivoclar Vivadent. All rights reserved.
 //
 
 #import "ViewController.h"
@@ -25,6 +25,7 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *registeredSubmit;
 
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 
 
 - (IBAction)registeredSubmit:(id)sender;

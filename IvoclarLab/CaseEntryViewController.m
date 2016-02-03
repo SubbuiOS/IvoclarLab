@@ -3,7 +3,7 @@
 //  IvoclarLab
 //
 //  Created by Subramanyam on 05/11/15.
-//  Copyright (c) 2015 Subramanyam. All rights reserved.
+//  Copyright (c) 2015 Ivoclar Vivadent. All rights reserved.
 //
 
 #import "CaseEntryViewController.h"
@@ -16,9 +16,6 @@
 
 @end
 
-NSMutableDictionary *data;
-NSMutableArray *contentArray;
-UITapGestureRecognizer * tapRecognizer;
 
 @implementation CaseEntryViewController
 
@@ -75,6 +72,11 @@ UITapGestureRecognizer * tapRecognizer;
     tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
                                                             action:@selector(didTapAnywhere:)];
     
+    
+    
+    
+    
+    
     _noOfUnitsTF.delegate = self;
     _noOfUnitsTF.keyboardType = UIKeyboardTypeNumberPad;
     
@@ -92,12 +94,24 @@ UITapGestureRecognizer * tapRecognizer;
     typeOfCaseArray = [[NSMutableArray alloc]initWithObjects:@"Type of Case",@"Crowns",@"Bridges",@"Veneer", nil];
     
     
-    partnerLbutton = [UIButton buttonWithType:UIButtonTypeSystem];
+    // More button will be displayed when the Mpartners are more than 1
     
-    [partnerLbutton setTitle:@"Cancel" forState:UIControlStateNormal];
-    [partnerLbutton addTarget:self action:@selector(partnerLbuttonIsClicked) forControlEvents:UIControlEventTouchUpInside];
-    [partnerLbutton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [partnerLbutton setBackgroundColor:[UIColor colorWithRed:0.0f/255.0f green:128.0f/255.0f blue:255.0f/255.0f alpha:1.0f]];
+    moreButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    
+    [moreButton setTitle:@"More" forState:UIControlStateNormal];
+    [moreButton addTarget:self action:@selector(moreButtonIsClicked) forControlEvents:UIControlEventTouchUpInside];
+    [moreButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [moreButton setBackgroundColor:[UIColor colorWithRed:0.0f/255.0f green:128.0f/255.0f blue:255.0f/255.0f alpha:1.0f]];
+    
+    
+    // partnerLButton is the cancel button, which will be displayed with LPartners
+    
+    partnerLButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    
+    [partnerLButton setTitle:@"Cancel" forState:UIControlStateNormal];
+    [partnerLButton addTarget:self action:@selector(partnerLButtonIsClicked) forControlEvents:UIControlEventTouchUpInside];
+    [partnerLButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [partnerLButton setBackgroundColor:[UIColor colorWithRed:0.0f/255.0f green:128.0f/255.0f blue:255.0f/255.0f alpha:1.0f]];
     
     
 //    stateButton = [UIButton buttonWithType:UIButtonTypeSystem];
@@ -134,13 +148,13 @@ UITapGestureRecognizer * tapRecognizer;
     {
         // iPad
         
-        _selectNatureOfWorkLabel.frame = CGRectMake(_natureOfWorkOutlet.frame.origin.x+130, _natureOfWorkOutlet.frame.origin.y+25, 150, 32);
+        _selectNatureOfWorkLabel.frame = CGRectMake(_natureOfWorkOutlet.frame.origin.x+130, _natureOfWorkOutlet.frame.origin.y+21, 150, 32);
         
-        _crownBrandLabel.frame = CGRectMake(_crownBrandDDOutlet.frame.origin.x+130, _crownBrandDDOutlet.frame.origin.y+25, 150, 32);
+        _crownBrandLabel.frame = CGRectMake(_crownBrandDDOutlet.frame.origin.x+130, _crownBrandDDOutlet.frame.origin.y+21, 150, 32);
         
-        _typeOfCaseLabel.frame = CGRectMake(_typeOfCaseLabel.frame.origin.x+130, _typeOfCaseLabel.frame.origin.y+10, 150, 32);
+        _typeOfCaseLabel.frame = CGRectMake(_typeOfCaseOutlet.frame.origin.x+130, _typeOfCaseOutlet.frame.origin.y+21, 150, 32);
     
-        _noOfUnitsTF.frame = CGRectMake(_natureOfWorkOutlet.frame.origin.x+100, _crownBrandView.frame.size.height+_crownBrandView.frame.origin.y+30, 440, 30);
+        _noOfUnitsTF.frame = CGRectMake(_natureOfWorkOutlet.frame.origin.x+100, _crownBrandView.frame.size.height+_crownBrandView.frame.origin.y+30, 440, 50);
         
         
     }
@@ -152,8 +166,8 @@ UITapGestureRecognizer * tapRecognizer;
     _selectPartnerOutlet.layer.cornerRadius = 10;
     _selectPartnerOutlet.clipsToBounds = YES;
     
-    partnerLbutton.layer.cornerRadius = 10; // this value vary as per your desire
-    partnerLbutton.clipsToBounds = YES;
+    partnerLButton.layer.cornerRadius = 10; // this value vary as per your desire
+    partnerLButton.clipsToBounds = YES;
     
     _noOfUnitsTF.layer.borderColor=[[UIColor blueColor]CGColor];
     _noOfUnitsTF.layer.borderWidth=1.0;
@@ -313,23 +327,29 @@ UITapGestureRecognizer * tapRecognizer;
     
     if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
         
+        // CommonView is used as a container to hold the tableViews
+        
+        
         commonView = [[UIView alloc]initWithFrame:CGRectMake(_natureOfWorkView.frame.origin.x+150, _natureOfWorkView.frame.origin.y+_natureOfWorkView.frame.size.height+140, _natureOfWorkView.frame.size.width, 150)];
+        
+         natureOfWorkTV = [[UITableView alloc] initWithFrame:CGRectMake(5, 5, self.view.frame.size.width-320, 130) style:UITableViewStylePlain];
         
         
     }
     
     else
     {
-         commonView = [[UIView alloc]initWithFrame:CGRectMake(_natureOfWorkView.frame.origin.x+20, _natureOfWorkView.frame.origin.y+_natureOfWorkView.frame.size.height+71 , _natureOfWorkView.frame.size.width , 150)];
+         commonView = [[UIView alloc]initWithFrame:CGRectMake(_natureOfWorkView.frame.origin.x+20, _natureOfWorkView.frame.origin.y+_natureOfWorkView.frame.size.height+81 , _natureOfWorkView.frame.size.width , 150)];
+        
+         natureOfWorkTV = [[UITableView alloc]initWithFrame:CGRectMake(5, 5, self.view.frame.size.width-50, 130) style:UITableViewStylePlain];
     }
     commonView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:commonView];
     
     [natureOfWorkTV reloadData];
 
-    natureOfWorkTV = [[UITableView alloc]initWithFrame:CGRectMake(5, 5, self.view.frame.size.width-50, 130)];
-
-    natureOfWorkTV.delegate = self;
+    
+      natureOfWorkTV.delegate = self;
     natureOfWorkTV.dataSource = self;
     [commonView addSubview:natureOfWorkTV];
     
@@ -373,7 +393,9 @@ UITapGestureRecognizer * tapRecognizer;
         
         if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
             
-            commonView = [[UIView alloc]initWithFrame:CGRectMake(_crownBrandView.frame.origin.x+140, _crownBrandView.frame.origin.y+_crownBrandView.frame.size.height+140, _crownBrandView.frame.size.width-300, 150)];
+            commonView = [[UIView alloc]initWithFrame:CGRectMake(_crownBrandView.frame.origin.x+140, _crownBrandView.frame.origin.y+_crownBrandView.frame.size.height+140, _crownBrandView.frame.size.width-300, 210)];
+            
+             crownBrandTV = [[UITableView alloc]initWithFrame:CGRectMake(5, 5, self.view.frame.size.width-320, 130) style:UITableViewStylePlain];
             
             
         }
@@ -381,7 +403,9 @@ UITapGestureRecognizer * tapRecognizer;
         else
         {
         
-        commonView = [[UIView alloc]initWithFrame:CGRectMake(_crownBrandView.frame.origin.x+20, _crownBrandView.frame.origin.y+_crownBrandView.frame.size.height+72 , _crownBrandView.frame.size.width , 150)];
+        commonView = [[UIView alloc]initWithFrame:CGRectMake(_crownBrandView.frame.origin.x+20, _crownBrandView.frame.origin.y+_crownBrandView.frame.size.height+82 , _crownBrandView.frame.size.width , 210)];
+            
+             crownBrandTV = [[UITableView alloc]initWithFrame:CGRectMake(5, 5, self.view.frame.size.width-50, 130) style:UITableViewStylePlain];
             
         }
         
@@ -390,7 +414,9 @@ UITapGestureRecognizer * tapRecognizer;
         
         [crownBrandTV reloadData];
         
-        crownBrandTV = [[UITableView alloc]initWithFrame:CGRectMake(5, 5, self.view.frame.size.width-50, 130) style:UITableViewStylePlain];
+        
+        
+       
 
         crownBrandTV.delegate = self;
         crownBrandTV.dataSource = self;
@@ -433,6 +459,8 @@ UITapGestureRecognizer * tapRecognizer;
         
         commonView = [[UIView alloc]initWithFrame:CGRectMake(_typeOfCaseView.frame.origin.x+140, _typeOfCaseView.frame.origin.y+_typeOfCaseView.frame.size.height+140, _typeOfCaseView.frame.size.width-300, 150)];
         
+         typeOfCaseTV = [[UITableView alloc]initWithFrame:CGRectMake(5, 5, self.view.frame.size.width-320, 130) style:UITableViewStylePlain];
+        
         
     }
     
@@ -440,7 +468,9 @@ UITapGestureRecognizer * tapRecognizer;
     {
     
     
-    commonView = [[UIView alloc]initWithFrame:CGRectMake(_typeOfCaseView.frame.origin.x+20, _typeOfCaseView.frame.origin.y+_typeOfCaseView.frame.size.height+72 , _typeOfCaseView.frame.size.width , 150)];
+    commonView = [[UIView alloc]initWithFrame:CGRectMake(_typeOfCaseView.frame.origin.x+20, _typeOfCaseView.frame.origin.y+_typeOfCaseView.frame.size.height+82 , _typeOfCaseView.frame.size.width , 150)];
+        
+         typeOfCaseTV = [[UITableView alloc]initWithFrame:CGRectMake(5, 5, self.view.frame.size.width-50, 130) style:UITableViewStylePlain];
         
     }
     commonView.backgroundColor = [UIColor clearColor];
@@ -448,7 +478,7 @@ UITapGestureRecognizer * tapRecognizer;
 
     [typeOfCaseTV reloadData];
     
-    typeOfCaseTV = [[UITableView alloc]initWithFrame:CGRectMake(5, 5, self.view.frame.size.width-50, 130) style:UITableViewStylePlain];
+   
 
     
     typeOfCaseTV.delegate = self;
@@ -474,10 +504,13 @@ UITapGestureRecognizer * tapRecognizer;
 - (IBAction)selectPartner:(id)sender {
     
     
+    moreButton.hidden = NO;
+    
     if ([_welcomeNameLabel.text isEqual:@""] || _welcomeNameLabel.text== nil)
     {
         
         UIAlertView * selectPartnerAlert = [[UIAlertView alloc]initWithTitle:@"Warning" message:@"Please Update the profile" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+        
         
         [selectPartnerAlert show];
         
@@ -523,11 +556,13 @@ UITapGestureRecognizer * tapRecognizer;
     //[formatter setDateFormat:@"hh:mm a"];
     //[formatter setDateFormat:@"MMM dd, YYYY"];
     [formatter setDateStyle:NSDateFormatterMediumStyle];
+        
+    
     
     //get the date today
     NSString *dateToday = [formatter stringFromDate:[NSDate date]];
     
-    NSString * text = [NSString stringWithFormat:@"Please note that your order has been sent to %@ dates %@ for %@ Bridges.You will be contacted shortly.You are Requested to please click on Received option once your case is delivered to you to close the complete order cycle.",_partnerNameLabel.text, dateToday,_noOfUnitsTF.text];
+    NSString * text = [NSString stringWithFormat:@"Please note that your order has been sent to %@ dated %@ for %@Unit(s) of %@ %@.You will be contacted shortly.You are Requested to please click on Received option once your case is delivered to you to close the complete order cycle.",_partnerNameLabel.text, dateToday,_noOfUnitsTF.text,_crownBrandLabel.text,_typeOfCaseLabel.text];
     
     
      submitCEAlert = [[UIAlertView alloc]initWithTitle:@"Success :" message:text delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
@@ -557,6 +592,7 @@ UITapGestureRecognizer * tapRecognizer;
     
     }
     
+
     
 }
 
@@ -630,17 +666,73 @@ UITapGestureRecognizer * tapRecognizer;
         
         // To Display more Partners we are adding a tableview to the alertView
         
-        partnerAlert = [[UIAlertView alloc]initWithTitle:@"Select Partner" message:@"\n" delegate:self cancelButtonTitle:@"More" otherButtonTitles:nil, nil];
+        // If the MPartners count was 1 alertView will be displayed
         
-        partnerMTV = [[UITableView alloc]initWithFrame:CGRectMake(0, 5, 200, 150) style:UITableViewStylePlain];
+        if (partnerMDict.count ==1) {
+            
+            partnerAlert = [[UIAlertView alloc]initWithTitle:@"Select Partner" message:@"\n" delegate:self cancelButtonTitle:@"More" otherButtonTitles:nil, nil];
+            
+            partnerMTV = [[UITableView alloc]initWithFrame:CGRectMake(0, 5, 200, 150) style:UITableViewStylePlain];
+            
+            
+            [partnerAlert setValue:partnerMTV forKey:@"accessoryView"];
+            partnerAlert.delegate = self;
+           // [partnerAlert setNeedsLayout];
+            partnerMTV.delegate = self;
+            partnerMTV.dataSource = self;
+            [partnerAlert show];
+
+            
+        }
+        else
+        {
+            
+//            partnerAlert = [[UIAlertView alloc]initWithTitle:@"Select Partner" message:@"\n" delegate:self cancelButtonTitle:@"More" otherButtonTitles:nil, nil];
+//            
+//            partnerMTV = [[UITableView alloc]initWithFrame:CGRectMake(0, 5, 200, 150) style:UITableViewStylePlain];
+//            
+//            
+//            [partnerAlert setValue:partnerMTV forKey:@"accessoryView"];
+//            partnerAlert.delegate = self;
+//            [partnerAlert setNeedsLayout];
+//            partnerMTV.delegate = self;
+//            partnerMTV.dataSource = self;
+//            [partnerAlert show];
+            
+            // PartnerMView will be displayed when MPartners are more than 1
+            
+            partnerMView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+            //partnerLView.alpha=1;
+            //partnerLView.userInteractionEnabled = YES;
+            partnerMView.backgroundColor = [UIColor grayColor];
+            
+            
+            partnerMTV = [[UITableView alloc]initWithFrame:CGRectMake(partnerMView.frame.origin.x+8, partnerMView.frame.origin.y+8, partnerMView.frame.size.width-15,partnerMView.frame.size.height-42) style:UITableViewStylePlain];
+            
+            partnerMTV.layer.cornerRadius = 7;
+            partnerMTV.clipsToBounds = YES;
+            
+            moreButton.frame = CGRectMake(partnerMTV.frame.origin.x, partnerMTV.frame.size.height+partnerMTV.frame.origin.y+7, partnerMTV.frame.size.width,25);
+            [partnerMView addSubview:moreButton];
+            
+            // stateButton.frame = CGRectMake(30, partnerLView.frame.origin.y+10, partnerLTV.frame.size.width, 20);
+            //[partnerLView addSubview:stateButton];
+            
+            [self.view addSubview:partnerMView];
+            partnerMTV.delegate = self;
+            partnerMTV.dataSource = self;
+            [partnerMView addSubview:partnerMTV];
+            
+
+            
+
 
         
-        [partnerAlert setValue:partnerMTV forKey:@"accessoryView"];
-    
-        partnerMTV.delegate = self;
-        partnerMTV.dataSource = self;
+            
+        }
         
-        [partnerAlert show];
+        
+    
         
     }
     
@@ -651,6 +743,7 @@ UITapGestureRecognizer * tapRecognizer;
         NSData *objectData = [response dataUsingEncoding:NSUTF8StringEncoding];
         partnerLDict = [NSJSONSerialization JSONObjectWithData:objectData options:NSJSONReadingMutableContainers error:nil];
         NSLog(@"partner dictionary :%@",partnerLDict);
+        
         
         
         // Displaying a view consisting of a tableView as a Custom alertView
@@ -664,10 +757,13 @@ UITapGestureRecognizer * tapRecognizer;
        // selectStateTV = [[UITableView alloc]initWithFrame:CGRectMake(partnerLView.frame.origin.x+30, partnerLView.frame.origin.y+5, partnerLView.frame.size.width-50,100) style:UITableViewStylePlain];
     
         
-        partnerLTV = [[UITableView alloc]initWithFrame:CGRectMake(partnerLView.frame.origin.x+30, partnerLView.frame.origin.y+25, partnerLView.frame.size.width-50,partnerLView.frame.size.height-60) style:UITableViewStylePlain];
+        partnerLTV = [[UITableView alloc]initWithFrame:CGRectMake(partnerLView.frame.origin.x+8, partnerLView.frame.origin.y+8, partnerLView.frame.size.width-15,partnerLView.frame.size.height-42) style:UITableViewStylePlain];
         
-        partnerLbutton.frame = CGRectMake(30, partnerLTV.frame.size.height+30, partnerLTV.frame.size.width, 20);
-        [partnerLView addSubview:partnerLbutton];
+        partnerLTV.layer.cornerRadius = 7;
+        partnerLTV.clipsToBounds = YES;
+        
+        partnerLButton.frame = CGRectMake(partnerLTV.frame.origin.x, partnerLTV.frame.size.height+partnerLTV.frame.origin.y+7, partnerLTV.frame.size.width,25);
+        [partnerLView addSubview:partnerLButton];
         
        // stateButton.frame = CGRectMake(30, partnerLView.frame.origin.y+10, partnerLTV.frame.size.width, 20);
         //[partnerLView addSubview:stateButton];
@@ -764,6 +860,17 @@ UITapGestureRecognizer * tapRecognizer;
     
 }
 
+//-(void)willPresentAlertView:(UIAlertView *)alertView
+//{
+//    if(alertView == partnerAlert)
+//    {
+//        [alertView setFrame:CGRectMake(0, 0, 280, 600)];
+//
+//    }
+//    
+//
+//}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -797,7 +904,7 @@ UITapGestureRecognizer * tapRecognizer;
     }
     else
     {
-        return partnerLDict.count+1;
+        return partnerLDict.count+partnerMDict.count;
     }
     
 }
@@ -812,19 +919,23 @@ UITapGestureRecognizer * tapRecognizer;
     
     //Displaying Custom Cells
         
-        PartnersCustomCell * partnerCell = [tableView dequeueReusableCellWithIdentifier:@"partnerCell"];
-        if (partnerCell == nil) {
-            
-            [tableView registerNib:[UINib nibWithNibName:@"PartnersCustomCell" bundle:nil] forCellReuseIdentifier:@"partnerCell"];
-            partnerCell = [tableView dequeueReusableCellWithIdentifier:@"partnerCell"];
-            partnerCell.selectionStyle = UITableViewCellSelectionStyleDefault;
-            
-        }
-
-        [partnerCell.partnerLocation scrollRangeToVisible:NSMakeRange(0, 0)];
-
+      
             if (tableView == partnerMTV)
             {
+                
+                
+                partnerCell = [tableView dequeueReusableCellWithIdentifier:@"partnerCell"];
+                if (partnerCell == nil) {
+                    
+                    [tableView registerNib:[UINib nibWithNibName:@"PartnersCustomCell" bundle:nil] forCellReuseIdentifier:@"partnerCell"];
+                    partnerCell = [tableView dequeueReusableCellWithIdentifier:@"partnerCell"];
+                    partnerCell.selectionStyle = UITableViewCellSelectionStyleDefault;
+                    
+                }
+                
+                [partnerCell.partnerLocation scrollRangeToVisible:NSMakeRange(0, 0)];
+
+                
                 partnerCell.partnerName.text = [[partnerMDict valueForKey:@"PartnerName"]objectAtIndex:indexPath.row];
             
                 partnerCell.partnerMobile.text = [[partnerMDict valueForKey:@"Mobile"]objectAtIndex:indexPath.row];
@@ -835,31 +946,81 @@ UITapGestureRecognizer * tapRecognizer;
                 
                 
             }
-            else
+            else if (tableView == partnerLTV)
             {
+                
+                partnerCell = [tableView dequeueReusableCellWithIdentifier:@"partnerCell"];
+                if ((partnerCell == nil)|| (indexPath.row<partnerMDict.count)) {
+                    
+                    [tableView registerNib:[UINib nibWithNibName:@"PartnersCustomCell" bundle:nil] forCellReuseIdentifier:@"partnerCell"];
+                    partnerCell = [tableView dequeueReusableCellWithIdentifier:@"partnerCell"];
+                    partnerCell.selectionStyle = UITableViewCellSelectionStyleDefault;
+                    
+                }
+                
+                [partnerCell.partnerLocation scrollRangeToVisible:NSMakeRange(0, 0)];
+
             
-                // First the Mpartner data should be in row 0
+                // First the Mpartner data should be displayed
                 // After that L partners should be displayed
                 
-                
-                if (indexPath.row == 0) {
+                NSLog(@"indexpath.row total :%li",(long)indexPath.row);
+                NSLog(@"m dict count :%li",(unsigned long)partnerMDict.count);
+
+                if (indexPath.row < partnerMDict.count) {
                     
-                    partnerCell.partnerName.text = [[partnerMDict valueForKey:@"PartnerName"]objectAtIndex:0];
+                    NSLog(@"indexpath.row :%li",(long)indexPath.row);
                     
-                    partnerCell.partnerMobile.text = [[partnerMDict valueForKey:@"Mobile"]objectAtIndex:0];
+                    partnerCell.partnerName.text = [[partnerMDict valueForKey:@"PartnerName"]objectAtIndex:indexPath.row];
                     
-                    partnerCell.partnerLocation.text = [[partnerMDict valueForKey:@"Address"]objectAtIndex:0];
+                    NSLog(@"partner name : %@",partnerCell.partnerName.text);
+                    
+                    partnerCell.partnerMobile.text = [[partnerMDict valueForKey:@"Mobile"]objectAtIndex:indexPath.row];
+                    
+                    partnerCell.partnerLocation.text = [[partnerMDict valueForKey:@"Address"]objectAtIndex:indexPath.row];
+                    
 
                 }
-                else
+                
+                // When More is clicked PartnerLView and PartnerLTV will be displayed
+                // When displaying we should display the Mpartner first and followed by LPartners
+                
+                
+                 if(indexPath.row>=partnerMDict.count)
+                    
                 {
-                    partnerCell.partnerName.text = [[partnerLDict valueForKey:@"PartnerName"]objectAtIndex:indexPath.row-1];
-                
-                    partnerCell.partnerMobile.text = [[partnerLDict valueForKey:@"Mobile"]objectAtIndex:indexPath.row-1];
-                
-                    partnerCell.partnerLocation.text = [[partnerLDict valueForKey:@"Address"]objectAtIndex:indexPath.row-1];
-                    // [partnerCell.partnerLocation sizeToFit];
-                    //partnerCell.partnerLocation.numberOfLines=0;
+                    
+                    // To avoid the crash when there are no partners we are returning it without displaying anything
+                    
+                    if ([[[partnerLDict valueForKey:@"PartnerName"] objectAtIndex:indexPath.row-partnerMDict.count] isEqual:nil] || [[[partnerLDict valueForKey:@"PartnerName"] objectAtIndex:indexPath.row-partnerMDict.count] isEqual:@""]) {
+                        
+                        return partnerCell;
+                        
+                    }
+                    
+                    else
+                    {
+                        
+                        NSLog(@"indexpath.row l partner:%li",(long)indexPath.row);
+                        
+                        // NSLog(@"L ddict :%@",partnerLDict);
+                        
+                        NSLog(@"partner M dict count :%li",(unsigned long)partnerMDict.count);
+                        NSLog(@"L count :%li",(unsigned long)partnerLDict.count);
+                        
+                        partnerCell.partnerName.text = [[partnerLDict valueForKey:@"PartnerName"]objectAtIndex:indexPath.row-partnerMDict.count];
+                        
+                        NSLog(@"partner name : %@",partnerCell.partnerName.text);
+                        
+                        
+                        partnerCell.partnerMobile.text = [[partnerLDict valueForKey:@"Mobile"]objectAtIndex:indexPath.row-partnerMDict.count];
+                        
+                        partnerCell.partnerLocation.text = [[partnerLDict valueForKey:@"Address"]objectAtIndex:indexPath.row-partnerMDict.count];
+                        // [partnerCell.partnerLocation sizeToFit];
+                        //partnerCell.partnerLocation.numberOfLines=0;
+                        
+                    }
+                   
                 }
             
                 
@@ -918,6 +1079,11 @@ UITapGestureRecognizer * tapRecognizer;
         
         _partnerNameTitle.hidden = NO;
         _partnerNameLabel.hidden = NO;
+        moreButton.hidden = YES;
+        [partnerMView removeFromSuperview];
+        [partnerMTV removeFromSuperview];
+        
+        
 
     }
     
@@ -927,16 +1093,31 @@ UITapGestureRecognizer * tapRecognizer;
             _partnerNameTitle.hidden = NO;
             _partnerNameLabel.hidden = NO;
 
+        
+        if (indexPath.row < partnerMDict.count) {
             
-        if (indexPath.row == 0) {
+            _partnerNameLabel.text =[[partnerMDict valueForKey:@"PartnerName"]objectAtIndex:indexPath.row];
             
-            _partnerNameLabel.text =[[partnerMDict valueForKey:@"PartnerName"]objectAtIndex:0];
+           
 
         }
         
-        else
+        else if(indexPath.row>=partnerMDict.count)
         {
-            _partnerNameLabel.text = [[partnerLDict valueForKey:@"PartnerName"]objectAtIndex:indexPath.row-1];
+            
+             if ([[[partnerLDict valueForKey:@"PartnerName"] objectAtIndex:indexPath.row-partnerMDict.count] isEqual:nil] || [[[partnerLDict valueForKey:@"PartnerName"] objectAtIndex:indexPath.row-partnerMDict.count] isEqual:@""])
+             {
+                 
+                 
+                 
+             }
+            
+            else
+            {
+                 _partnerNameLabel.text = [[partnerLDict valueForKey:@"PartnerName"]objectAtIndex:indexPath.row-partnerMDict.count];
+            }
+            
+           
         }
         
        
@@ -1039,7 +1220,7 @@ UITapGestureRecognizer * tapRecognizer;
 
     
 
-    [self partnerLbuttonIsClicked];
+    [self partnerLButtonIsClicked];
 
     
 }
@@ -1054,8 +1235,35 @@ UITapGestureRecognizer * tapRecognizer;
     return 45;
 }
 
+-(void) moreButtonIsClicked
+{
+//    [partnerMView removeFromSuperview];
+//    [partnerMTV removeFromSuperview];
+    
+    [partnerMView removeFromSuperview];
+    [partnerMTV removeFromSuperview];
+    
+    [partnerLTV reloadData];
+    
+    NSString * LPartner = [NSString stringWithFormat:
+                           @"<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
+                           "<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n"
+                           "<soap:Body>\n"
+                           "<GetLPartners xmlns=\"http://www.kurnoolcity.com/wsdemo\">"
+                           "<DoctorId>%@</DoctorId>\n"
+                           "</GetLPartners>\n"
+                           "</soap:Body>\n"
+                           "</soap:Envelope>\n",filteredDoctorID];
+    
+    [[CommonAppManager sharedAppManager]soapServiceMessage:LPartner soapActionString:@"GetLPartners" withDelegate:self];
+    
 
--(void)partnerLbuttonIsClicked
+    
+    
+    
+}
+
+-(void)partnerLButtonIsClicked
 {
     
     [partnerLView removeFromSuperview];
@@ -1400,6 +1608,10 @@ UITapGestureRecognizer * tapRecognizer;
     //Appending a string to the Doctor name
     
     _welcomeNameLabel.text = welcomeString;
+    
+    _welcomeNameLabel.textColor = [UIColor colorWithRed:71.0f/255.0f green:118.0f/255.0f blue:172.0f/255.0f alpha:1];
+
+    
     NSLog(@"doc name :%@",welcomeString);
 
 }

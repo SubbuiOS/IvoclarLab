@@ -3,7 +3,7 @@
 //  IvoclarLab
 //
 //  Created by Subramanyam on 20/11/15.
-//  Copyright (c) 2015 Subramanyam. All rights reserved.
+//  Copyright (c) 2015 Ivoclar Vivadent. All rights reserved.
 //
 
 #import "GUITabPagerViewController.h"
@@ -154,7 +154,7 @@
     if ([[self dataSource] respondsToSelector:@selector(tabColor)]) {
         [self setHeaderColor:[[self dataSource] tabColor]];
     } else {
-        [self setHeaderColor:[UIColor orangeColor]];
+        [self setHeaderColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"tab_bg.jpg"]]];
     }
     
     if ([[self dataSource] respondsToSelector:@selector(tabBackgroundColor)]) {
@@ -169,6 +169,8 @@
             UIView *view;
             if ((view = [[self dataSource] viewForTabAtIndex:i]) != nil) {
                 [_tabViews addObject:view];
+                
+            
             }
         }
     } else {
@@ -200,16 +202,58 @@
 //            [tabButton sizeToFit];
 //            
 //            CGRect frame = [tabButton frame];
+            
+            // If we want to change the width of tab change the below 85
             CGRect frame = [tabLabel frame];
             frame.size.width = MAX(frame.size.width + 20, 85);
             [tabLabel setFrame:frame];
+            
+            
+            
+            
+
+            
+         // tab outlook
             //[tabButton setFrame:frame];
             //[_tabViews addObject:tabButton];
             [_tabViews addObject:tabLabel];
         }
     }
     
-    [_tabViews[0] setBackgroundColor:[UIColor orangeColor]];
+    [_tabViews[0] setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"tab_bg.jpg"]]];
+    
+    // tab round corner
+    
+    
+    
+    UIBezierPath *maskPath;
+//    maskPath = [UIBezierPath bezierPathWithRoundedRect:[_tabViews[0] bounds]
+//                                     byRoundingCorners:(UIRectCornerTopLeft|UIRectCornerTopRight)
+//                                           cornerRadii:CGSizeMake(10.0, 10.0)];
+    
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        
+          maskPath = [UIBezierPath bezierPathWithRoundedRect:CGRectMake([_tabViews[0]frame].origin.x, [_tabViews[0]frame].origin.y, [_tabViews[0]frame].size.width, [_tabViews[0]frame].size.height+100) byRoundingCorners:(UIRectCornerTopLeft|UIRectCornerTopRight) cornerRadii:CGSizeMake(10.0, 10.0)];
+        
+    }
+    
+    else
+    {
+        maskPath = [UIBezierPath bezierPathWithRoundedRect:CGRectMake([_tabViews[0]frame].origin.x, [_tabViews[0]frame].origin.y, [_tabViews[0]frame].size.width, [_tabViews[0]frame].size.height+50) byRoundingCorners:(UIRectCornerTopLeft|UIRectCornerTopRight) cornerRadii:CGSizeMake(10.0, 10.0)];
+        
+
+    }
+    
+  
+    
+    
+   // maskPath = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(5, 0, 100, 60) byRoundingCorners:(UIRectCornerTopLeft|UIRectCornerTopRight) cornerRadii:CGSizeMake(10.0, 10.0)];
+    
+    CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
+    maskLayer.frame = [_tabViews[0] bounds];
+    maskLayer.path = maskPath.CGPath;
+    [_tabViews[0] layer].mask = maskLayer;
+    
     if ([self header]) {
         [[self header] removeFromSuperview];
     }

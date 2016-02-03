@@ -3,7 +3,7 @@
 //  IvoclarLab
 //
 //  Created by Subramanyam on 09/11/15.
-//  Copyright (c) 2015 Subramanyam. All rights reserved.
+//  Copyright (c) 2015 Ivoclar Vivadent. All rights reserved.
 //
 
 #import "ViewController.h"
@@ -12,9 +12,12 @@
 
 {
     NSString * response;
+    NSString * filteredDoctorID;
+
 }
 @property (weak, nonatomic) IBOutlet UITextField *passwordTF;
 
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 
 @property (weak, nonatomic) IBOutlet UITextField *reenterPasswordTF;
 @property (weak, nonatomic) IBOutlet UIButton *passwordSubmitOutlet;

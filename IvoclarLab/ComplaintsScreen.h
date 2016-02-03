@@ -3,7 +3,7 @@
 //  IvoclarLab
 //
 //  Created by Subramanyam on 20/11/15.
-//  Copyright (c) 2015 Subramanyam. All rights reserved.
+//  Copyright (c) 2015 Ivoclar Vivadent. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
@@ -24,6 +24,9 @@
     NSString *response;
     NSString * filteredDoctorID;
     NSDictionary * caseIdDictionary;
+    
+    UITapGestureRecognizer * tapRecognizer;
+
     
     NSString * materialQuality;
     NSString * labService;

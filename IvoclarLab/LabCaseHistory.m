@@ -3,7 +3,7 @@
 //  IvoclarLab
 //
 //  Created by Subramanyam on 26/11/15.
-//  Copyright (c) 2015 Subramanyam. All rights reserved.
+//  Copyright (c) 2015 Ivoclar Vivadent. All rights reserved.
 //
 
 #import "LabCaseHistory.h"
@@ -36,7 +36,8 @@
     
     
     //self.navigationItem.title = @"Ivoclar lab";
-    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.0f/255.0f green:128.0f/255.0f blue:255.0f/255.0f alpha:1];
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:71.0f/255.0f green:118.0f/255.0f blue:172.0f/255.0f alpha:1];
+    
     // self.navigationController.navigationBar.translucent = NO;
     
     self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
@@ -60,7 +61,7 @@
     [navigationTitleView addSubview:label];
     self.navigationItem.titleView = navigationTitleView;
     
-    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.0f/255.0f green:128.0f/255.0f blue:255.0f/255.0f alpha:1];
+   // self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.0f/255.0f green:128.0f/255.0f blue:255.0f/255.0f alpha:1];
     
     
     //Animating the navigation Bar
@@ -71,8 +72,21 @@
     [self.navigationController.navigationBar.layer addAnimation: fadeTextAnimation forKey: @"fadeText"];
     //self.navigationItem.title = @"Ivoclar Lab";
     
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        
+        
+        labCaseHistoryTV= [[UITableView alloc]initWithFrame:CGRectMake(0, _caseHistoryLabel.frame.origin.y+ _caseHistoryLabel.frame.size.height+10, self.view.frame.size.width+280, 490) style:UITableViewStylePlain];
+        
+
+        
+    }
     
-    labCaseHistoryTV= [[UITableView alloc]initWithFrame:CGRectMake(0, _caseHistoryLabel.frame.origin.y+ _caseHistoryLabel.frame.size.height+10, self.view.frame.size.width, 500) style:UITableViewStylePlain];
+    else
+    {
+        
+        labCaseHistoryTV= [[UITableView alloc]initWithFrame:CGRectMake(0, _caseHistoryLabel.frame.origin.y+ _caseHistoryLabel.frame.size.height+10, self.view.frame.size.width, 470) style:UITableViewStylePlain];
+    }
+    
     
     defaults = [NSUserDefaults standardUserDefaults];
     
@@ -259,6 +273,10 @@
         
         
         // Storing in NSUserDefaults and is used when there is no network
+        
+        
+        [caseHistoryDict setValue:@"" forKey:@"LabName"];
+        
         [defaults setObject:caseHistoryDict forKey:@"CaseHistoryLab"];
         [defaults synchronize];
         NSLog(@"defaults: %@",[defaults objectForKey:@"CaseHistoryLab"]);
@@ -299,6 +317,12 @@
         caseHistoryCell = [tableView dequeueReusableCellWithIdentifier:@"caseHistoryCell"];
     }
     
+    
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        
+        caseHistoryCell.docAddressCH.frame = CGRectMake(160, 50, 380, 20);
+    }
+    
     caseHistoryCell.cellNumberCH.text = [NSString stringWithFormat:@"%ld", indexPath.row+1];
     
     caseHistoryCell.doctorNameCH.text = [[caseHistoryDict valueForKey:@"DoctorName"]objectAtIndex:indexPath.row];
@@ -315,6 +339,9 @@
     caseHistoryCell.caseIdCH.text = [[caseHistoryDict valueForKey:@"CaseId"]objectAtIndex:indexPath.row];
     
     caseHistoryCell.caseStatusCH.text = [[caseHistoryDict valueForKey:@"CaseStatus"]objectAtIndex:indexPath.row];
+    
+   // NSLog(@"case history dict : %@",caseHistoryDict);
+    
     
     
     return caseHistoryCell;

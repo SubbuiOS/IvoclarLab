@@ -3,7 +3,7 @@
 //  IvoclarLab
 //
 //  Created by Subramanyam on 24/11/15.
-//  Copyright (c) 2015 Subramanyam. All rights reserved.
+//  Copyright (c) 2015 Ivoclar Vivadent. All rights reserved.
 //
 
 #import "LabCaseStatus.h"
@@ -28,9 +28,9 @@
     if([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad)
     {
         // iPad
-        _caseIdLabel.frame = CGRectMake(_caseIdButtonOutlet.frame.origin.x+145, _caseIdButtonOutlet.frame.origin.y+10, 200, 32);
+        _caseIdLabel.frame = CGRectMake(_caseIdButtonOutlet.frame.origin.x+145, _caseIdButtonOutlet.frame.origin.y+18, 200, 32);
         
-        _statusLabel.frame = CGRectMake(_statusButtonOutlet.frame.origin.x+145, _statusButtonOutlet.frame.origin.y+10, 200, 32);
+        _statusLabel.frame = CGRectMake(_statusButtonOutlet.frame.origin.x+145, _statusButtonOutlet.frame.origin.y+18, 200, 32);
         
     }
     
@@ -52,7 +52,9 @@
     
     
     //self.navigationItem.title = @"Ivoclar lab";
-    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.0f/255.0f green:128.0f/255.0f blue:255.0f/255.0f alpha:1];
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:71.0f/255.0f green:118.0f/255.0f blue:172.0f/255.0f alpha:1];
+    
+
     // self.navigationController.navigationBar.translucent = NO;
     
     self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
@@ -74,7 +76,7 @@
     
     [navigationTitleView addSubview:label];
     self.navigationItem.titleView = navigationTitleView;
-    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.0f/255.0f green:128.0f/255.0f blue:255.0f/255.0f alpha:1];
+    //self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.0f/255.0f green:128.0f/255.0f blue:255.0f/255.0f alpha:1];
     
     //Animating the navigation Bar
     CATransition *fadeTextAnimation = [CATransition animation];
@@ -160,16 +162,34 @@
     [caseStatusTV removeFromSuperview];
     
     
-    commonView = [[UIView alloc]initWithFrame:CGRectMake(_labCaseStatusView.frame.origin.x+17, _labCaseStatusView.frame.size.height+_labCaseStatusView.frame.origin.y-20, _labCaseStatusView.frame.size.width+200, 350)];
-    commonView.backgroundColor = [UIColor clearColor];
-    [self.view addSubview:commonView];
-    
-    
     [caseStatusTV reloadData];
     
     caseStatusTV.hidden = NO;
     
-    caseStatusTV = [[UITableView alloc]initWithFrame:CGRectMake(5, 5, self.view.frame.size.width-50, 150) style:UITableViewStylePlain];
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        
+        
+        commonView = [[UIView alloc]initWithFrame:CGRectMake(_labCaseStatusView.frame.origin.x+137, _labCaseStatusView.frame.size.height+_labCaseStatusView.frame.origin.y-20, _labCaseStatusView.frame.size.width+200, 350)];
+
+        
+        caseStatusTV = [[UITableView alloc]initWithFrame:CGRectMake(5, 5, self.view.frame.size.width-320, 250) style:UITableViewStylePlain];
+        
+        
+    }
+    else
+    {
+        commonView = [[UIView alloc]initWithFrame:CGRectMake(_labCaseStatusView.frame.origin.x+17, _labCaseStatusView.frame.size.height+_labCaseStatusView.frame.origin.y-20, _labCaseStatusView.frame.size.width+200, 350)];
+        
+
+        
+        caseStatusTV = [[UITableView alloc]initWithFrame:CGRectMake(5, 5, self.view.frame.size.width-50, 250) style:UITableViewStylePlain];
+    }
+    
+    
+    commonView.backgroundColor = [UIColor clearColor];
+    [self.view addSubview:commonView];
+    
+
 
     caseStatusTV.delegate = self;
     caseStatusTV.dataSource = self;
@@ -200,7 +220,16 @@
     [commonView removeFromSuperview];
     [caseIdTV removeFromSuperview];
     
-    commonView = [[UIView alloc]initWithFrame:CGRectMake(_labCaseIdView.frame.origin.x+17, _labCaseIdView.frame.size.height+_labCaseIdView.frame.origin.y-20, _labCaseIdView.frame.size.width+200, 350)];
+     if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad)
+     {
+         commonView = [[UIView alloc]initWithFrame:CGRectMake(_labCaseIdView.frame.origin.x+137, _labCaseIdView.frame.size.height+_labCaseIdView.frame.origin.y-20, _labCaseIdView.frame.size.width+200, 350)];
+     }
+    else
+    {
+        commonView = [[UIView alloc]initWithFrame:CGRectMake(_labCaseIdView.frame.origin.x+17, _labCaseIdView.frame.size.height+_labCaseIdView.frame.origin.y-20, _labCaseIdView.frame.size.width+200, 350)];
+    }
+    
+    
     commonView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:commonView];
     
@@ -298,7 +327,19 @@
         
         
         caseIdTV.hidden  = NO;
-        caseIdTV = [[UITableView alloc]initWithFrame:CGRectMake(5, 5, self.view.frame.size.width-50, 150) style:UITableViewStylePlain];
+        
+        if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+            
+            caseIdTV = [[UITableView alloc]initWithFrame:CGRectMake(5, 5, self.view.frame.size.width-320, 250) style:UITableViewStylePlain];
+            
+        }
+        
+        else
+        {
+            caseIdTV = [[UITableView alloc]initWithFrame:CGRectMake(5, 5, self.view.frame.size.width-50, 250) style:UITableViewStylePlain];
+        }
+        
+        
 
         caseIdTV.dataSource = self;
         caseIdTV.delegate = self;

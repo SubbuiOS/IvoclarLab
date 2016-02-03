@@ -3,7 +3,7 @@
 //  IvoclarLab
 //
 //  Created by Subramanyam on 23/11/15.
-//  Copyright (c) 2015 Subramanyam. All rights reserved.
+//  Copyright (c) 2015 Ivoclar Vivadent. All rights reserved.
 //
 
 #import "LoginPage.h"
@@ -45,11 +45,14 @@
 //    // For Changing the color of navigation bar
 //    self.navigationController.navigationBar.barTintColor = [UIColor blueColor];
 //
-    // The below line is for changing the back button color of navigation bar 
+   
+    // This is also used to change the back button title
+    //[self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+    
+    
+    // The below line is for changing the back button color of navigation bar
     
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
-    
-    //[self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
     
 }
 
@@ -60,6 +63,15 @@
     self.navigationController.navigationBarHidden = YES;
     
     self.view.backgroundColor = [UIColor colorWithRed:255.0f/255.0f green:255.0f/255.0f blue:255.0f/255.0f alpha:1.0f];
+    
+    [_titleLabel setBackgroundColor:[UIColor colorWithRed:71.0f/255.0f green:118.0f/255.0f blue:172.0f/255.0f alpha:1]];
+    
+    
+    _backButtonOutlet.layer.cornerRadius = 6;
+    _backButtonOutlet.clipsToBounds = YES;
+    
+    [_backButtonOutlet setBackgroundColor:[UIColor colorWithRed:27.0/255.0 green:32.0/255.0 blue:52.0/255.0 alpha:1]];
+    
     
 
 

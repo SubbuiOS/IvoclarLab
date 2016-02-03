@@ -3,7 +3,7 @@
 //  IvoclarLab
 //
 //  Created by Subramanyam on 09/11/15.
-//  Copyright (c) 2015 Subramanyam. All rights reserved.
+//  Copyright (c) 2015 Ivoclar Vivadent. All rights reserved.
 //
 
 #import "NewUserOTPScreen.h"
@@ -13,7 +13,6 @@
 
 @end
 
-NSMutableDictionary * docIdDict;
 @implementation NewUserOTPScreen
 
 - (void)viewDidLoad {
@@ -35,9 +34,12 @@ NSMutableDictionary * docIdDict;
     _OTPSubmitOutlet.clipsToBounds = YES;
     
     
-    UIAlertView * OTPAlert = [[UIAlertView alloc]initWithTitle:@"Alert" message:@"Please enter the OTP sent to Your email" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+//    UIAlertView * OTPAlert = [[UIAlertView alloc]initWithTitle:@"Alert" message:@"Please enter the OTP sent to Your email" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+//    
+//    [OTPAlert show];
     
-    [OTPAlert show];
+    
+    _OTPReceivingLabel.hidden = NO;
     
     
 }
@@ -47,7 +49,44 @@ NSMutableDictionary * docIdDict;
     
     _OTPTF.text = @"";
     
+    [self.titleLabel setBackgroundColor:[UIColor colorWithRed:71.0f/255.0f green:118.0f/255.0f blue:172.0f/255.0f alpha:1]];
+    
+    
+    _backButtonOutlet.layer.cornerRadius = 6;
+    _backButtonOutlet.clipsToBounds = YES;
+    
+     [_backButtonOutlet setBackgroundColor:[UIColor colorWithRed:27.0/255.0 green:32.0/255.0 blue:52.0/255.0 alpha:1]];
+
+    
+    
 }
+
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    
+    [self getDataFromPlist];
+    
+    // Here We are autoFilling the OTP text field so we made the user to wait for 6sec untill the OTP is received
+    
+    OTPTimer = [NSTimer scheduledTimerWithTimeInterval: 6.0 target:self selector:@selector(loadOTP) userInfo:nil repeats:NO];
+    
+   // [self performSelector:@selector(loadOTP) withObject:filteredOTP afterDelay:2.0];
+    
+}
+
+-(void) loadOTP
+{
+    
+    _OTPTF.text = filteredOTP;
+    
+    
+    NSLog(@"otp :%@",_OTPTF.text);
+    
+    
+    _OTPReceivingLabel.hidden = YES;
+}
+
 
 
 
@@ -66,24 +105,10 @@ NSMutableDictionary * docIdDict;
 }
 */
 
-- (IBAction)OTPSubmit:(id)sender {
-    
-    
-    if ([_OTPTF.text isEqual:@""]) {
-        
-        UIAlertView * OTPAlert = [[UIAlertView alloc]initWithTitle:@"Warning" message:@"Please enter a valid One Time Password(OTP)" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-        
-        [OTPAlert show];
-    }
-    
-    else
-    {
-    
-    spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    spinner.center = CGPointMake(170, _OTPSubmitOutlet.frame.size.height+_OTPSubmitOutlet.frame.origin.y+50);
-    [self.view addSubview:spinner];
-    [spinner startAnimating];
-    
+
+-(void) getDataFromPlist
+
+{
     //get the plist document path
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
@@ -112,23 +137,60 @@ NSMutableDictionary * docIdDict;
     //print the plist result data on console
     for (int i= 0; i<[contentArray count]; i++) {
         
-    
-            
+        
+        
         data= [contentArray objectAtIndex:i];
-
+        
         if ([data objectForKey:@"DoctorID"]) {
-        
+            
             NSString *drID = [data objectForKey:@"DoctorID"];
-
-        
+            
+            
             NSCharacterSet *invalidCharSet = [[NSCharacterSet characterSetWithCharactersInString:@"0123456789"]invertedSet];
             filteredDoctorID = [[drID componentsSeparatedByCharactersInSet:invalidCharSet]componentsJoinedByString:@""];
-        
-        //_doctorIDTF.text = filteredDoctorID;
+            
+            //_doctorIDTF.text = filteredDoctorID;
         }
         
-       // NSLog(@"Data From Plist: Doctor ID = %@",drID);
+        if ([data objectForKey:@"OTP"]) {
+            
+            NSString *OTP = [data objectForKey:@"OTP"];
+            
+            
+            NSCharacterSet *invalidCharSet = [[NSCharacterSet characterSetWithCharactersInString:@"0123456789"]invertedSet];
+            filteredOTP = [[OTP componentsSeparatedByCharactersInSet:invalidCharSet]componentsJoinedByString:@""];
+            
+            //_doctorIDTF.text = filteredDoctorID;
+            
+            NSLog(@"filtrered OTP :%@",filteredOTP);
+        }
+        
+        // NSLog(@"Data From Plist: Doctor ID = %@",drID);
     }
+}
+
+
+- (IBAction)OTPSubmit:(id)sender {
+    
+    
+    if ([_OTPTF.text isEqual:@""]) {
+        
+        UIAlertView * OTPAlert = [[UIAlertView alloc]initWithTitle:@"Warning" message:@"Please enter a valid One Time Password(OTP)" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+        
+        [OTPAlert show];
+    }
+    
+    else
+    {
+    
+    spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    spinner.center = CGPointMake(170, _OTPSubmitOutlet.frame.size.height+_OTPSubmitOutlet.frame.origin.y+50);
+    [self.view addSubview:spinner];
+    [spinner startAnimating];
+        
+        [self getDataFromPlist];
+    
+ 
 
     // Checking OTP that we entered is valid or not
     
@@ -229,7 +291,13 @@ namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
 }
 
 
-
+//- (IBAction)resendOTP:(id)sender
+//{
+//    
+//    
+//    
+//}
+//
 
 
 

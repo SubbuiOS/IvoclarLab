@@ -3,11 +3,12 @@
 //  IvoclarLab
 //
 //  Created by Subramanyam on 05/11/15.
-//  Copyright (c) 2015 Subramanyam. All rights reserved.
+//  Copyright (c) 2015 Ivoclar Vivadent. All rights reserved.
 //
 
 #import "ViewController.h"
 #import "CommonAppManager.h"
+#import "PartnersCustomCell.h"
 
 
 @interface CaseEntryViewController : ViewController<UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource,NSXMLParserDelegate,UIAlertViewDelegate/*,UIPickerViewDataSource,UIPickerViewDelegate*/>
@@ -29,6 +30,8 @@
     NSMutableDictionary * partnerLDict;
     NSMutableDictionary * profileDetailsDict;
     
+    PartnersCustomCell * partnerCell;
+    
    // NSUserDefaults * defaults;
    
     NSString * response;
@@ -41,11 +44,17 @@
     UIAlertView * trackAlert;
     UIAlertView * confirmationAlert;
     UIView * partnerLView;
-    UIButton * partnerLbutton;
+    UIView * partnerMView;
+    UIButton * moreButton;
+    UIButton * partnerLButton;
    // UIButton * stateButton;
     
-    UIView * commonView;
+    NSMutableDictionary *data;
+    NSMutableArray *contentArray;
+    UITapGestureRecognizer * tapRecognizer;
+
     
+    UIView * commonView;
     
     
 
@@ -91,6 +100,8 @@
 
 @property (weak, nonatomic) IBOutlet UIView *crownBrandView;
 @property (weak, nonatomic) IBOutlet UIView *typeOfCaseView;
+
+
 
 
 

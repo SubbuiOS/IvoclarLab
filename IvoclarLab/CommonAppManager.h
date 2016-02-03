@@ -29,6 +29,7 @@
     NSURLConnection *URLConnection;
     NSMutableData *webData;
     NSMutableArray * menuArray;
+    NSMutableArray * cellImages;
     
     id delegate;
     
