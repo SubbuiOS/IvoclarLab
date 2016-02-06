@@ -61,6 +61,12 @@
     UIAlertView * alreadyRegisteredAlert = [[UIAlertView alloc]initWithTitle:@"You are already registered" message:@"Pls Login with the details" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
     [alreadyRegisteredAlert show];
     
+    [_backButtonOutlet setBackgroundColor:[UIColor colorWithRed:27.0/255.0 green:32.0/255.0 blue:52.0/255.0 alpha:1]];
+    
+    _backButtonOutlet.layer.cornerRadius = 6;
+    _backButtonOutlet.clipsToBounds = YES;
+    
+    
 }
 
 
@@ -132,6 +138,7 @@
         
     
 }
+
 -(void)connectionData:(NSData*)data status:(BOOL)status
 {
     
@@ -313,6 +320,16 @@
 
     
 }
+
+
+- (IBAction)backButton:(id)sender
+{
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+
+    
+}
+
 
 
 -(BOOL) textFieldShouldReturn:(UITextField *)textField{

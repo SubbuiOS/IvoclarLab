@@ -17,7 +17,7 @@
     NSString * response;
     NSMutableDictionary * docIdDict;
     UIActivityIndicatorView *spinner;
-   // NSUserDefaults * defaults;
+    NSUserDefaults * defaults;
     
 }
 

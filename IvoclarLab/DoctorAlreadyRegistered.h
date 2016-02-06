@@ -33,7 +33,9 @@
 - (IBAction)forgotPassword:(id)sender;
 
 - (IBAction)newUserRegistration:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *backButtonOutlet;
 
+- (IBAction)backButton:(id)sender;
 
 -(void)connectionData:(NSData*)data status:(BOOL)status;
 

@@ -284,7 +284,16 @@
     
     if ([elementName isEqual:@"CheckMobileResponse"])
     {
+        
+        defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setValue:_doctorEmailTF.text forKey:@"Email"];
+        [defaults synchronize];
+        
         NSLog(@"mobile response :%@",response);
+        
+        
+    
+        
         
         if ([response isEqual:@"\"Y\""]) {
             

@@ -332,17 +332,42 @@
         
         commonView = [[UIView alloc]initWithFrame:CGRectMake(_natureOfWorkView.frame.origin.x+150, _natureOfWorkView.frame.origin.y+_natureOfWorkView.frame.size.height+140, _natureOfWorkView.frame.size.width, 150)];
         
-         natureOfWorkTV = [[UITableView alloc] initWithFrame:CGRectMake(5, 5, self.view.frame.size.width-320, 130) style:UITableViewStylePlain];
+         natureOfWorkTV = [[UITableView alloc] initWithFrame:CGRectMake(5, 5, self.view.frame.size.width-320, 160) style:UITableViewStylePlain];
         
         
     }
     
     else
     {
-         commonView = [[UIView alloc]initWithFrame:CGRectMake(_natureOfWorkView.frame.origin.x+20, _natureOfWorkView.frame.origin.y+_natureOfWorkView.frame.size.height+81 , _natureOfWorkView.frame.size.width , 150)];
+         commonView = [[UIView alloc]initWithFrame:CGRectMake(_natureOfWorkView.frame.origin.x+20, _natureOfWorkView.frame.origin.y+_natureOfWorkView.frame.size.height+81 , _natureOfWorkView.frame.size.width , 250)];
         
-         natureOfWorkTV = [[UITableView alloc]initWithFrame:CGRectMake(5, 5, self.view.frame.size.width-50, 130) style:UITableViewStylePlain];
-    }
+         natureOfWorkTV = [[UITableView alloc]initWithFrame:CGRectMake(5, 5, self.view.frame.size.width-50, 160) style:UITableViewStylePlain]
+        ;
+    
+    
+        natureOfWorkTV.backgroundColor = [UIColor colorWithRed:115.0f/225.0f green:153.0f/255.0f blue:203.0f/255.0f alpha:1.0f];
+        
+    
+        }
+    
+    
+    
+    UIBezierPath * maskPath = [UIBezierPath bezierPathWithRoundedRect:CGRectMake([natureOfWorkTV frame].origin.x, [natureOfWorkTV frame].origin.y, [natureOfWorkTV frame].size.width, [natureOfWorkTV frame].size.height+50) byRoundingCorners:(UIRectCornerBottomLeft|UIRectCornerBottomRight) cornerRadii:CGSizeMake(10.0, 10.0)];
+    
+    
+    
+    
+    
+    
+    // maskPath = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(5, 0, 100, 60) byRoundingCorners:(UIRectCornerTopLeft|UIRectCornerTopRight) cornerRadii:CGSizeMake(10.0, 10.0)];
+    
+    CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
+    maskLayer.frame = [natureOfWorkTV bounds];
+    maskLayer.path = maskPath.CGPath;
+    [natureOfWorkTV layer].mask = maskLayer;
+    
+
+    
     commonView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:commonView];
     
@@ -407,7 +432,31 @@
             
              crownBrandTV = [[UITableView alloc]initWithFrame:CGRectMake(5, 5, self.view.frame.size.width-50, 130) style:UITableViewStylePlain];
             
+            
+            crownBrandTV.backgroundColor = [UIColor colorWithRed:115.0f/225.0f green:153.0f/255.0f blue:203.0f/255.0f alpha:1.0f];
+            
+            
+            
+            
+            
         }
+        
+        UIBezierPath * maskPath = [UIBezierPath bezierPathWithRoundedRect:CGRectMake([crownBrandTV frame].origin.x, [crownBrandTV frame].origin.y, [crownBrandTV frame].size.width, [crownBrandTV frame].size.height+50) byRoundingCorners:(UIRectCornerBottomLeft|UIRectCornerBottomRight) cornerRadii:CGSizeMake(10.0, 10.0)];
+        
+        
+        
+        
+        
+        
+        
+        // maskPath = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(5, 0, 100, 60) byRoundingCorners:(UIRectCornerTopLeft|UIRectCornerTopRight) cornerRadii:CGSizeMake(10.0, 10.0)];
+        
+        CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
+        maskLayer.frame = [crownBrandTV bounds];
+        maskLayer.path = maskPath.CGPath;
+        [crownBrandTV layer].mask = maskLayer;
+        
+
         
         commonView.backgroundColor = [UIColor clearColor];
         [self.view addSubview:commonView];
@@ -452,14 +501,18 @@
     
     typeOfCaseTV.hidden = NO;
     
+    _selectPartnerOutlet.hidden = YES;
+    _submitOutlet.hidden = YES;
+    
+    
     [commonView removeFromSuperview];
     [typeOfCaseTV removeFromSuperview];
     
     if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
         
-        commonView = [[UIView alloc]initWithFrame:CGRectMake(_typeOfCaseView.frame.origin.x+140, _typeOfCaseView.frame.origin.y+_typeOfCaseView.frame.size.height+140, _typeOfCaseView.frame.size.width-300, 150)];
+        commonView = [[UIView alloc]initWithFrame:CGRectMake(_typeOfCaseView.frame.origin.x+140, _typeOfCaseView.frame.origin.y+_typeOfCaseView.frame.size.height+140, _typeOfCaseView.frame.size.width-300, 250)];
         
-         typeOfCaseTV = [[UITableView alloc]initWithFrame:CGRectMake(5, 5, self.view.frame.size.width-320, 130) style:UITableViewStylePlain];
+         typeOfCaseTV = [[UITableView alloc]initWithFrame:CGRectMake(5, 5, self.view.frame.size.width-320, 200) style:UITableViewStylePlain];
         
         
     }
@@ -470,9 +523,30 @@
     
     commonView = [[UIView alloc]initWithFrame:CGRectMake(_typeOfCaseView.frame.origin.x+20, _typeOfCaseView.frame.origin.y+_typeOfCaseView.frame.size.height+82 , _typeOfCaseView.frame.size.width , 150)];
         
-         typeOfCaseTV = [[UITableView alloc]initWithFrame:CGRectMake(5, 5, self.view.frame.size.width-50, 130) style:UITableViewStylePlain];
+         typeOfCaseTV = [[UITableView alloc]initWithFrame:CGRectMake(5, 5, self.view.frame.size.width-50, 179) style:UITableViewStylePlain];
+        
+        typeOfCaseTV.backgroundColor = [UIColor colorWithRed:115.0f/225.0f green:153.0f/255.0f blue:203.0f/255.0f alpha:1.0f];
+        
         
     }
+    
+    
+    UIBezierPath * maskPath = [UIBezierPath bezierPathWithRoundedRect:CGRectMake([typeOfCaseTV frame].origin.x, [typeOfCaseTV frame].origin.y, [typeOfCaseTV frame].size.width, [typeOfCaseTV frame].size.height+50) byRoundingCorners:(UIRectCornerBottomLeft|UIRectCornerBottomRight) cornerRadii:CGSizeMake(10.0, 10.0)];
+    
+    
+    
+    
+    
+    
+    
+    // maskPath = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(5, 0, 100, 60) byRoundingCorners:(UIRectCornerTopLeft|UIRectCornerTopRight) cornerRadii:CGSizeMake(10.0, 10.0)];
+    
+    CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
+    maskLayer.frame = [typeOfCaseTV bounds];
+    maskLayer.path = maskPath.CGPath;
+    [typeOfCaseTV layer].mask = maskLayer;
+    
+
     commonView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:commonView];
 
@@ -506,6 +580,10 @@
     
     moreButton.hidden = NO;
     
+    [partnerMTV removeFromSuperview];
+    [partnerMView removeFromSuperview];
+    
+    
     if ([_welcomeNameLabel.text isEqual:@""] || _welcomeNameLabel.text== nil)
     {
         
@@ -521,6 +599,15 @@
     {
     
     //First we will get Mpartners by clicking the button
+        
+        spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        spinner.center = CGPointMake(_selectPartnerOutlet.frame.origin.x+_selectPartnerOutlet.frame.size.width+30,_selectPartnerOutlet.frame.origin.y);
+        [self.view addSubview:spinner];
+        [spinner startAnimating];
+
+        
+        
+        
     
     NSString * MPartner = [NSString stringWithFormat:
                           @"<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
@@ -658,6 +745,9 @@
     }
     
     if ([elementName isEqual:@"GetMPartnersResult"]) {
+        
+        
+        [spinner stopAnimating];
         
         NSLog(@"Mpartner :%@",response);
         NSData *objectData = [response dataUsingEncoding:NSUTF8StringEncoding];
@@ -918,8 +1008,9 @@
         
     
     //Displaying Custom Cells
+
         
-      
+        
             if (tableView == partnerMTV)
             {
                 
@@ -941,6 +1032,7 @@
                 partnerCell.partnerMobile.text = [[partnerMDict valueForKey:@"Mobile"]objectAtIndex:indexPath.row];
             
                 partnerCell.partnerLocation.text = [[partnerMDict valueForKey:@"Address"]objectAtIndex:indexPath.row];
+                
                 
 
                 
@@ -1056,6 +1148,9 @@
         else if(tableView == typeOfCaseTV)
         {
             cell.textLabel.text = [typeOfCaseArray objectAtIndex:indexPath.row];
+            
+
+            
         }
         
         cell.textLabel.textColor = [UIColor whiteColor];
@@ -1071,6 +1166,7 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
+    _partnerNameLabel.textAlignment = NSTextAlignmentJustified;
     
     if (tableView == partnerMTV) {
         
@@ -1212,6 +1308,8 @@
        // _typeOfCasePicker.hidden = YES;
         
         typeOfCaseTV.hidden = YES;
+        _selectPartnerOutlet.hidden = NO;
+        _submitOutlet.hidden = NO;
         [commonView removeFromSuperview];
         [typeOfCaseTV removeFromSuperview];
 
@@ -1221,7 +1319,8 @@
     
 
     [self partnerLButtonIsClicked];
-
+    
+    
     
 }
 
@@ -1232,14 +1331,17 @@
 
     }
     
+    if((tableView == typeOfCaseTV)|| (tableView == natureOfWorkTV))
+    {
+        return 50;
+    }
+    
     return 45;
 }
 
 -(void) moreButtonIsClicked
 {
-//    [partnerMView removeFromSuperview];
-//    [partnerMTV removeFromSuperview];
-    
+
     [partnerMView removeFromSuperview];
     [partnerMTV removeFromSuperview];
     
@@ -1269,6 +1371,7 @@
     [partnerLView removeFromSuperview];
     //self.view.alpha = 1;
     [partnerMTV removeFromSuperview];
+    [partnerMView removeFromSuperview];
     [partnerLTV removeFromSuperview];
     
     

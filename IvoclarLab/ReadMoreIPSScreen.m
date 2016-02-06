@@ -3,7 +3,7 @@
 //  IvoclarLab
 //
 //  Created by Subramanyam on 27/01/16.
-//  Copyright (c) 2016 Subramanyam. All rights reserved.
+//  Copyright (c) 2016 Ivoclar Vivadent. All rights reserved.
 //
 
 #import "ReadMoreIPSScreen.h"

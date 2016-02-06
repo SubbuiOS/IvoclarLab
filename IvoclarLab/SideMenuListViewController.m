@@ -179,7 +179,7 @@
         
         ProfileScreen * profilePage = [self.storyboard instantiateViewControllerWithIdentifier:@"newProfile"];
         
-        if ((profilePage.doctorNameTF.text == nil) || (profilePage.areaNameTF.text == nil) || (profilePage.emailTF.text == nil) || (profilePage.pincodeTF.text == nil) || (profilePage.stateDDOutlet.titleLabel.text == nil) || (profilePage.cityDDOutlet.titleLabel.text == nil))
+        if ((profilePage.doctorNameTF.text == nil) || (profilePage.areaNameTF.text == nil) || (profilePage.emailTF.text == nil) || (profilePage.pincodeTF.text == nil) || ([profilePage.selectYourStateLabel.text isEqual:@"Select State"]|| [profilePage.selectYourCityLabel.text isEqual:@"Select City"]))
             
             {
                 UIAlertView * profileAlert = [[UIAlertView alloc]initWithTitle:@"Warning" message:@"Please fill all the details in profile" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];

@@ -218,7 +218,7 @@
         NSString *cancelTitle = @"Close";
         NSString *showTitle = @"Show";
         NSString *message = [[userInfo valueForKey:@"aps"] valueForKey:@"alert"];
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Some title"
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Ivoclar"
                                                             message:message
                                                            delegate:self
                                                   cancelButtonTitle:cancelTitle 

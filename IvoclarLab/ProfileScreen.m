@@ -71,6 +71,11 @@
     [[CommonAppManager sharedAppManager]soapServiceMessage:getProfileDetails soapActionString:@"GetProfileDetails" withDelegate:self];
     }
     
+    else
+    {
+        _emailTF.text = [[NSUserDefaults standardUserDefaults]valueForKey:@"Email"];
+    }
+    
 }
 
 

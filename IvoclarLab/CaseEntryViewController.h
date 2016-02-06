@@ -53,6 +53,7 @@
     NSMutableArray *contentArray;
     UITapGestureRecognizer * tapRecognizer;
 
+    UIActivityIndicatorView * spinner;
     
     UIView * commonView;
     
